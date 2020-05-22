@@ -13,12 +13,11 @@ Caracteristicas:
 [+] Se ejecuta en segundo plano. [Sin consola]
 [+] Indetectable antivirus [Avats, ESET32, Windows defender]
 [+] Se disfraza, como 'Windows Defender'.
-[+] Obtiene contraseñas guardadas de google Chrome
 [+] Modifica el registro de inicio del sistema.
 [+] Uso de un segundo Gmail, en caso de error.
 [+] Multihilos, bajo uso de recursos.
 [+] Facil infección 
 [+] Documentación detallada y actualizada
-[-] No termux
+[-] No termux ni Linux
 [-] No remoto
 NOTA: Lea la documentación.
