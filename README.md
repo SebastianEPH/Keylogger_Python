@@ -162,11 +162,13 @@ def ReceiveE():
 7. Creamos una nueva tabla con el Nombre= `keylog` y guardamos.
 
     ![](https://i.imgur.com/8mcP594.png)
-8. Creamos los siguientes datos con los siguiente typos de datos: `l_id` la convertimos en llave primaria
+8. Creamos los siguientes datos con los siguiente typos de datos:
     ````c
-    l_id        // INT   // Llave Primaria  //Autoincremento
-    l_log       // MEDIUMTEXT [Acepta 16.777.215 Caracteres]
-                // LONGTEXT   [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
+    l_id        // INT          [Llave Primaria]  (Autoincremento)
+    l_user      // CHAR         [50 Caracteres] 
+    l_time      // CHAR         [50 Caracteres]
+    l_log       // MEDIUMTEXT   [Acepta 16.777.215 Caracteres]
+                // LONGTEXT     [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
     ````
     ![](https://i.imgur.com/TrGVRMB.png)
 9. 
@@ -174,6 +176,11 @@ def ReceiveE():
 
 10. En el apartado Data, podrá ver el registro de teclas por día
     ![Ver log](https://i.imgur.com/o2w2WMi.png)
+
+11. Podemos observar la base de datos con el registro de teclas obtenida.
+
+    ![Fin](https://i.imgur.com/X4MxCeA.png)
+
 
 
 

