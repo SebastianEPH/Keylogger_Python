@@ -370,7 +370,7 @@ def SendLog():
 
     while (True):
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
-        #time.sleep(15) # Solo antigueeo 
+        #time.sleep(10) # Solo antigueeo 
         if VerificarConexion():
             if (GMailOrDataBase() == 0):    # Send mail
                 # Crea nombre del archivo
