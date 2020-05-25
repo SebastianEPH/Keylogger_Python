@@ -1,13 +1,13 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0     
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0.1     
 ````
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
 * __Documentación:__ `24/05/2020`
-* __Versión:__ `4.0`
+* __Versión:__ `4.0.1`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -26,7 +26,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `4.0`
+- `WindowsDefender.exe` = Keylogger Compilado `4.0.1`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
@@ -51,7 +51,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
     ````
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
 - __Intervalo de tiempo personalizado:__ 
-    - __DATABASE:__ El tiempo recomendado es de 2 a 3 minutos.  [`Ésto se debe a un error todavía no solucionado en python que causa que no pueda envíar datos mayor a 200 caracteres.`]
+    - __DATABASE:__ El tiempo recomendado es de 20 a 30 minutos.
     - __GMAIL:__ El tiempo recomendado es de 1:30 a 2 horas mínimo. [`Sucede que Google suele bloquear la cuenta por horas cuando detecta una gran cantidad de correos envíados por día.`]
 
     ````py
@@ -114,7 +114,7 @@ Requerimiento de paquetes de `Python3.8`:
 - `import threading` <== Ejecución multihilos
 - `import pyinstaller` <== Convierte de `*.py` a `*.exe`
 
-NOTA: Bibliotecas no optimizadas! :'( 
+NOTA: Biblioteca no optimizada! :'( 
 
 ## Escoge [GMAIL] o [DataBase]:
 - Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__ o por __Gmail__, no podemos escoger ambas.

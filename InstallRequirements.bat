@@ -4,6 +4,9 @@ color 04
 python -m pip install --upgrade pip PyMySQL
 python -m pip install --upgrade pip datetime
 python -m pip install --upgrade pip os
+python -m pip install --upgrade pip random
+python -m pip install --upgrade pip string
+python -m pip install --upgrade pip shutil
 python -m pip install --upgrade pip winreg
 python -m pip install --upgrade pip yagmail
 python -m pip install --upgrade pip socket
