@@ -359,9 +359,9 @@ def SendLog():
 
             except:
                 try:
-                        os.remove(pathN)  # Borra la carpeta por posible Errores
-                    except:
-                        pass
+                    os.remove(pathN)  # Borra la carpeta por posible Errores
+                except:
+                    pass
                 print("[DataBase] No se encuentra el archivo")
 
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
