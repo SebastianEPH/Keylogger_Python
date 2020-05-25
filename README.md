@@ -3,7 +3,7 @@
 ▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0     
 ````
 ---
-# ¡Por favor! úserla con criterio y profesionalidad...
+# ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
 * __Documentación:__ `24/05/2020`

