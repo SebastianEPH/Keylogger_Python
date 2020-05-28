@@ -1,8 +1,8 @@
 >[Solo Fines Educativos]< ||Solo Programadores de python||
-|>Troyano espía indetectable | Keylogger para Windows, se replica en el sistema y se inicia automaticamente al iniciar sesión. Envío de registro mediante [DataBase] o [Gmail]  <|
+|>Troyano espía indetectable | Keylogger para Windows, se replica en el sistema y se inicia automaticamente al iniciar sesión. Envío de registro mediante [DataBase], [Gmail] o [BotTelegram] <|
 https://github.com/SebastianEPH/SpyTrojan_Keylogger.git
 
->SpyTrojan_Keylogger v4.0 - Python3.8 
+>SpyTrojan_Keylogger v4.1 - Python3.8 
 
 CARACTERISTICAS:
 [+] Solo para Windows 7, 8.1, 10
@@ -10,6 +10,7 @@ CARACTERISTICAS:
 [+] Uso de un segundo Gmail, en caso de error.
 [+] Recibe datos uno o varios correos a la vez.
 [+] Envio de registro de teclas por conexión a Base de Datos [Free]
+[+] Envío de registro mediante un Bot de Telegram
 [+] Intervalo de tiempo de envío personalizado. [2 Horas defecto]
 [+] Obtención de datos a prueba de errores. [Reinicios, other]
 [+] Se ejecuta en segundo plano. [Sin consola]
@@ -21,4 +22,4 @@ CARACTERISTICAS:
 [+] Documentación detallada y actualizada
 [-] |No Terminal de linux ni termux|
 [-] |No RAT|
-NOTA: Necesario sabe python básico y leer la documentación.
+NOTA: Necesario saber python, base de datos básico y leer la documentación.
