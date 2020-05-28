@@ -270,7 +270,15 @@ NOTA: Biblioteca no optimizada! :'(
 
     # ************ Zona Telegram ************* 
     ````
+6. Buscamos nuestro bot y la iniciamos...
 
+    ![Buscando nuestro bot](https://i.imgur.com/2IA7ec8.png)
+
+    ![iniciando bot](https://i.imgur.com/1r9F2IU.png)
+
+6. Ejemplo del funcionamiento
+
+    ![Ejemplo de funcionamiento telegram](https://i.imgur.com/QHLYDi9.png)
 
 # [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 
