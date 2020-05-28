@@ -188,7 +188,7 @@ def timeSend(): # Tiempo de envío perzonalizado
 
     ![](https://i.imgur.com/8mcP594.png)
 
-8. Creamos los siguientes datos con los siguiente typos de datos:
+8. Creamos los siguientes tipos de datos:
     ````c
     # No olvidar que el id debe ser autoincremento
     l_id        // INT          [Llave Primaria]  [Autoincremento]

