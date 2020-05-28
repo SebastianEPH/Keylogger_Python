@@ -5,7 +5,8 @@ pip install winregistry
 pip install sockets
 pip install os-win
 pip install strings
-pip install telebot
+echo pip install telebot 
+pip install pyTelegramBotAPI
 pip install random2
 pip install random
 pip install os-sys

