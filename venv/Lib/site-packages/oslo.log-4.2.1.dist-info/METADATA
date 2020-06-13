@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: oslo.log
+Version: 4.2.1
+Summary: oslo.log library
+Home-page: https://docs.openstack.org/oslo.log/latest
+Author: OpenStack
+Author-email: openstack-discuss@lists.openstack.org
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Environment :: OpenStack
+Classifier: Intended Audience :: Information Technology
+Classifier: Intended Audience :: System Administrators
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Python: >=3.6
+Requires-Dist: pbr (>=3.1.1)
+Requires-Dist: oslo.config (>=5.2.0)
+Requires-Dist: oslo.context (>=2.20.0)
+Requires-Dist: oslo.i18n (>=3.20.0)
+Requires-Dist: oslo.utils (>=3.36.0)
+Requires-Dist: oslo.serialization (>=2.25.0)
+Requires-Dist: debtcollector (>=1.19.0)
+Requires-Dist: python-dateutil (>=2.7.0)
+Requires-Dist: pyinotify (>=0.9.6) ; (sys_platform!='win32' and sys_platform!='darwin' and sys_platform!='sunos5')
+Provides-Extra: fixtures
+Requires-Dist: fixtures (>=3.0.0) ; extra == 'fixtures'
+Provides-Extra: systemd
+Requires-Dist: systemd-python (>=234) ; extra == 'systemd'
+Provides-Extra: test
+Requires-Dist: hacking (<2.1.0,>=2.0.0) ; extra == 'test'
+Requires-Dist: stestr (>=2.0.0) ; extra == 'test'
+Requires-Dist: testtools (>=2.3.0) ; extra == 'test'
+Requires-Dist: oslotest (>=3.3.0) ; extra == 'test'
+Requires-Dist: coverage (>=4.5.1) ; extra == 'test'
+Requires-Dist: bandit (<1.6.0,>=1.1.0) ; extra == 'test'
+Requires-Dist: fixtures (>=3.0.0) ; extra == 'test'
+
+========================
+Team and repository tags
+========================
+
+.. image:: https://governance.openstack.org/tc/badges/oslo.log.svg
+    :target: https://governance.openstack.org/tc/reference/tags/index.html
+
+.. Change things from this point on
+
+================================
+oslo.log -- Oslo Logging Library
+================================
+
+.. image:: https://img.shields.io/pypi/v/oslo.log.svg
+    :target: https://pypi.org/project/oslo.log/
+    :alt: Latest Version
+
+.. image:: https://img.shields.io/pypi/dm/oslo.log.svg
+    :target: https://pypi.org/project/oslo.log/
+    :alt: Downloads
+
+The oslo.log (logging) configuration library provides standardized
+configuration for all openstack projects. It also provides custom
+formatters, handlers and support for context specific
+logging (like resource id's etc).
+
+* Free software: Apache license
+* Documentation: https://docs.openstack.org/oslo.log/latest/
+* Source: https://opendev.org/openstack/oslo.log
+* Bugs: https://bugs.launchpad.net/oslo.log
+* Release notes: https://docs.openstack.org/releasenotes/oslo.log/
+
+
+

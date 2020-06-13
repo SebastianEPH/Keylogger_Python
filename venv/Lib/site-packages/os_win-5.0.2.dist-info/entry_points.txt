@@ -1,0 +1,3 @@
+[oslo.config.opts]
+os_win = os_win.conf:list_opts
+

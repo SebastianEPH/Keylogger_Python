@@ -4,8 +4,7 @@ color 05
 pip install winregistry
 pip install sockets
 pip install os-win
-pip install strings
-echo pip install telebot 
+pip install strings 
 pip install pyTelegramBotAPI
 pip install random2
 pip install random
