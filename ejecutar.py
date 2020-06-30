@@ -85,11 +85,11 @@ class Functions:
             return False    # La carpeta ya existe
         pass
 
-    def random_char(y=5):
+    def RandomChar(self,y=5):
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     # Función = Verifica si hay conexión a internet para poder envíar el log
-    def VerificarConexion():
+    def VerifyConnection(self):
         con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
         try:                                                            # Intenta conectarse al servidor de Google
             con.connect(('www.google.com', 80))
