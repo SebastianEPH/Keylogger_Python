@@ -2,11 +2,14 @@
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
 ▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.0    
 ````
+
+# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.0
+
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `28/05/2020`
+* __Documentación:__ `30/06/2020` 
 * __Versión:__ `5.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
