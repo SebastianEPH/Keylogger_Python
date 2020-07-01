@@ -1,16 +1,16 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.0    
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.1    
 ````
 
-# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.0
+# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.1
 
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
 * __Documentación:__ `30/06/2020` 
-* __Versión:__ `5.0`
+* __Versión:__ `5.1`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -29,7 +29,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - `LICENCE` = Licencia 
 - `README.md`= Documentación
 - `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `5.0`
+- `WindowsDefender.exe` = Keylogger Compilado `5.1`
 - `WindowsDefender.py` = Código fuente del Keylogger
 ---
 ---
