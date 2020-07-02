@@ -1,16 +1,16 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.2    
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.3    
 ````
 
-# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.2
+# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.3
 
 ---
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `30/06/2020` 
-* __Versión:__ `5.2`
+* __Documentación:__ `2/07/2020` 
+* __Versión:__ `5.3`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
@@ -20,18 +20,22 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 # Carpeta Principal
 ![Archivos](https://i.imgur.com/F1i9X0j.png)
-- `Doc` = Documentación de como perzonalizar el keylogger `CustomKey.md`
-- `Compile.bat`    = Convierte el script `*.py` a `*.exe`
-- `DataCompartir.txt`    = Pequeña descripción del keylogger
-- `Ejecutar.bat`    = Ejecuta el script - [para pruebas]
-- `icon.ico`    = Icono Windows Defender
-- `InstallRequirements.bat` = Instala las librerías necesarias en python3
-- `LICENCE` = Licencia 
-- `README.md`= Documentación
-- `version.txt` = Información detalla de conversión `.py` a `.exe`
-- `WindowsDefender.exe` = Keylogger Compilado `5.2`
-- `WindowsDefender.py` = Código fuente del Keylogger
----
+
+* from eventlet.tpool import socket, threading  ` Librería verifica internet y permite procesos multihilos`
+* from pynput.keyboard import Listener
+* from getpass import getuser     # Obtiene el nombre del usuario
+* from datetime import datetime   # Devuelve fecha y hora actual
+* from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
+* import datetime                 # Devuelve fecha y hora actual
+* import random                   # Genera numeros
+* import os                       # Lib para copiar archivos
+* import telepot                  # Telegram API
+* import yagmail                  # Enviar archivos solo a Gmail
+* import pymysql                  # Lib connection mysql
+* import shutil                   # Lib para crear carpetas
+* import string                   # Lib genera textos
+* import time                     # Contar segundos
+* from PIL import ImageGrab       # Toma capturas de pantall
 ---
 # Caracteristicas
 - __Indetectable Antivirus:__ Windows Defender `26/05/2020`, Avast, ESET NOD32
@@ -72,7 +76,11 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 
 - __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. [Más información aquí](#)
+- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram]
 
+    ![](https://i.imgur.com/NpNzd4b.png)
+
+    ![](https://i.imgur.com/r2otz8z.png)
 
 ## Caracteristicas que se agregarán en futuras actualizaciones:  
 - __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
@@ -81,7 +89,6 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 - __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
 - __Portapapeles:__ Obtiene el texto del portapapeles.
 - __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
-- __Capturas de pantalla:__ [No valido en base de datos]
 - __Auto Destrucción:__ El keylogger se auto destruirá en una una fecha especifica.
 
 ## Uso de Recursos de la PC

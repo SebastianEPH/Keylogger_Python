@@ -17,6 +17,7 @@ pip install PyMySQL
 pip install PyInstaller
 pip install pywin32
 pip install yagmail
+pip install pillow
 
 echo.
 echo.

