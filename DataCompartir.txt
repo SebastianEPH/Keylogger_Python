@@ -2,7 +2,7 @@
 |>Troyano espía indetectable | Keylogger para Windows, se replica en el sistema y se inicia automaticamente al iniciar sesión. Envío de registro mediante [DataBase], [Gmail] o [BotTelegram] <|
 https://github.com/SebastianEPH/SpyTrojan_Keylogger.git
 
->SpyTrojan_Keylogger v5.0 - Python3.8 
+>SpyTrojan_Keylogger v5.3.1 - Python3.8 
 
 CARACTERISTICAS:
 [+] Solo para Windows 7, 8.1, 10

