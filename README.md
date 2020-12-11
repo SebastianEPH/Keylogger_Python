@@ -57,7 +57,11 @@
 
 <!--#region Caracteristicas  -->
 # Caracteristicas
-- __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
+- __Configuración en registro:__ El software lee su configuración desde el registro de windows, El archivo `infectionFile.py` es el que se encarga de escribir en el registro, para que el keylogger pueda funcionar a la normalidad, tener la configuración en el registro tiene muchas ventajas, cómo activar o desactivar funcionalidades, hasta cambiar el token y el id a tiempo real. 
+
+    ![](https://imgur.com/IVJl4NH.png)
+
+- __Segundo plano:__ Se ejecuta en segundo plano y sin ningún entorno gráfico o consola
 
     `NOTA: imagen no actual`
 
@@ -73,15 +77,15 @@
     ![Info](https://i.imgur.com/mTBByRy.png)
 
     ![StartUP Info](https://i.imgur.com/bkGSFQC.png)
-- __Oculto__ 
+- __Oculto:__ Se oculta en carpetas estrañas del usuario. 
 
-- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, 
+- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, pero no aparece en el menú de StartUp
 
-    `NOTA: imagen no actual`
+    `NOTA: El software no aparece en ésta lista`
 
     ![StartUp](https://i.imgur.com/xh91bR5.png)
 
-- __Multiples cuentas:__ Soporte a multiples cuentas 
+- __Multiples cuentas:__ Puede enviar los metadatos a distintas cuenta o grupos de telegram
 - __Envio mediante Bot Telegram:__ Envia todos los datos mediante telegram
 - __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado 
     ![](https://i.imgur.com/NpNzd4b.png)
@@ -475,7 +479,7 @@ según estos datos, el software funcionará de una u otra manera.
 
     <details>
     <summary> Click para ver más información</summary>
-    
+
     ![](https://imgur.com/IVJl4NH.png)
 
     ````py
