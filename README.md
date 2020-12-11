@@ -28,7 +28,7 @@
 
 # __¡ Nota importante !:__ Ésta documentación está en proceso de escritura... algunos datos no están completas
 
- <!--#region Carpeta Principal  -->
+<!--#region Carpeta Principal  -->
 # Carpeta Principal
 ![Archivos](https://imgur.com/eGfbb26.png)
 
@@ -56,6 +56,7 @@
 ---
 <!--#endregion -->
 
+<!--#region Caracteristicas  -->
 # Caracteristicas
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
 
@@ -87,23 +88,56 @@
     ![](https://i.imgur.com/NpNzd4b.png)
 
     ![](https://i.imgur.com/r2otz8z.png)
+<!--#endregion -->
 
-
+<!--#region Uso de Recursos  -->
 ## Uso de Recursos de la PC
 El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 ![Uso del CPU y RAM](https://i.imgur.com/DFAf2Tw.png)
 
 ---
----
+<!--#endregion -->
+
 # Proceso de preparación:
 
+<!--#region Instalar todos los requerimientos -->
 ## 1. Instalar todos los requerimientos
 
 ![lista de requerimientos](https://imgur.com/PPgsmrH.png)
+<!--#endregion -->
+
+<!--#region Configuración de Telegram  -->
+## 2. Crear y configurar un Bot de telegram Telegram
+
+1. Entramos a [BotFather](https://telegram.me/BotFather).
+    
+    ![botFather](https://i.imgur.com/1dtdBO6.png)
+
+2. Creamos un nuevo bot y obtenemos el Token privado
+    
+    ![](https://i.imgur.com/oRYutuu.png)
+
+3. Ahora obtenemos nuestro `Chat ID`, esto se realiza para que solo el registro de teclas nos llegue a nosotros y no a cualquiera que encuentre el bot.
+
+4. Buscamos el Bot llamado [Chat ID Echo](https://telegram.me/chatid_echo_bot) y obtenemos nuestro Chat ID
+    
+    ![CHAT ID](https://i.imgur.com/tJttP3i.png)
+
+5. Buscamos nuestro bot y la iniciamos...
+
+    ![Buscando nuestro bot](https://i.imgur.com/2IA7ec8.png)
+
+    ![iniciando bot](https://i.imgur.com/1r9F2IU.png)
+
+6. Ejemplo del funcionamiento
+
+    ![Ejemplo de funcionamiento telegram](https://i.imgur.com/QHLYDi9.png)
+
+<!--#endregion -->
 
 <!--#region Crear ejecutable del `SpyTrojan.py -->
-## 2. Crear ejecutable del `SpyTrojan.py` 
+## 3. Crear ejecutable del `SpyTrojan.py` 
 
 * __Paso 1:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
 
@@ -154,22 +188,18 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
     ![](https://imgur.com/1M7P0aW.png)
 
-    <details>
-    <summary>Ver más</summary>
     <p>El archivo <code># Create .EXE [SpyTrojan]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
     <p> El archivo <code># Create .EXE [SpyTrojan]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
     <br>
     <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
-
-
-</details> 
+ 
 
 * __Nota:__  Al abrir el *.exe resultante, ésta mandará error lo cuál es normal ya que el software lee información del registro `[REGEDIT]`, información que todavía no se han creado.
 
 <!--#endregion -->
 
-
-## 3. Crear ejecutable del `InfectionFile.py` 
+<!--#region Crear ejecutable del `InfectionFile.py -->
+## 4. Crear ejecutable del `InfectionFile.py` 
 
 Este Archivo se encargará de escribir en el registro de windows la configuración de nuestro software, 
 según estos datos, el software funcionará de una u otra manera. 
@@ -327,8 +357,6 @@ según estos datos, el software funcionará de una u otra manera.
 </details> 
 
 
-
-
 * __Paso 8:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
 
     ![lista de requerimientos](https://imgur.com/q79rmJb.png)
@@ -369,7 +397,7 @@ según estos datos, el software funcionará de una u otra manera.
 
     ### Estos datos serán utilizados al momento de convertir nuestro *.py a *.exe
 
-    ![Info](https://i.imgur.com/MQAiVnJ.png) 
+    ![Info](https://i.imgur.com/MQAiVnJ.png)
     ![Info](https://i.imgur.com/mTBByRy.png)
 
 </details> 
@@ -378,87 +406,17 @@ según estos datos, el software funcionará de una u otra manera.
 
     ![](https://imgur.com/1M7P0aW.png)
 
-    <details>
-    <summary>Ver más</summary>
     <p>El archivo <code># Create .EXE [InfectionFile]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
     <p> El archivo <code># Create .EXE [InfectionFile]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
     <br>
     <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
 
-
-</details> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--#endregion -->
 
 
 __NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
 
-Requerimiento de paquetes de `Python > 3.8`:
 
-
-
-# [Configuración] BotTelegram
-
-1. Entramos a [BotFather](https://telegram.me/BotFather).
-    
-    ![botFather](https://i.imgur.com/1dtdBO6.png)
-
-2. Creamos un nuevo bot y obtenemos el Token privado
-    
-    ![](https://i.imgur.com/oRYutuu.png)
-
-3. Ahora obtenemos nuestro `Chat ID`, esto se realiza para que solo el registro de teclas nos llegue a nosotros y no a cualquiera que encuentre el bot.
-
-4. Buscamos el Bot llamado [Chat ID Echo](https://telegram.me/chatid_echo_bot) y obtenemos nuestro Chat ID
-    
-    ![CHAT ID](https://i.imgur.com/tJttP3i.png)
-
-5. Ya tenemos nuestro `Token del bot` y nuestro `Chat ID` ahora tenemos que abrir nuestro archivo `WindowsDefender.py` y colocar esos datos siguientes métodos:
-
-    __NOTA:__ Podemos tener hasta 3 ID distintos y a todos les llegaran los mismos datos, si solo usará uno, no modifique los valores del ID_2 e ID_3
-
-    ````py
-    # Importante
-        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
-        self.MODE = 2     # 0 = Gmail
-                          # 1 = DataBase                                            # Solo se puede usar una opción
-                          # 2 = TelegramBot
-
-        class TelegramBot:
-        def __init__(self):
-            self.ID   = 831756903                                                     # ID Principal [Obligatorio]
-            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
-            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
-            self.TOKEN = "1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8"             # TOKEN de tu Bot [Obligatorio]
-
-
-    # ************ Zona Telegram ************* 
-    ````
-6. Buscamos nuestro bot y la iniciamos...
-
-    ![Buscando nuestro bot](https://i.imgur.com/2IA7ec8.png)
-
-    ![iniciando bot](https://i.imgur.com/1r9F2IU.png)
-
-6. Ejemplo del funcionamiento
-
-    ![Ejemplo de funcionamiento telegram](https://i.imgur.com/QHLYDi9.png)
-
-# [Si usted desea modificar el keylogger lea la siguiente documentación aquí.](Doc/CustomKey.md)
 
 # Modo Debugger
 Si ya configuró o bien la base de datos, Gmail o Telegram, si deseas saber si todo está Ok, pues ejecuta el archivo `Ejecuta.bat`, esta ejecutará el `SpyTrojanKeylogger.py` en modo debugg, la cual mostrará información en la consola:
