@@ -10,12 +10,20 @@
 
 
 ## Información
-* __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `11/12/20` 
-* __Versión:__ `6.0`
-* __Estado:__` Estable`
-* __Plataforma:__` Windows 7, 8.1 y 10`
-* __Lenguaje:__` Python > 3.8`
+* __Developed by:__ `SebastianEPH`
+* __Product name:__ `Spy Trojan KeyLogger`
+* __Type software:__ `Trojan`
+* __File version:__ `v6.0`
+* __Architecture:__ `x86 bits || x64 bits`
+* __State:__ `Stable`
+* __Size:__ `NULL`
+* __Undetectable:__ `Not Tester`
+* __Plataform:__ `Only Windows 7, 8.1, 10`
+* __Programming language:__ `Python >3.6 <3.9`
+* __Licence:__ `GNU Licence`
+* __IDE or text editor:__ `PyCharm 2020 Education`
+* __Documentation date:__ `11/12/20`
+* __Description:__ `Advanced Keylogger | send Telegram bot  `
 
 
 # __¡ Nota importante !:__ Ésta documentación está en proceso de escritura... algunos datos no están completas
@@ -23,27 +31,27 @@
 # Carpeta Principal
 ![Archivos](https://imgur.com/eGfbb26.png)
 
-* __.git:__` Python > 3.8`
-* __.idea:__` Python > 3.8`
-* __Doc:__` Python > 3.8`
-* __venv:__` Python > 3.8`
-* __# Create .EXE [InfectionFile]-[Debug].bat:__` Python > 3.8`
-* __# Create .EXE [InfectionFile]-[Release].bat:__` Python > 3.8`
-* __# Create .EXE [SpyTrojan]-[Debug].bat:__` Python > 3.8`
-* __# Create .EXE [SpyTrojan]-[Release].bat:__` Python > 3.8`
-* __#=[Infection] Run.bat:__` Python > 3.8`
-* __#=[SpyTrojan] Run.bat:__` Python > 3.8`
-* __.gitignore:__` Python > 3.8`
-* __ConfigKey.ini:__` Python > 3.8`
-* __icon_infection_file.ico:__` Python > 3.8`
-* __icon_SpyTrojan.ico:__` Python > 3.8`
-* __InfectionFile.py:__` Python > 3.8`
-* __info_exe_InfectionFile.txt:__` Python > 3.8`
-* __info_exe_SpyTrojan.txt:__` Python > 3.8`
-* __InstallRequirements.bat:__` Python > 3.8`
-* __LICENSE:__` Python > 3.8`
-* __README.md:__` Python > 3.8`
-* __SpyTrojan.py:__` Python > 3.8`
+* __.git:__` Lista de cambios` _<= ignorar_
+* __.idea:__` Información del IDE` _<= ignorar_
+* __Doc:__` Web => en proceso...` _<= ignorar_
+* __venv:__`Entorno_virtual de python ` _<= ignorar_
+* __# Create .EXE [InfectionFile]-[Debug].bat:__` Convierte en ejecutable *.exe, pero al abrirlo se mostrará la consola` _<= para uso de debuggeo_
+* __# Create .EXE [InfectionFile]-[Release].bat:__` Convierte en ejecutable, y al iniciarlo, será de modo oculto, sin Consola` _<= Es el proyecto finalizado_
+* __# Create .EXE [SpyTrojan]-[Debug].bat:__` Convierte en ejecutable *.exe, pero al abrirlo se mostrará la consola` _<= para uso de debuggeo_
+* __# Create .EXE [SpyTrojan]-[Release].bat:__` Convierte en ejecutable, y al iniciarlo, será de modo oculto, sin Consola` _<= Es el proyecto finalizado_
+* __#=[Infection] Run.bat:__` Ejecuta en consola el archivo InfectionFile` _<= para uso de debuggeo_
+* __#=[SpyTrojan] Run.bat:__` Ejecuta en consola el archivo SpyTrojan` _<= para uso de debuggeo_
+* __.gitignore:__` Lista de archivos y carpetas sin seguimiento` _<= ignorar_
+* __ConfigKey.ini:__` Archivo de configuración del keylogger` _<= No habilitado en está versión_
+* __icon_infection_file.ico:__` Icono InfectionFile` _<= puedes remplazarlo, pero no cambiarle de nombre_
+* __icon_SpyTrojan.ico:__` Icono SpyTrojan` _<= puedes remplazarlo, pero no cambiarle de nombre_
+* __InfectionFile.py:__` Este script se encargará de infectar la computadora, y escribir en el registro.`_<= Se debe configurar previamente_
+* __info_exe_InfectionFile.txt:__` Contiene la información del *.exe` _<= lee la documentación_
+* __info_exe_SpyTrojan.txt:__` Contiene la información del *.exe` _<= lee la documentación_
+* __InstallRequirements.bat:__` Instala las bibliotecas` _<= Puede instalarlos manualmente_
+* __LICENSE__
+* __README.md:__` Documentación`
+* __SpyTrojan.py:__` Keyloggger TelegramBot`
 
 ---
 
